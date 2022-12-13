@@ -1,7 +1,7 @@
 <aside class="page-sidebar">
     <div class="page-logo">
         <a href="#" class="page-logo-link press-scale-down d-flex align-items-center position-relative" data-toggle="modal" data-target="#modal-shortcut">
-            <img src="../assets/dist/img/logo.png" alt="" aria-roledescription="logo">
+            <img src="dist/img/logo.png" alt="" aria-roledescription="logo">
             <span class="page-logo-text mr-1">ระบบจัดการสินค้าออนไลน์</span>
             <span class="position-absolute text-white opacity-50 small pos-top pos-right mr-2 mt-n2"></span>
             <i class="fal fa-angle-down d-inline-block ml-1 fs-lg color-primary-300"></i>
@@ -20,7 +20,7 @@
         </div>
 
         <div class="info-card">
-            <img src="../assets/dist/img/demo/avatars/avatar-admin.png" class="profile-image rounded-circle" alt="Dr. Codex Lantern">
+            <img src="dist/img/demo/avatars/avatar-admin.png" class="profile-image rounded-circle" alt="Dr. Codex Lantern">
             <div class="info-card-text">
                 <a href="#" class="d-flex align-items-center text-white">
                     <span class="text-truncate text-truncate-sm d-inline-block">
@@ -29,7 +29,7 @@
                 </a>
                 <span class="d-inline-block text-truncate text-truncate-sm">Toronto, Canada</span>
             </div>
-            <img src="../assets/dist/img/card-backgrounds/cover-2-lg.png" class="cover" alt="cover">
+            <img src="dist/img/card-backgrounds/cover-2-lg.png" class="cover" alt="cover">
             <a href="#" onclick="return false;" class="pull-trigger-btn" data-action="toggle" data-class="list-filter-active" data-target=".page-sidebar" data-focus="nav_filter_input">
                 <i class="fal fa-angle-down"></i>
             </a>
