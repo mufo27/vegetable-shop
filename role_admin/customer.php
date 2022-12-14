@@ -104,113 +104,155 @@
             // Event Lot
             var events = $("#app-eventlog");
 
-            
-            // Column Definitions
-            var columnSet = [{
-                    title: "RowId",
-                    id: "DT_RowId",
-                    data: "DT_RowId",
-                    placeholderMsg: "Server Generated ID",
-                    "visible": false,
-                    "searchable": false,
-                    type: "readonly"
+            var dataArray = [
+                {
+                    "id": 3,
+                    "phone": null,
+                    "user": "ctm",
+                    "pass": "111",
+                    "status": 2,
+                    "pkname": "Mr",
+                    "fname": "Cus",
+                    "lname": "Tomer",
+                    "email": null,
+                    "address": null,
+                    "save_time": "2022-11-22 11:49:44"
                 },
                 {
-                    title: "Status",
-                    id: "status",
-                    data: "status",
-                    type: "select",
-                    "options": [
-                        "active",
-                        "inactive",
-                        "disabled",
-                        "partial"
-                    ]
-                },
-                {
-                    title: "IP Address",
-                    id: "ipAddress",
-                    data: "ipAddress",
-                    type: "text",
-                    pattern: "((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.|$)){4}",
-                    placeholderMsg: "e.g 82.84.86.88",
-                    errorMsg: "*Invalid address - Enter valid ip.",
-                    hoverMsg: "(Optional) - Ex: 82.84.86.88",
-                    unique: true,
-                    uniqueMsg: "Already exists. IP must be unique!",
-                    required: true
-                },
-                {
-                    title: "Port Number",
-                    id: "port",
-                    data: "port",
-                    type: "number",
-                    pattern: "^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$",
-                    placeholderMsg: "e.g 6112",
-                    errorMsg: "*Invalid port - Enter valid port or range.",
-                    hoverMsg: "Ex: 6112 (single)   or   6111:6333 (range)",
-                    unique: false,
-                    required: true
-                },
-                {
-                    title: "Activation Date",
-                    id: "adate",
-                    data: "adate",
-                    type: "date",
-                    pattern: "((?:19|20)\d\d)-(0?[1-9]|1[012])-([12][0-9]|3[01]|0?[1-9])",
-                    placeholderMsg: "yyyy-mm-dd",
-                    errorMsg: "*Invalid date format. Format must be yyyy-mm-dd"
-                },
-                {
-                    title: "User Email",
-                    id: "user",
-                    data: "user",
-                    type: "text",
-                    pattern: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
-                    placeholderMsg: "user@domain.com",
-                    errorMsg: "*Invalid email - Enter valid email.",
-                    unique: true,
-                    required: true,
-                    uniqueMsg: "Email already in use"
-                },
-                {
-                    title: "Package",
-                    id: "package",
-                    data: "package",
-                    type: "select",
-                    "options": [
-                        "free",
-                        "silver",
-                        "gold",
-                        "platinum",
-                        "payg"
-                    ]
-                },
-                {
-                    title: "Acc. Balance",
-                    id: "balance",
-                    data: "balance",
-                    type: "number",
-                    placeholderMsg: "Amount due",
-                    defaultValue: "0"
+                    "id": 6,
+                    "phone": "0955845863",
+                    "user": "udru",
+                    "pass": "111",
+                    "status": 2,
+                    "pkname": "นาย",
+                    "fname": "Watcharapong",
+                    "lname": "kaewphila",
+                    "email": null,
+                    "address": null,
+                    "save_time": "2022-11-22 15:42:47"
                 }
-            ]
+                ];
+
+            // Column Definitions
+            // var columnSet = [{
+            //         title: "RowId",
+            //         id: "DT_RowId",
+            //         data: "DT_RowId",
+            //         placeholderMsg: "Server Generated ID",
+            //         "visible": false,
+            //         "searchable": false,
+            //         type: "readonly"
+            //     },
+            //     {
+            //         title: "Status",
+            //         id: "status",
+            //         data: "status",
+            //         type: "select",
+            //         "options": [
+            //             "active",
+            //             "inactive",
+            //             "disabled",
+            //             "partial"
+            //         ]
+            //     },
+            //     {
+            //         title: "IP Address",
+            //         id: "ipAddress",
+            //         data: "ipAddress",
+            //         type: "text",
+            //         pattern: "((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.|$)){4}",
+            //         placeholderMsg: "e.g 82.84.86.88",
+            //         errorMsg: "*Invalid address - Enter valid ip.",
+            //         hoverMsg: "(Optional) - Ex: 82.84.86.88",
+            //         unique: true,
+            //         uniqueMsg: "Already exists. IP must be unique!",
+            //         required: true
+            //     },
+            //     {
+            //         title: "Port Number",
+            //         id: "port",
+            //         data: "port",
+            //         type: "number",
+            //         pattern: "^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$",
+            //         placeholderMsg: "e.g 6112",
+            //         errorMsg: "*Invalid port - Enter valid port or range.",
+            //         hoverMsg: "Ex: 6112 (single)   or   6111:6333 (range)",
+            //         unique: false,
+            //         required: true
+            //     },
+            //     {
+            //         title: "Activation Date",
+            //         id: "adate",
+            //         data: "adate",
+            //         type: "date",
+            //         pattern: "((?:19|20)\d\d)-(0?[1-9]|1[012])-([12][0-9]|3[01]|0?[1-9])",
+            //         placeholderMsg: "yyyy-mm-dd",
+            //         errorMsg: "*Invalid date format. Format must be yyyy-mm-dd"
+            //     },
+            //     {
+            //         title: "User Email",
+            //         id: "user",
+            //         data: "user",
+            //         type: "text",
+            //         pattern: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
+            //         placeholderMsg: "user@domain.com",
+            //         errorMsg: "*Invalid email - Enter valid email.",
+            //         unique: true,
+            //         required: true,
+            //         uniqueMsg: "Email already in use"
+            //     },
+            //     {
+            //         title: "Package",
+            //         id: "package",
+            //         data: "package",
+            //         type: "select",
+            //         "options": [
+            //             "free",
+            //             "silver",
+            //             "gold",
+            //             "platinum",
+            //             "payg"
+            //         ]
+            //     },
+            //     {
+            //         title: "Acc. Balance",
+            //         id: "balance",
+            //         data: "balance",
+            //         type: "number",
+            //         placeholderMsg: "Amount due",
+            //         defaultValue: "0"
+            //     }
+            // ]
 
             /* start data table */
             var myTable = $('#dt-basic-example').dataTable({
-                /* check datatable buttons page for more info on how this DOM structure works */
+                
                 dom: "<'row mb-3'<'col-sm-12 col-md-6 d-flex align-items-center justify-content-start'f><'col-sm-12 col-md-6 d-flex align-items-center justify-content-end'B>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-                ajax: "../assets/dist/media/data/server-demo.json",
+
+                // ajax: "../assets/dist/media/data/server-demo.json",
                 // ajax: "fetch/fetch_customer.php",
-                columns: columnSet,
-                /* selecting multiple rows will not work */
+                // data: "fetch/fetch_customer.php",
+                data: dataArray,
+
+                columns: [
+                    { data: "id" },
+                    { data: "phone" },
+                    { data: "user" },
+                    { data: "pass" },
+                    { data: "status" },
+                    { data: "pkname" },
+                    { data: "fname" },
+                    { data: "lname" },
+                    { data: "email" },
+                    { data: "address" },
+                    { data: "save_time" },
+                ],
                 select: 'single',
-                /* altEditor at work */
                 altEditor: true,
                 responsive: true,
-                /* buttons uses classes from bootstrap, see buttons page for more details */
+
                 buttons: [{
                         extend: 'selected',
                         text: '<i class="fal fa-times mr-1"></i> Delete',
@@ -307,7 +349,6 @@
                     },
                 ],
 
-                /* default callback for insertion: mock webservice, always success */
                 onAddRow: function(dt, rowdata, success, error) {
                     console.log("Missing AJAX configuration for INSERT");
                     success(rowdata);
