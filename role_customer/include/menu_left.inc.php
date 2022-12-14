@@ -43,41 +43,6 @@
                 </a>
             </li>
 
-            <li class="active">
-                <a href="dashboard.php" title="" data-filter-tags="">
-                    <i class="fal fa-analytics"></i><span class="nav-link-text" data-i18n="">Dashboard</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="#" title="Theme Settings" data-filter-tags="theme settings">
-                    <i class="fal fa-users"></i>
-                    <span class="nav-link-text" data-i18n="nav.theme_settings">บัญชีผู้ใช้งาน</span>
-                </a>
-                <ul>
-                    <li>
-                        <a href="farmer.php" title="" data-filter-tags="">
-                            <span class="nav-link-text" data-i18n="">ผู้ดูแลระบบ (Admin)</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="farmer.php" title="" data-filter-tags="">
-                            <span class="nav-link-text" data-i18n="">พนักงาน (Employee)</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="farmer.php" title="" data-filter-tags="">
-                            <span class="nav-link-text" data-i18n="">เกษตรกร (Farmer)</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="customer.php" title="" data-filter-tags="">
-                            <span class="nav-link-text" data-i18n="">ลูกค้า (Customer)</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
             <li>
                 <a href="#" title="Theme Settings" data-filter-tags="theme settings">
                     <i class="fal fa-cog"></i>
