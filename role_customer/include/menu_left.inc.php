@@ -37,48 +37,61 @@
 
         <ul id="js-nav-menu" class="nav-menu">
 
-            <li class="">
+            <li>
                 <a href="index.php" title="" data-filter-tags="">
                     <i class="fal fa-home"></i><span class="nav-link-text" data-i18n="">หน้าแรก</span>
                 </a>
             </li>
 
             <li>
+                <a href="#" title="" data-filter-tags="">
+                    <i class="fal fa-shopping-basket"></i><span class="nav-link-text" data-i18n="">ตะกร้าสินค้า</span>
+                </a>
+            </li>
+
+            <li>
                 <a href="#" title="Theme Settings" data-filter-tags="theme settings">
-                    <i class="fal fa-cog"></i>
-                    <span class="nav-link-text" data-i18n="nav.theme_settings">จัดการข้อมูล</span>
+                    <i class="fal fa-shopping-bag"></i>
+                    <span class="nav-link-text" data-i18n="nav.theme_settings">รายการสั่งซื้อสินค้า</span>
                 </a>
                 <ul>
                     <li>
-                        <a href="category.php" title="" data-filter-tags="">
-                            <span class="nav-link-text" data-i18n="">หมวดหมู่ (Category)</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="product.php" title="" data-filter-tags="">
-                            <span class="nav-link-text" data-i18n="">สินค้า (Product)</span>
+                        <a href="#" title="" data-filter-tags="">
+                            <span class="nav-link-text" data-i18n="">รายละเอียดการสั่งซื้อ</span>
                         </a>
                     </li>
                 </ul>
             </li>
 
+            <li>
+                <a href="#" title="Theme Settings" data-filter-tags="theme settings">
+                    <i class="fal fa-money-check-alt"></i>
+                    <span class="nav-link-text" data-i18n="nav.theme_settings">การชำระเงิน</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#" title="" data-filter-tags="">
+                            <span class="nav-link-text" data-i18n="">รายละเอียดการชำระเงิน</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
-
-            <li class="">
-                <a href="order.php" title="" data-filter-tags="">
-                    <i class="fal fa-clipboard-list-check"></i><span class="nav-link-text" data-i18n="">รายการสั่งซื้อสินค้า</span>
+            <li>
+                <a href="#" title="" data-filter-tags="">
+                    <i class="fal fa-shipping-fast"></i><span class="nav-link-text" data-i18n="">การจัดส่งสินค้า</span>
                 </a>
             </li>
 
-            <li class="">
-                <a href="payment.php" title="" data-filter-tags="">
-                    <i class="fal fa-money-check-alt"></i><span class="nav-link-text" data-i18n="">การชำระเงิน</span>
+            <li>
+                <a href="#" title="" data-filter-tags="">
+                    <i class="fal fa-history"></i><span class="nav-link-text" data-i18n="">ประวัติการสั่งซื้อ</span>
                 </a>
             </li>
 
-            <li class="">
-                <a href="send.php" title="" data-filter-tags="">
-                    <i class="fal fa-money-check-alt"></i><span class="nav-link-text" data-i18n="">การจัดส่งสินค้า</span>
+            <li>
+                <a href="#" title="" data-filter-tags="">
+                    <i class="fal fa-user-circle"></i><span class="nav-link-text" data-i18n="">ข้อมูลส่วนตัว</span>
                 </a>
             </li>
 

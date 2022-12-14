@@ -103,84 +103,28 @@
         $(document).ready(function() {
             // Event Lot
             var events = $("#app-eventlog");
-
-
             // Column Definitions
-            var columnSet = [
-                {
-                    title: "id",
+            var columnSet = [{
+                    title: "RowId",
                     id: "id",
                     data: "id",
-                    type: "text",
-                    placeholderMsg: "ID",
+                    placeholderMsg: "Server Generated ID",
+                    "visible": false,
+                    "searchable": false,
+                    type: "readonly"
                 },
-                // {
-                //     title: "IP Address",
-                //     id: "ipAddress",
-                //     data: "ipAddress",
-                //     type: "text",
-                //     pattern: "((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.|$)){4}",
-                //     placeholderMsg: "e.g 82.84.86.88",
-                //     errorMsg: "*Invalid address - Enter valid ip.",
-                //     hoverMsg: "(Optional) - Ex: 82.84.86.88",
-                //     unique: true,
-                //     uniqueMsg: "Already exists. IP must be unique!",
-                //     required: true
-                // },
-                // {
-                //     title: "Port Number",
-                //     id: "port",
-                //     data: "port",
-                //     type: "number",
-                //     pattern: "^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$",
-                //     placeholderMsg: "e.g 6112",
-                //     errorMsg: "*Invalid port - Enter valid port or range.",
-                //     hoverMsg: "Ex: 6112 (single)   or   6111:6333 (range)",
-                //     unique: false,
-                //     required: true
-                // },
-                // {
-                //     title: "Activation Date",
-                //     id: "adate",
-                //     data: "adate",
-                //     type: "date",
-                //     pattern: "((?:19|20)\d\d)-(0?[1-9]|1[012])-([12][0-9]|3[01]|0?[1-9])",
-                //     placeholderMsg: "yyyy-mm-dd",
-                //     errorMsg: "*Invalid date format. Format must be yyyy-mm-dd"
-                // },
-                // {
-                //     title: "User Email",
-                //     id: "user",
-                //     data: "user",
-                //     type: "text",
-                //     pattern: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
-                //     placeholderMsg: "user@domain.com",
-                //     errorMsg: "*Invalid email - Enter valid email.",
-                //     unique: true,
-                //     required: true,
-                //     uniqueMsg: "Email already in use"
-                // },
-                // {
-                //     title: "Package",
-                //     id: "package",
-                //     data: "package",
-                //     type: "select",
-                //     "options": [
-                //         "free",
-                //         "silver",
-                //         "gold",
-                //         "platinum",
-                //         "payg"
-                //     ]
-                // },
-                // {
-                //     title: "Acc. Balance",
-                //     id: "balance",
-                //     data: "balance",
-                //     type: "number",
-                //     placeholderMsg: "Amount due",
-                //     defaultValue: "0"
-                // }
+                {
+                    title: "Username",
+                    id: "user",
+                    data: "user",
+                    type: "text"
+                },
+                {
+                    title: "Password",
+                    id: "pass",
+                    data: "pass",
+                    type: "text"
+                }
             ]
 
             /* start data table */
@@ -189,9 +133,7 @@
                 dom: "<'row mb-3'<'col-sm-12 col-md-6 d-flex align-items-center justify-content-start'f><'col-sm-12 col-md-6 d-flex align-items-center justify-content-end'B>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-                // ajax: "../assets/dist/media/data/server-demo.json",
-                ajax: "fetch/fetch_customer.php",
-                // ajax: "fetch/test.json",
+                ajax: "fetch/fetch_customer_id.php",
                 columns: columnSet,
                 /* selecting multiple rows will not work */
                 select: 'single',
