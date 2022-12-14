@@ -104,6 +104,7 @@
             // Event Lot
             var events = $("#app-eventlog");
 
+            
             // Column Definitions
             var columnSet = [{
                     title: "RowId",
@@ -202,6 +203,7 @@
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
                 ajax: "../assets/dist/media/data/server-demo.json",
+                // ajax: "fetch/fetch_customer.php",
                 columns: columnSet,
                 /* selecting multiple rows will not work */
                 select: 'single',

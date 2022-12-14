@@ -3,7 +3,7 @@
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $database = "shoppuk";
+        $database = "vegetable_shop";
 
         try {
 
