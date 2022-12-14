@@ -26,15 +26,6 @@
     <link rel="stylesheet" media="screen, print" href="../assets/dist/css/fa-brands.css">
     <link rel="stylesheet" media="screen, print" href="../assets/dist/css/fa-solid.css">
 
-    <!-- font google -->
-    <!-- <style type="text/css">
-        @import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap");
-
-        body {
-            font-family: "Kanit", sans-serif;
-            font-size: 16px;
-        }
-    </style> -->
 </head>
 
 <body class="mod-bg-1 mod-nav-link ">
@@ -95,8 +86,9 @@
 
     <?php include('include/settings_page.inc.php'); ?>
 
+    <script src="../assets/dist/js/vendors.bundle.js"></script>
 
-    <script src="js/app.bundle.js"></script>
+    <script src="../assets/dist/js/app.bundle.js"></script>
     <script>
         $(document).ready(function() {
 

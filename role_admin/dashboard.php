@@ -5,7 +5,7 @@
 
     <meta charset="utf-8">
     <title>
-        dashboard - ระบบจัดการสินค้าออนไลน์
+        dashboard - ระบบจัดการสินค้าออนไลน์ 
     </title>
     <meta name="description" content="Dashboard">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
