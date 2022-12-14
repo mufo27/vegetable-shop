@@ -104,118 +104,82 @@
             // Event Lot
             var events = $("#app-eventlog");
 
-            var columnSet = [{
-                    title: "RowId",
+            var columnSet = [
+                {
+                    title: "Code",
                     id: "id",
                     data: "id",
-                    placeholderMsg: "Server Generated ID",
-                    "visible": false,
-                    "searchable": false,
+                    placeholderMsg: "Auto generated Code",
                     type: "readonly"
                 },
                 {
-                    title: "Username",
+                    title: "คำนำหน้า",
+                    id: "pkname",
+                    data: "pkname",
+                    type: "select",
+                    "options": [
+                        "นาย",
+                        "นาง",
+                        "นางสาว"
+                    ]
+                },
+                {
+                    title: "ชื่อจริง",
+                    id: "fname",
+                    data: "fname",
+                    type: "text"
+                },
+                {
+                    title: "นามสกุล",
+                    id: "lname",
+                    data: "lname",
+                    type: "text"
+                },
+                {
+                    title: "บัญชีผู้ใช้งาน",
                     id: "user",
                     data: "user",
                     type: "text"
                 },
                 {
-                    title: "Password",
+                    title: "รหัสผ่าน",
                     id: "pass",
                     data: "pass",
                     type: "text"
+                },
+                {
+                    title: "เบอร์โทร",
+                    id: "phone",
+                    data: "phone",
+                    type: "number"
+                },
+                {
+                    title: "Email",
+                    id: "email",
+                    data: "email",
+                    type: "email"
+                },
+                {
+                    title: "ที่อยู่",
+                    id: "address",
+                    data: "address",
+                    type: "text"
+                },
+                {
+                    title: "วันที่บันทึก",
+                    id: "save_time",
+                    data: "save_time",
+                    type: "date"
+                },
+                {
+                    title: "Status",
+                    id: "status",
+                    data: "status",
+                    placeholderMsg: "ลูกค้า",
+                    type: "readonly"
                 }
             ]
 
-            // var columnSet = [{
-            //         title: "RowId",
-            //         id: "DT_RowId",
-            //         data: "DT_RowId",
-            //         placeholderMsg: "Server Generated ID",
-            //         "visible": false,
-            //         "searchable": false,
-            //         type: "readonly"
-            //     },
-            //     {
-            //         title: "Status",
-            //         id: "status",
-            //         data: "status",
-            //         type: "select",
-            //         "options": [
-            //             "active",
-            //             "inactive",
-            //             "disabled",
-            //             "partial"
-            //         ]
-            //     },
-            //     {
-            //         title: "IP Address",
-            //         id: "ipAddress",
-            //         data: "ipAddress",
-            //         type: "text",
-            //         pattern: "((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.|$)){4}",
-            //         placeholderMsg: "e.g 82.84.86.88",
-            //         errorMsg: "*Invalid address - Enter valid ip.",
-            //         hoverMsg: "(Optional) - Ex: 82.84.86.88",
-            //         unique: true,
-            //         uniqueMsg: "Already exists. IP must be unique!",
-            //         required: true
-            //     },
-            //     {
-            //         title: "Port Number",
-            //         id: "port",
-            //         data: "port",
-            //         type: "number",
-            //         pattern: "^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$",
-            //         placeholderMsg: "e.g 6112",
-            //         errorMsg: "*Invalid port - Enter valid port or range.",
-            //         hoverMsg: "Ex: 6112 (single)   or   6111:6333 (range)",
-            //         unique: false,
-            //         required: true
-            //     },
-            //     {
-            //         title: "Activation Date",
-            //         id: "adate",
-            //         data: "adate",
-            //         type: "date",
-            //         pattern: "((?:19|20)\d\d)-(0?[1-9]|1[012])-([12][0-9]|3[01]|0?[1-9])",
-            //         placeholderMsg: "yyyy-mm-dd",
-            //         errorMsg: "*Invalid date format. Format must be yyyy-mm-dd"
-            //     },
-            //     {
-            //         title: "User Email",
-            //         id: "user",
-            //         data: "user",
-            //         type: "text",
-            //         pattern: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
-            //         placeholderMsg: "user@domain.com",
-            //         errorMsg: "*Invalid email - Enter valid email.",
-            //         unique: true,
-            //         required: true,
-            //         uniqueMsg: "Email already in use"
-            //     },
-            //     {
-            //         title: "Package",
-            //         id: "package",
-            //         data: "package",
-            //         type: "select",
-            //         "options": [
-            //             "free",
-            //             "silver",
-            //             "gold",
-            //             "platinum",
-            //             "payg"
-            //         ]
-            //     },
-            //     {
-            //         title: "Acc. Balance",
-            //         id: "balance",
-            //         data: "balance",
-            //         type: "number",
-            //         placeholderMsg: "Amount due",
-            //         defaultValue: "0"
-            //     }
-            // ]
 
             /* start data table */
             var myTable = $('#dt-basic-example').dataTable({
@@ -224,7 +188,6 @@
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
 
-                // ajax: "../assets/dist/media/data/server-demo.json",
                 ajax: "fetch/fetch_customer.php",
 
                 columns: columnSet,
@@ -235,18 +198,18 @@
 
                 buttons: [{
                         extend: 'selected',
-                        text: '<i class="fal fa-times mr-1"></i> Delete',
+                        text: '<i class="fal fa-times mr-1"></i> ลบ',
                         name: 'delete',
                         className: 'btn-primary btn-sm mr-1'
                     },
                     {
                         extend: 'selected',
-                        text: '<i class="fal fa-edit mr-1"></i> Edit',
+                        text: '<i class="fal fa-edit mr-1"></i> แก้ไข',
                         name: 'edit',
                         className: 'btn-primary btn-sm mr-1'
                     },
                     {
-                        text: '<i class="fal fa-plus mr-1"></i> Add',
+                        text: '<i class="fal fa-plus mr-1"></i> เพิ่ม',
                         name: 'add',
                         className: 'btn-success btn-sm mr-1'
                     },
@@ -256,24 +219,36 @@
                         className: 'btn-primary btn-sm'
                     }
                 ],
+                
                 columnDefs: [{
-                        targets: 1,
+                        targets: 0,
+                        type: 'text',
+                        render: function(data, type, full, meta) {
+                            if (data >= 0) {
+                                return '<span class="text-success fw-500">CTM-' + data + '</span>';
+                            } else {
+                                return '<span class="text-danger fw-500">CTM-' + data + '</span>';
+                            }
+                        },
+                    },
+                    {
+                        targets: 10,
                         render: function(data, type, full, meta) {
                             var badge = {
-                                "active": {
-                                    'title': 'Active',
+                                "0": {
+                                    'title': 'Admin',
                                     'class': 'badge-success'
                                 },
-                                "inactive": {
-                                    'title': 'Inactive',
+                                "1": {
+                                    'title': 'Farmer',
                                     'class': 'badge-warning'
                                 },
-                                "disabled": {
-                                    'title': 'Disabled',
+                                "2": {
+                                    'title': 'Customer',
                                     'class': 'badge-danger'
                                 },
-                                "partial": {
-                                    'title': 'Partial',
+                                "3": {
+                                    'title': 'Error',
                                     'class': 'bg-danger-100 text-white'
                                 }
                             };
@@ -282,51 +257,7 @@
                             }
                             return '<span class="badge ' + badge[data].class + ' badge-pill">' + badge[data].title + '</span>';
                         },
-                    },
-                    {
-                        targets: 7,
-                        type: 'currency',
-                        render: function(data, type, full, meta) {
-                            //var number = Number(data.replace(/[^0-9.-]+/g,""));
-                            if (data >= 0) {
-                                return '<span class="text-success fw-500">$' + data + '</span>';
-                            } else {
-                                return '<span class="text-danger fw-500">$' + data + '</span>';
-                            }
-                        },
-                    },
-                    {
-                        targets: 6,
-                        render: function(data, type, full, meta) {
-                            var package = {
-                                "free": {
-                                    'title': 'Free',
-                                    'class': 'bg-fusion-50',
-                                    'info': 'Free users are restricted to 30 days of use'
-                                },
-                                "silver": {
-                                    'title': 'Silver',
-                                    'class': 'bg-fusion-50 bg-fusion-gradient'
-                                },
-                                "gold": {
-                                    'title': 'Gold',
-                                    'class': 'bg-warning-500 bg-warning-gradient'
-                                },
-                                "platinum": {
-                                    'title': 'Platinum',
-                                    'class': 'bg-trans-gradient'
-                                },
-                                "payg": {
-                                    'title': 'PAYG',
-                                    'class': 'bg-success-500 bg-success-gradient'
-                                }
-                            };
-                            if (typeof package[data] === 'undefined') {
-                                return data;
-                            }
-                            return '<div class="has-popover d-flex align-items-center"><span class="d-inline-block rounded-circle mr-2 ' + package[data].class + '" style="width:15px; height:15px;"></span><span>' + package[data].title + '</span></div>';
-                        },
-                    },
+                    }
                 ],
 
                 onAddRow: function(dt, rowdata, success, error) {

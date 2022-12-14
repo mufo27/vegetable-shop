@@ -10,7 +10,8 @@
             // $i = 1;
             $emp_array = array();
             while ($row = $select->fetch(PDO::FETCH_ASSOC)) 
-            {
+            {                     
+                // $emp_array["data"][] = $i++;
                 $emp_array["data"][] = $row;
             }
 
