@@ -104,36 +104,29 @@
             // Event Lot
             var events = $("#app-eventlog");
 
-            var dataArray = [
-                {
-                    "id": 3,
-                    "phone": null,
-                    "user": "ctm5",
-                    "pass": "111",
-                    "status": 2,
-                    "pkname": "Mr",
-                    "fname": "Cus",
-                    "lname": "Tomer",
-                    "email": null,
-                    "address": null,
-                    "save_time": "2022-11-22 11:49:44"
+            var columnSet = [{
+                    title: "RowId",
+                    id: "id",
+                    data: "id",
+                    placeholderMsg: "Server Generated ID",
+                    "visible": false,
+                    "searchable": false,
+                    type: "readonly"
                 },
                 {
-                    "id": 6,
-                    "phone": "0955845863",
-                    "user": "udru",
-                    "pass": "111",
-                    "status": 2,
-                    "pkname": "นาย",
-                    "fname": "Watcharapong",
-                    "lname": "kaewphila",
-                    "email": null,
-                    "address": null,
-                    "save_time": "2022-11-22 15:42:47"
+                    title: "Username",
+                    id: "user",
+                    data: "user",
+                    type: "text"
+                },
+                {
+                    title: "Password",
+                    id: "pass",
+                    data: "pass",
+                    type: "text"
                 }
-                ];
+            ]
 
-            // Column Definitions
             // var columnSet = [{
             //         title: "RowId",
             //         id: "DT_RowId",
@@ -226,29 +219,16 @@
 
             /* start data table */
             var myTable = $('#dt-basic-example').dataTable({
-                
+
                 dom: "<'row mb-3'<'col-sm-12 col-md-6 d-flex align-items-center justify-content-start'f><'col-sm-12 col-md-6 d-flex align-items-center justify-content-end'B>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
 
                 // ajax: "../assets/dist/media/data/server-demo.json",
-                // ajax: "fetch/fetch_customer.php",
-                // data: "fetch/fetch_customer.php",
-                data: dataArray,
+                ajax: "fetch/fetch_customer.php",
 
-                columns: [
-                    { data: "id" },
-                    { data: "phone" },
-                    { data: "user" },
-                    { data: "pass" },
-                    { data: "status" },
-                    { data: "pkname" },
-                    { data: "fname" },
-                    { data: "lname" },
-                    { data: "email" },
-                    { data: "address" },
-                    { data: "save_time" },
-                ],
+                columns: columnSet,
+
                 select: 'single',
                 altEditor: true,
                 responsive: true,

@@ -11,7 +11,7 @@
             $emp_array = array();
             while ($row = $select->fetch(PDO::FETCH_ASSOC)) 
             {
-                $emp_array[] = $row;
+                $emp_array["data"][] = $row;
             }
 
             $data = $emp_array;
