@@ -90,7 +90,7 @@
             </li>
 
             <li>
-                <a href="#" title="" data-filter-tags="">
+                <a href="profile.php" title="" data-filter-tags="">
                     <i class="fal fa-user-circle"></i><span class="nav-link-text" data-i18n="">ข้อมูลส่วนตัว</span>
                 </a>
             </li>
