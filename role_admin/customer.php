@@ -24,6 +24,8 @@
     <link rel="mask-icon" href="../assets/dist/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <link rel="stylesheet" media="screen, print" href="../assets/dist/css/datagrid/datatables/datatables.bundle.css">
     <link rel="stylesheet" media="screen, print" href="../assets/dist/css/theme-demo.css">
+    <!-- sweetalert2 -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="mod-bg-1 mod-nav-link ">
@@ -104,12 +106,11 @@
             // Event Lot
             var events = $("#app-eventlog");
 
-            var columnSet = [
-                {
-                    title: "Code",
+            var columnSet = [{
+                    title: "ID",
                     id: "id",
                     data: "id",
-                    placeholderMsg: "Auto generated Code",
+                    placeholderMsg: "Auto generated ID",
                     type: "readonly"
                 },
                 {
@@ -164,22 +165,8 @@
                     id: "address",
                     data: "address",
                     type: "text"
-                },
-                {
-                    title: "วันที่บันทึก",
-                    id: "save_time",
-                    data: "save_time",
-                    type: "date"
-                },
-                {
-                    title: "Status",
-                    id: "status",
-                    data: "status",
-                    placeholderMsg: "ลูกค้า",
-                    type: "readonly"
                 }
             ]
-
 
             /* start data table */
             var myTable = $('#dt-basic-example').dataTable({
@@ -219,68 +206,138 @@
                         className: 'btn-primary btn-sm'
                     }
                 ],
-                
+
                 columnDefs: [{
-                        targets: 0,
-                        type: 'text',
-                        render: function(data, type, full, meta) {
-                            if (data >= 0) {
-                                return '<span class="text-success fw-500">CTM-' + data + '</span>';
-                            } else {
-                                return '<span class="text-danger fw-500">CTM-' + data + '</span>';
-                            }
-                        },
+                    targets: 0,
+                    type: 'text',
+                    render: function(data, type, full, meta) {
+                        if (data >= 0) {
+                            return '<span class="text-success fw-500">CTM-' + data + '</span>';
+                        } else {
+                            return '<span class="text-danger fw-500">CTM-' + data + '</span>';
+                        }
                     },
-                    {
-                        targets: 10,
-                        render: function(data, type, full, meta) {
-                            var badge = {
-                                "0": {
-                                    'title': 'Admin',
-                                    'class': 'badge-success'
-                                },
-                                "1": {
-                                    'title': 'Farmer',
-                                    'class': 'badge-warning'
-                                },
-                                "2": {
-                                    'title': 'Customer',
-                                    'class': 'badge-danger'
-                                },
-                                "3": {
-                                    'title': 'Error',
-                                    'class': 'bg-danger-100 text-white'
-                                }
-                            };
-                            if (typeof badge[data] === 'undefined') {
-                                return data;
-                            }
-                            return '<span class="badge ' + badge[data].class + ' badge-pill">' + badge[data].title + '</span>';
-                        },
-                    }
-                ],
+                }],
 
                 onAddRow: function(dt, rowdata, success, error) {
-                    console.log("Missing AJAX configuration for INSERT");
-                    success(rowdata);
 
-                    // demo only below:
-                    events.prepend('<p class="text-success fw-500">' + JSON.stringify(rowdata, null, 4) + '</p>');
+                    $.ajax({
+
+                        url: 'add/add_customer.php',
+                        type: 'post',
+                        dataType: 'json',
+                        data: rowdata,
+                        success: function(response) {
+
+                            if (response.status == 200) {
+
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: 'เพิ่มข้อมูล สำเร็จเรียบร้อย...!!'
+                                }).then(function() {
+                                    window.location.reload();
+                                });
+
+                                success(rowdata);
+
+                                $('#modal-id').modal('hide');
+
+                            } else if (response.status == 500) {
+
+                                success(rowdata);
+
+                                $('#modal-id').modal('hide');
+
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'ข้อมูลซ้ำ...!!'
+                                }).then(function() {
+                                    window.location.reload();
+                                });
+
+                            } else {
+
+                                success(rowdata);
+
+                                $('#modal-id').modal('hide');
+
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'เพิ่มข้อมูล ไม่สำเร็จ...!!'
+                                }).then(function() {
+                                    window.location.reload();
+                                });
+
+                            }
+
+                        },
+                        error: function(error) {
+                            console.log("bad", error);
+                        }
+                    });
+
                 },
                 onEditRow: function(dt, rowdata, success, error) {
-                    console.log("Missing AJAX configuration for UPDATE");
-                    success(rowdata);
+                    $.ajax({
 
-                    // demo only below:
-                    events.prepend('<p class="text-info fw-500">' + JSON.stringify(rowdata, null, 4) + '</p>');
+                        url: 'del/del_customer.php',
+                        type: 'post',
+                        dataType: "json",
+                        data: rowdata,
+                        success: success,
+                        error: error
+                    });
                 },
                 onDeleteRow: function(dt, rowdata, success, error) {
-                    console.log("Missing AJAX configuration for DELETE");
-                    success(rowdata);
 
-                    // demo only below:
-                    events.prepend('<p class="text-danger fw-500">' + JSON.stringify(rowdata, null, 4) + '</p>');
+                    $.ajax({
+
+                        url: 'del/del_customer.php',
+                        type: 'post',
+                        dataType: "json",
+                        data: rowdata,
+                        success: function(response) {
+
+                            if (response.status == 200) {
+
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: 'ลบข้อมูล สำเร็จเรียบร้อย...!!'
+                                }).then(function() {
+                                    window.location.reload();
+                                });
+
+                                success(rowdata);
+
+                                $('#modal-id').modal('hide');
+
+                            } else {
+                                success(rowdata);
+
+                                $('#modal-id').modal('hide');
+
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'ลบข้อมูล ไม่สำเร็จ...!!'
+                                }).then(function() {
+                                    window.location.reload();
+                                });
+
+                            }
+
+                        },
+                        error: function(error) {
+                            console.log("bad", error);
+                        }
+                    });
                 },
+
+
             });
 
         });
