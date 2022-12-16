@@ -1,10 +1,12 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <title>
-        หน้าแรก - ระบบจัดการสินค้าออนไลน์
+        ข้อมูลส่วนตัว - ระบบจัดการสินค้าออนไลน์
     </title>
     <meta name="description" content="Profile">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -45,7 +47,7 @@
                 <!-- BEGIN Page Content -->
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">หน้าแรก</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">ข้อมูลส่วนตัว</a></li>
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
                     </ol>
                     <div class="row">
@@ -75,13 +77,8 @@
                                                         <input type="text" class="form-control" id="validationDefault02" placeholder="Last name" value="Otto" required="">
                                                     </div>
                                                     <div class="col-md-4 mb-3">
-                                                        <label class="form-label" for="validationDefaultUsername">Username</label>
-                                                        <div class="input-group">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text" id="inputGroupPrepend4">@</span>
-                                                            </div>
-                                                            <input type="text" class="form-control" id="validationDefaultUsername" placeholder="Username" aria-describedby="inputGroupPrepend4" required="">
-                                                        </div>
+                                                        <label class="form-label" for="validationDefault02">Username</label>
+                                                        <input type="text" class="form-control" id="validationDefault02" placeholder="Username" value="" required="">
                                                     </div>
                                                 </div>
                                                 <div class="form-row mb-2">
