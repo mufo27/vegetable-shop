@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('../database/condb.inc.php');
+require_once('../database/condb.inc.php');
 ?>
 <div id="panel-1" class="panel">
     <div class="panel-container show">
@@ -15,6 +15,7 @@ include('../database/condb.inc.php');
                         <img src="../upload/<?= $row['img']; ?>" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title"><?= $row['name']; ?></h5>
+                            <!-- <a href="?product=<?= $row['id']; ?>&c_name=<?= $row['name']; ?>" class="btn btn-primary waves-effect waves-themed">เลือก</a> -->
                             <a href="?product=<?= $row['id']; ?>&c_name=<?= $row['name']; ?>" class="btn btn-primary waves-effect waves-themed">เลือก</a>
                         </div>
                     </div>
