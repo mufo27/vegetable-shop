@@ -61,7 +61,6 @@ $select->execute();
                         <li class="breadcrumb-item"><?= $c_name; ?></li>
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date">Sunday, December 18, 2022</span></li>
                     </ol>
-
                     <div class="panel-container show">
                         <div class="panel-content">
                             <div class="row">
