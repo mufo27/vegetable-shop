@@ -58,6 +58,7 @@ $select->execute();
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0);">หมวดหมู่</a></li>
+                        <li class="breadcrumb-item"><?= $c_name; ?></li>
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date">Sunday, December 18, 2022</span></li>
                     </ol>
 
