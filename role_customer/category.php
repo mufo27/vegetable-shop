@@ -1,37 +1,7 @@
 <?php
+session_start();
 require_once('../database/condb.inc.php');
-
-$category_id = $_GET['c_id'];
-$c_name = $_GET['c_name'];
-
-$select = $conn->prepare("SELECT * FROM product WHERE category_id=:category_id");
-$select->bindParam(':category_id', $category_id);
-$select->execute();
-
 ?>
-
-<!-- <div id="panel-1" class="panel">
-    <div class="panel-container show">
-        <div class="panel-content">
-            <div class="row">
-                <?php
-                while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
-                ?>
-                    <div class="card border m-auto m-lg-0" style="max-width: 18rem;">
-                        <img src="../upload/<?= $row['img']; ?>" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title"><?= $row['name']; ?></h5>
-                            <p class="card-text text-primary">ราคารับซื้อ : <?= $row['purchase_price']; ?> บาท</p>
-                            <p class="card-text text-success">ราคาขาย : <?= $row['selling_price']; ?> บาท</p>
-                            <a href="#" class="btn btn-primary waves-effect waves-themed">เลือก</a>
-                        </div>
-                    </div>
-                    <?= $row['name']; ?>
-                <?php } ?>
-            </div>
-        </div>
-    </div>
-</div> -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -83,7 +53,42 @@ $select->execute();
                         <li class="breadcrumb-item"><a href="javascript:void(0);">หมวดหมู่</a></li>
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date">Sunday, December 18, 2022</span></li>
                     </ol>
-
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <!-- Kitchen sink example -->
+                            <div id="panel-1" class="panel">
+                                <div class="panel-hdr">
+                                    <h2>
+                                        หมวดหมู่
+                                    </h2>
+                                    <div class="panel-toolbar">
+                                        <button class="btn btn-panel waves-effect waves-themed" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                                        <button class="btn btn-panel waves-effect waves-themed" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                                        <button class="btn btn-panel waves-effect waves-themed" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>
+                                    </div>
+                                </div>
+                                <div class="panel-container show">
+                                    <div class="panel-content">
+                                        <div class="row">
+                                            <?php
+                                            $select = $conn->prepare("SELECT * FROM category");
+                                            $select->execute();
+                                            while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+                                            ?>
+                                                <div class="card border m-auto m-lg-0" style="max-width: 18rem;">
+                                                    <img src="../upload/<?= $row['img']; ?>" class="card-img-top">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title"><?= $row['name']; ?></h5>
+                                                        <a href="product.php?c_id=<?= $row['id']; ?>&c_name=<?= $row['name']; ?>" class="btn btn-primary waves-effect waves-themed">เลือก</a>
+                                                    </div>
+                                                </div>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </main>
 
                 <?php include('include/footer.inc.php'); ?>

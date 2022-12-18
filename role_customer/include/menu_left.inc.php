@@ -44,6 +44,12 @@
             </li>
 
             <li>
+                <a href="category.php" title="" data-filter-tags="">
+                    <i class="fal fa-tag"></i><span class="nav-link-text" data-i18n="">หมวดหมู่</span>
+                </a>
+            </li>
+
+            <li>
                 <a href="#" title="" data-filter-tags="">
                     <i class="fal fa-shopping-basket"></i><span class="nav-link-text" data-i18n="">ตะกร้าสินค้า</span>
                 </a>

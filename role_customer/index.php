@@ -54,6 +54,16 @@
                         </h1>
                     </div>
                     <div class="row">
+                    <div class="col-sm-6 col-xl-3">
+                            <div class="p-3 bg-info-200 rounded overflow-hidden position-relative text-white mb-g">
+                                <div class="">
+                                    <a href="category.php" style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">
+                                        หมวดหมู่
+                                    </a>
+                                </div>
+                                <i class="fal fa-tag position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n4" style="font-size: 6rem;"></i>
+                            </div>
+                        </div>
                         <div class="col-sm-6 col-xl-3">
                             <div class="p-3 bg-primary-300 rounded overflow-hidden position-relative text-white mb-g">
                                 <div class="">
@@ -95,7 +105,6 @@
                             </div>
                         </div>
                     </div>
-                    <?php include('./type_product.php') ?>
                 </main>
 
                 <?php include('include/footer.inc.php'); ?>
