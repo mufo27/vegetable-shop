@@ -24,6 +24,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/dist/img/favicon/favicon-32x32.png">
     <link rel="mask-icon" href="../assets/dist/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <link rel="stylesheet" media="screen, print" href="../assets/dist/css/datagrid/datatables/datatables.bundle.css">
+    <link rel="stylesheet" href="include/style.css">
 
 </head>
 
@@ -77,7 +78,8 @@
                             <div class="p-3 bg-primary-300 rounded overflow-hidden position-relative text-white mb-g">
                                 <div class="">
                                     <h3 class="display-4 d-block l-h-n m-0 fw-500">
-                                        หมวดหมู่ 3 รายการ
+                                         3 รายการ
+                                    <small class="m-0 l-h-n">หมวดหมู่</small>
                                     </h3>
                                 </div>
                                 <i class="fal fa-user position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n1" style="font-size:6rem"></i>
@@ -87,7 +89,8 @@
                             <div class="p-3 bg-warning-400 rounded overflow-hidden position-relative text-white mb-g">
                                 <div class="">
                                     <h3 class="display-4 d-block l-h-n m-0 fw-500">
-                                        สินค้า 30 รายการ
+                                         30 รายการ
+                                    <small class="m-0 l-h-n">สินค้า</small>
                                     </h3>
                                 </div>
                                 <i class="fal fa-gem position-absolute pos-right pos-bottom opacity-15  mb-n1 mr-n4" style="font-size: 6rem;"></i>
@@ -97,7 +100,8 @@
                             <div class="p-3 bg-success-200 rounded overflow-hidden position-relative text-white mb-g">
                                 <div class="">
                                     <h3 class="display-4 d-block l-h-n m-0 fw-500">
-                                        สั่งซื้อ 55 รายการ
+                                         55 รายการ
+                                    <small class="m-0 l-h-n">สั่งซื้อ</small>
                                     </h3>
                                 </div>
                                 <i class="fal fa-lightbulb position-absolute pos-right pos-bottom opacity-15 mb-n5 mr-n6" style="font-size: 8rem;"></i>
@@ -107,7 +111,8 @@
                             <div class="p-3 bg-info-200 rounded overflow-hidden position-relative text-white mb-g">
                                 <div class="">
                                     <h3 class="display-4 d-block l-h-n m-0 fw-500">
-                                        ลูกค้า 20 คน
+                                         20 คน
+                                    <small class="m-0 l-h-n">ลูกค้า</small>
                                     </h3>
                                 </div>
                                 <i class="fal fa-globe position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n4" style="font-size: 6rem;"></i>

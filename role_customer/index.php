@@ -54,7 +54,7 @@
                         </h1>
                     </div>
                     <div class="row">
-                    <div class="col-sm-6 col-xl-3">
+                        <div class="col-sm-6 col-xl-3">
                             <div class="p-3 bg-info-200 rounded overflow-hidden position-relative text-white mb-g">
                                 <div class="">
                                     <a href="category.php" style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">

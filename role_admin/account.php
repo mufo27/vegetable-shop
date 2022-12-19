@@ -48,6 +48,8 @@ $select->execute();
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/dist/img/favicon/favicon-32x32.png">
     <link rel="mask-icon" href="../assets/dist/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <link rel="stylesheet" media="screen, print" href="../assets/dist/css/datagrid/datatables/datatables.bundle.css">
+    <link rel="stylesheet" href="include/style.css">
+
 </head>
 
 <body class="mod-bg-1 mod-nav-link ">
@@ -165,7 +167,7 @@ $select->execute();
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                                                    <button type="submit" name="btn_add" class="btn btn-success">บันทึก</button>
+                                                    <button type="submit" name="btn_add" class="btn btn-success">ยันยันบันทึกข้อมูล</button>
                                                 </div>
                                             </form>
 
@@ -238,13 +240,14 @@ $select->execute();
                                                                         </div>
                                                                         <div class="form-group row">
                                                                             <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">คำนำหน้า:</label>
-                                                                            <div class="col-lg-9"><select class="custom-select form-control" id="pkname" name="pkname" required>
+                                                                            <div class="col-lg-9">
+                                                                                <select class="custom-select form-control" id="pkname" name="pkname" required>
                                                                                     <option value="<?= $row['pkname']; ?>">-- <?= $row['pkname']; ?> -</option>
                                                                                     <option value="นาย">นาย</option>
                                                                                     <option value="นาง">นาง</option>
                                                                                     <option value="นางสาว">นางสาว</option>
-                                                                                </select></div>
-
+                                                                                </select>
+                                                                            </div>
                                                                         </div>
                                                                         <div class="form-group row">
                                                                             <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">ชื่อจริง:</label>
@@ -300,7 +303,7 @@ $select->execute();
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                                                                        <button type="submit" name="btn_edit" class="btn btn-warning">อัพเดท</button>
+                                                                        <button type="submit" name="btn_edit" class="btn btn-warning">ยันยันเปลี่ยนแปลงข้อมูล</button>
                                                                     </div>
                                                                 </form>
 
@@ -339,7 +342,7 @@ $select->execute();
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                                                                        <button type="submit" name="btn_del" value="<?= $row['id']; ?>" class="btn btn-danger"><i class="fal fa-times"></i> ลบ</button>
+                                                                        <button type="submit" name="btn_del" value="<?= $row['id']; ?>" class="btn btn-danger"><i class="fal fa-times"></i> ยันยันลบข้อมูล</button>
                                                                     </div>
                                                                 </form>
 
