@@ -1,3 +1,5 @@
+<?php require_once('active.inc.php'); ?>
+
 <aside class="page-sidebar">
     <div class="page-logo">
         <a href="#" class="page-logo-link press-scale-down d-flex align-items-center position-relative" data-toggle="modal" data-target="#modal-shortcut">
@@ -37,60 +39,61 @@
 
         <ul id="js-nav-menu" class="nav-menu">
 
-            <li class="">
-                <a href="index.php" title="" data-filter-tags="">
+            <li class="<?= $main; ?>">
+                <a href="index.php?main" title="" data-filter-tags="">
                     <i class="fal fa-home"></i><span class="nav-link-text" data-i18n="">หน้าแรก</span>
                 </a>
             </li>
 
-            <li class="active">
-                <a href="dashboard.php" title="" data-filter-tags="">
+            <li class="<?= $dashboard; ?>">
+                <a href="dashboard.php?dashboard" title="" data-filter-tags="">
                     <i class="fal fa-analytics"></i><span class="nav-link-text" data-i18n="">Dashboard</span>
                 </a>
             </li>
 
-            <li>
+            <li class="<?= $account; ?>">
                 <a href="#" title="Theme Settings" data-filter-tags="theme settings">
                     <i class="fal fa-users"></i>
                     <span class="nav-link-text" data-i18n="nav.theme_settings">บัญชีผู้ใช้งาน</span>
                 </a>
                 <ul>
-                    <li>
-                        <a href="farmer.php" title="" data-filter-tags="">
+                    <li class="<?= $status0; ?>">
+                        <a href="account.php?account&status=0" title="" data-filter-tags="">
                             <span class="nav-link-text" data-i18n="">ผู้ดูแลระบบ (Admin)</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="farmer.php" title="" data-filter-tags="">
-                            <span class="nav-link-text" data-i18n="">พนักงาน (Employee)</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="farmer.php" title="" data-filter-tags="">
+
+                    <li class="<?= $status1; ?>">
+                        <a href="account.php?account&status=1" title="" data-filter-tags="">
                             <span class="nav-link-text" data-i18n="">เกษตรกร (Farmer)</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="customer.php" title="" data-filter-tags="">
+                    <li class="<?= $status2; ?>">
+                        <a href="account.php?account&status=2" title="" data-filter-tags="">
                             <span class="nav-link-text" data-i18n="">ลูกค้า (Customer)</span>
+                        </a>
+                    </li>
+                    <li class="<?= $status3; ?>">
+                        <a href="account.php?account&status=3" title="" data-filter-tags="">
+                            <span class="nav-link-text" data-i18n="">พนักงาน (Employee)</span>
                         </a>
                     </li>
                 </ul>
             </li>
 
-            <li>
+            <li class="<?= $manage; ?>">
                 <a href="#" title="Theme Settings" data-filter-tags="theme settings">
                     <i class="fal fa-cog"></i>
                     <span class="nav-link-text" data-i18n="nav.theme_settings">จัดการข้อมูล</span>
                 </a>
                 <ul>
-                    <li>
-                        <a href="category.php" title="" data-filter-tags="">
+                    <li class="<?= $category; ?>">
+                        <a href="category.php?category" title="" data-filter-tags="">
                             <span class="nav-link-text" data-i18n="">หมวดหมู่ (Category)</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="product.php" title="" data-filter-tags="">
+                    <li class="<?= $product; ?>">
+                        <a href="product.php?product" title="" data-filter-tags="">
                             <span class="nav-link-text" data-i18n="">สินค้า (Product)</span>
                         </a>
                     </li>
@@ -99,20 +102,20 @@
 
 
 
-            <li class="">
-                <a href="order.php" title="" data-filter-tags="">
+            <li class="<?= $order; ?>">
+                <a href="order.php?order" title="" data-filter-tags="">
                     <i class="fal fa-clipboard-list-check"></i><span class="nav-link-text" data-i18n="">รายการสั่งซื้อสินค้า</span>
                 </a>
             </li>
 
-            <li class="">
-                <a href="payment.php" title="" data-filter-tags="">
+            <li class="<?= $payment; ?>">
+                <a href="payment.php?payment" title="" data-filter-tags="">
                     <i class="fal fa-money-check-alt"></i><span class="nav-link-text" data-i18n="">การชำระเงิน</span>
                 </a>
             </li>
 
-            <li class="">
-                <a href="send.php" title="" data-filter-tags="">
+            <li class="<?= $send; ?>">
+                <a href="send.php?send" title="" data-filter-tags="">
                     <i class="fal fa-money-check-alt"></i><span class="nav-link-text" data-i18n="">การจัดส่งสินค้า</span>
                 </a>
             </li>
