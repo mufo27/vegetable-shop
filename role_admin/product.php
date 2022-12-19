@@ -75,7 +75,7 @@ $select->execute();
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
 
-                                            <form action="action/category_db.php" method="post" enctype="multipart/form-data">
+                                            <form action="action/product_db.php" method="post" enctype="multipart/form-data">
 
                                                 <div class="modal-header">
                                                     <h4 class="modal-title">
@@ -92,17 +92,17 @@ $select->execute();
                                                             <select class="custom-select form-control" name="category_id" required>
                                                                 <option value="">-- เลือก --</option>
                                                                 <?php
-                                                                $select_t = $conn->prepare("SELECT * FROM category ORDER BY id ASC");
-                                                                $select_t->execute();
-                                                                while ($row_t = $select_t->fetch(PDO::FETCH_ASSOC)) {
+                                                                $select_t1 = $conn->prepare("SELECT * FROM category ORDER BY id ASC");
+                                                                $select_t1->execute();
+                                                                while ($row_t1 = $select_t1->fetch(PDO::FETCH_ASSOC)) {
                                                                 ?>
-                                                                    <option value="<?= $row_t['id']; ?>"> <?= $row_t['name']; ?> </option>
+                                                                    <option value="<?= $row_t1['id']; ?>"> <?= $row_t1['name']; ?> </option>
                                                                 <?php } ?>
                                                             </select>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">ID:</label>
+                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">Product ID:</label>
                                                         <div class="col-lg-9">
                                                             <input type="text" id="id" name="id" class="form-control" value="" placeholder="ระบบสร้างอัตโนมัติ" readonly="">
                                                         </div>
@@ -126,18 +126,6 @@ $select->execute();
                                                             <input type="text" id="unit" name="unit" class="form-control" value="" required>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group row">
-                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">รูปภาพ:</label>
-                                                        <div class="col-lg-9">
-                                                            <input type="file" id="chooseFile" name="img[]" multiple class="form-control" value="" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for=""></label>
-                                                        <div class="col-lg-9">
-                                                            <div class="imgGallery"></div>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
@@ -159,10 +147,9 @@ $select->execute();
                                                     <th style="width:10%; text-align: center; vertical-align: middle;">No.</th>
                                                     <th style="width:15%; text-align: center; vertical-align: middle;">ประเภท</th>
                                                     <th style="width:20%; text-align: center; vertical-align: middle;">สินค้า</th>
-                                                    <th style="width:10%; text-align: center; vertical-align: middle;">จำนวนสินค้า</th>
+                                                    <th style="width:10%; text-align: center; vertical-align: middle;">จำนวน</th>
                                                     <th style="width:10%; text-align: center; vertical-align: middle;">หน่วยนับ</th>
-                                                    <th style="width:15%; text-align: center; vertical-align: middle;">ประกาศรับซื้อ</th>
-                                                    <th style="width:10%; text-align: center; vertical-align: middle;">ประกาศ</th>
+                                                    <th style="width:10%; text-align: center; vertical-align: middle;">รูปภาพ</th>
                                                     <th style="width:10%; text-align: center; vertical-align: middle;">จัดการ</th>
                                                 </tr>
                                             </thead>
@@ -178,8 +165,7 @@ $select->execute();
                                                         <td style="text-align: center; vertical-align: middle;"><?= $row['qty']; ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?= $row['unit']; ?></td>
                                                         <td style="text-align: center; vertical-align: middle;">
-                                                            <button type="button" class="btn btn-warning btn-sm btn-icon waves-effect waves-themed" data-toggle="modal" data-target="#edit-modal<?= $row['id']; ?>"><i class="fal fa-edit"></i></button>
-                                                            <button type="button" class="btn btn-danger btn-sm btn-icon waves-effect waves-themed" data-toggle="modal" data-target="#del-modal<?= $row['id']; ?>"><i class="fal fa-times"></i></button>
+                                                            <a href="product_img.php?id=<?= $row['id']; ?>" class="btn btn-info btn-sm waves-effect waves-themed"><span class="fal fa-upload mr-1"></span>อัพโหลด</a>
                                                         </td>
                                                         <td style="text-align: center; vertical-align: middle;">
                                                             <button type="button" class="btn btn-warning btn-sm btn-icon waves-effect waves-themed" data-toggle="modal" data-target="#edit-modal<?= $row['id']; ?>"><i class="fal fa-edit"></i></button>
@@ -192,7 +178,7 @@ $select->execute();
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
 
-                                                                <form action="action/category_db.php" method="post" enctype="multipart/form-data">
+                                                                <form action="action/product_db.php" method="post" enctype="multipart/form-data">
 
 
 
@@ -206,10 +192,26 @@ $select->execute();
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">ID:</label>
+                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">หมวดหมู่:</label>
                                                                             <div class="col-lg-9">
-                                                                                <input type="text" id="id" name="id" class="form-control" value="<?= $row['id']; ?>" readonly="">
+                                                                                <select class="custom-select form-control" name="category_id" required>
+                                                                                    <option value="<?= $row['category_id']; ?>">-- <?= $row['category_name']; ?> --</option>
+                                                                                    <?php
+                                                                                    $select_t2 = $conn->prepare("SELECT * FROM category ORDER BY id ASC");
+                                                                                    $select_t2->execute();
+                                                                                    while ($row_t2 = $select_t2->fetch(PDO::FETCH_ASSOC)) {
+                                                                                    ?>
+                                                                                        <option value="<?= $row_t2['id']; ?>"> <?= $row_t2['name']; ?> </option>
+                                                                                    <?php } ?>
+                                                                                </select>
                                                                             </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">Product ID:</label>
+                                                                            <div class="col-lg-9">
+                                                                                <input type="text" id="id" name="id" class="form-control" value="<?= $row['id']; ?>" placeholder="ระบบสร้างอัตโนมัติ" readonly="">
+                                                                            </div>
+
                                                                         </div>
                                                                         <div class="form-group row">
                                                                             <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">สินค้า:</label>
@@ -218,22 +220,15 @@ $select->execute();
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">รูปภาพ:</label>
+                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">จำนวนสินค้า:</label>
                                                                             <div class="col-lg-9">
-                                                                                <img src="upload/<?= $row['img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px">
+                                                                                <input type="number" id="qty" name="qty" class="form-control" value="<?= $row['qty']; ?>" min="0" max="10000" required>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">เปลี่ยนใหม่:</label>
+                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">หน่วยนับ:</label>
                                                                             <div class="col-lg-9">
-                                                                                <input type="file" id="chooseFile2" name="img" class="form-control" value="" required>
-                                                                                <input type="hidden" id="img2" name="img2" class="form-control" value="<?= $row['img']; ?>">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for=""></label>
-                                                                            <div class="col-lg-9">
-                                                                                <div class="imgGallery2"></div>
+                                                                                <input type="text" id="unit" name="unit" class="form-control" value="<?= $row['unit']; ?>" required>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -251,7 +246,7 @@ $select->execute();
                                                     <div class="modal fade" id="del-modal<?= $row['id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
-                                                                <form action="action/category_db.php" method="post" enctype="multipart/form-data">
+                                                                <form action="action/product_db.php" method="post" enctype="multipart/form-data">
 
                                                                     <div class="modal-header">
                                                                         <h4 class="modal-title">
@@ -263,9 +258,11 @@ $select->execute();
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <div class="row">
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">id:&nbsp;</label> <?= $row['id']; ?></div>
+                                                                            <div class="col-12 mb-2"><label class="form-label" for="">Product ID:&nbsp;</label> <?= $row['id']; ?></div>
                                                                             <div class="col-12 mb-2"><label class="form-label" for="">สินค้า:&nbsp;</label> <?= $row['name']; ?></div>
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">รูปภาพ:&nbsp;</label> <img src="upload/<?= $row['img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px"></div>
+                                                                            <div class="col-12 mb-2"><label class="form-label" for="">จำนวนสินค้า:&nbsp;</label> <?= $row['qty']; ?></div>
+                                                                            <div class="col-12 mb-2"><label class="form-label" for="">หน่วย:&nbsp;</label> <?= $row['unit']; ?></div>
+                                                                            
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">

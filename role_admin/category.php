@@ -87,7 +87,7 @@ $select->execute();
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="form-group row">
-                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">ID:</label>
+                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">Category ID:</label>
                                                         <div class="col-lg-9">
                                                             <input type="text" id="id" name="id" class="form-control" value="" placeholder="ระบบสร้างอัตโนมัติ" readonly="">
                                                         </div>
@@ -169,7 +169,7 @@ $select->execute();
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">ID:</label>
+                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">Category ID:</label>
                                                                             <div class="col-lg-9">
                                                                                 <input type="text" id="id" name="id" class="form-control" value="<?= $row['id']; ?>" readonly="">
                                                                             </div>
@@ -226,7 +226,7 @@ $select->execute();
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <div class="row">
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">id:&nbsp;</label> <?= $row['id']; ?></div>
+                                                                            <div class="col-12 mb-2"><label class="form-label" for="">Category ID:&nbsp;</label> <?= $row['id']; ?></div>
                                                                             <div class="col-12 mb-2"><label class="form-label" for="">หมวดหมู่:&nbsp;</label> <?= $row['name']; ?></div>
                                                                             <div class="col-12 mb-2"><label class="form-label" for="">รูปภาพ:&nbsp;</label> <img src="upload/<?= $row['img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px"></div>
                                                                         </div>
