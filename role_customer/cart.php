@@ -1,3 +1,42 @@
+<?php
+session_start();
+require_once '../database/con_db.php';
+
+$id = $_SESSION['id'];
+
+$select = $conn->prepare("SELECT * FROM accuont WHERE id = ?");
+$select->bindParam(1, $id);
+$select->execute();
+$row = $select->fetch(PDO::FETCH_ASSOC);
+
+
+$p_id = $_POST['cart'];
+$act = $_POST['act'];
+$check_number = $_POST['check_number'];
+
+for ($k = 1; $k <= $check_number; $k++) {
+    if ($act == 'add' && !empty($p_id)) {
+
+        if (isset($_SESSION['cart'][$p_id])) {
+
+            $_SESSION['cart'][$p_id]++;
+        } else {
+
+            $_SESSION['cart'][$p_id] = 1;
+        }
+    }
+    header("location: cart.php");
+    exit;
+}
+
+
+if ($act == 'remove' && !empty($p_id)) {
+    unset($_SESSION['cart'][$p_id]);
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

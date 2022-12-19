@@ -83,7 +83,11 @@ $select->execute();
                                     <div class="modal fade" id="edit-modal<?= $row['id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
-                                                <form action="action/category_db.php" method="post" enctype="multipart/form-data">
+                                                <form action="cart.php" method="post" enctype="multipart/form-data">
+
+                                                    <input type="hidden" name="cart" value="<?= $row['id']; ?>">
+                                                    <input type="hidden" name="act" value="add">
+
                                                     <div class="modal-header">
                                                         <h4 class="modal-title">
                                                             แก้ไขข้อมูลสินค้า
@@ -112,15 +116,9 @@ $select->execute();
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
-                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">เปลี่ยนใหม่:</label>
+                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">จำนวนสินค้า:</label>
                                                             <div class="col-lg-9">
-                                                                <input type="file" id="chooseFile2" name="img" class="form-control" value="" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for=""></label>
-                                                            <div class="col-lg-9">
-                                                                <div class="imgGallery2"></div>
+                                                                <input type="number" name="number" class="form-control" min="1" value="1" required>
                                                             </div>
                                                         </div>
                                                     </div>
