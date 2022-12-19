@@ -90,7 +90,7 @@ $select->execute();
 
                                                     <div class="modal-header">
                                                         <h4 class="modal-title">
-                                                            แก้ไขข้อมูลสินค้า
+                                                            <?= $row['name']; ?>
                                                         </h4>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true"><i class="fal fa-times"></i></span>
@@ -98,25 +98,25 @@ $select->execute();
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="form-group row">
-                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">หมวดหมู่:</label>
+                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">หมวดหมู่ :</label>
                                                             <div class="col-lg-9">
-                                                                <input type="text" id="id" name="id" class="form-control" value="<?= $row['category_name']; ?>" readonly>
+                                                                <input type="text" class="form-control" value="<?= $row['category_name']; ?>" readonly>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
-                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">สินค้า:</label>
+                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">สินค้า :</label>
                                                             <div class="col-lg-9">
-                                                                <input type="text" id="name" name="name" class="form-control" value="<?= $row['name']; ?>" readonly>
+                                                                <input type="text"  class="form-control" value="<?= $row['name']; ?>" readonly>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
-                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">รูปภาพ:</label>
+                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">รูปภาพ :</label>
                                                             <div class="col-lg-9">
                                                                 <img src="../upload/<?= $row['img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px">
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
-                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">จำนวนสินค้า:</label>
+                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">จำนวนสินค้า :</label>
                                                             <div class="col-lg-9">
                                                                 <input type="number" name="number" class="form-control" min="1" value="1" required>
                                                             </div>
@@ -124,7 +124,7 @@ $select->execute();
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                                                        <button type="submit" name="btn_edit" class="btn btn-warning">ยันยันเปลี่ยนแปลงข้อมูล</button>
+                                                        <button type="submit" name="btn_edit" class="btn btn-warning">หยิบใส่ตะกร้า</button>
                                                     </div>
                                                 </form>
 
