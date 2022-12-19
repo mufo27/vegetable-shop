@@ -1,8 +1,3 @@
-<?php
-session_start();
-require_once('../database/condb.inc.php');
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,39 +46,57 @@ require_once('../database/condb.inc.php');
                 <!-- BEGIN Page Content -->
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">หมวดหมู่</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">ตะกร้าสินค้า</a></li>
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date">Sunday, December 18, 2022</span></li>
                     </ol>
+
                     <div class="row">
-                        <div class="col-xl-6">
+                        <div class="col-xl-12">
                             <div id="panel-1" class="panel">
                                 <div class="panel-hdr">
                                     <h2>
-                                        หมวดหมู่
+                                        แสดงรายการตะกร้าสินค้า
                                     </h2>
                                 </div>
+
                                 <div class="panel-container show">
                                     <div class="panel-content">
-                                        <div class="row">
-                                            <?php
-                                            $select = $conn->prepare("SELECT * FROM category");
-                                            $select->execute();
-                                            while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
-                                            ?>
-                                                <div class="card border m-auto m-lg-0" style="max-width: 18rem;">
-                                                    <img src="../upload/<?= $row['img']; ?>" class="card-img-top">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title"><?= $row['name']; ?></h5>
-                                                        <a href="product.php?c_id=<?= $row['id']; ?>&c_name=<?= $row['name']; ?>" class="btn btn-primary waves-effect waves-themed">เลือก</a>
-                                                    </div>
-                                                </div>
-                                            <?php } ?>
-                                        </div>
+                                        <!-- datatable start -->
+                                        <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
+                                            <thead class="bg-dark text-white">
+                                                <tr>
+                                                    <th style="width:10%; text-align: center; vertical-align: middle;">No.</th>
+                                                    <th style="width:40%; text-align: center; vertical-align: middle;">รูปภาพ</th>
+                                                    <th style="width:30%; text-align: center; vertical-align: middle;">สินค้า</th>
+                                                    <th style="width:30%; text-align: center; vertical-align: middle;">จำนวนสินค้า</th>
+                                                    <th style="width:30%; text-align: center; vertical-align: middle;">ราคา</th>
+                                                    <th style="width:20%; text-align: center; vertical-align: middle;">จัดการ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $i = 1;
+                                                while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+                                                ?>
+                                                    <tr>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $i++; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['name']; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><img src="../upload/<?= $row['img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px"></td>
+                                                        <td style="text-align: center; vertical-align: middle;">
+                                                            <button type="button" class="btn btn-warning btn-sm btn-icon waves-effect waves-themed" data-toggle="modal" data-target="#edit-modal<?= $row['id']; ?>"><i class="fal fa-edit"></i></button>
+                                                            <button type="button" class="btn btn-danger btn-sm btn-icon waves-effect waves-themed" data-toggle="modal" data-target="#del-modal<?= $row['id']; ?>"><i class="fal fa-times"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                        <!-- datatable end -->
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </main>
 
                 <?php include('include/footer.inc.php'); ?>

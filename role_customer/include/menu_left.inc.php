@@ -50,7 +50,7 @@
             </li>
 
             <li>
-                <a href="#" title="" data-filter-tags="">
+                <a href="cart.php" title="" data-filter-tags="">
                     <i class="fal fa-shopping-basket"></i><span class="nav-link-text" data-i18n="">ตะกร้าสินค้า</span>
                 </a>
             </li>

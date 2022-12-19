@@ -27,6 +27,7 @@
     <!-- Optional: page related CSS-->
     <link rel="stylesheet" media="screen, print" href="../assets/dist/css/fa-brands.css">
     <link rel="stylesheet" media="screen, print" href="../assets/dist/css/fa-solid.css">
+    <link rel="stylesheet" href="./include/style.css">
 
 </head>
 

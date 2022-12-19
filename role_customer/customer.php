@@ -24,6 +24,8 @@
     <link rel="mask-icon" href="../assets/dist/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <link rel="stylesheet" media="screen, print" href="../assets/dist/css/datagrid/datatables/datatables.bundle.css">
     <link rel="stylesheet" media="screen, print" href="../assets/dist/css/theme-demo.css">
+    <link rel="stylesheet" href="./include/style.css">
+
 </head>
 
 <body class="mod-bg-1 mod-nav-link ">

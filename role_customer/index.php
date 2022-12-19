@@ -25,6 +25,7 @@
     <!-- Optional: page related CSS-->
     <link rel="stylesheet" media="screen, print" href="../assets/dist/css/fa-brands.css">
     <link rel="stylesheet" media="screen, print" href="../assets/dist/css/fa-solid.css">
+    <link rel="stylesheet" href="./include/style.css">
 
 </head>
 
@@ -67,7 +68,7 @@
                         <div class="col-sm-6 col-xl-3">
                             <div class="p-3 bg-primary-300 rounded overflow-hidden position-relative text-white mb-g">
                                 <div class="">
-                                    <a href="#" style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">
+                                    <a href="cart.php" style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">
                                         ตะกร้าสินค้า
                                     </a>
                                 </div>

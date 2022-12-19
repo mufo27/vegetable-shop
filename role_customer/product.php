@@ -4,8 +4,8 @@ require_once('../database/condb.inc.php');
 $category_id = $_GET['c_id'];
 $c_name = $_GET['c_name'];
 
-$select = $conn->prepare("SELECT * FROM product WHERE category_id=:category_id");
-$select->bindParam(':category_id', $category_id);
+$select = $conn->prepare("SELECT p.* , c.name AS category_name FROM product p INNER JOIN category c ON p.category_id = c.id WHERE p.category_id=?");
+$select->bindParam(1, $category_id);
 $select->execute();
 
 ?>
@@ -37,6 +37,7 @@ $select->execute();
     <!-- Optional: page related CSS-->
     <link rel="stylesheet" media="screen, print" href="../assets/dist/css/fa-brands.css">
     <link rel="stylesheet" media="screen, print" href="../assets/dist/css/fa-solid.css">
+    <link rel="stylesheet" href="./include/style.css">
 
 </head>
 
@@ -71,9 +72,65 @@ $select->execute();
                                         <img src="../upload/<?= $row['img']; ?>" class="card-img-top" alt="...">
                                         <div class="card-body">
                                             <h5 class="card-title"><?= $row['name']; ?></h5>
-                                            <p class="card-text text-primary">ราคารับซื้อ : <?= $row['purchase_price']; ?> บาท</p>
+                                            <!-- <p class="card-text text-primary">ราคารับซื้อ : <?= $row['purchase_price']; ?> บาท</p> -->
                                             <p class="card-text text-success">ราคาขาย : <?= $row['selling_price']; ?> บาท</p>
-                                            <a href="#" class="btn btn-primary waves-effect waves-themed">เลือก</a>
+                                            <a href="#" class="btn btn-info waves-effect waves-themed"><i class="fal fa-eye"></i> ดูรายละเอียด</a>
+                                            <button type="button" class="btn btn-warning waves-effect waves-themed" data-toggle="modal" data-target="#edit-modal<?= $row['id']; ?>"><i class="fal fa-shopping-cart"></i> หยิบใส่ตะกร้า</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Modal Cart -->
+                                    <div class="modal fade" id="edit-modal<?= $row['id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <form action="action/category_db.php" method="post" enctype="multipart/form-data">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">
+                                                            แก้ไขข้อมูลสินค้า
+                                                        </h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group row">
+                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">หมวดหมู่:</label>
+                                                            <div class="col-lg-9">
+                                                                <input type="text" id="id" name="id" class="form-control" value="<?= $row['category_name']; ?>" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">สินค้า:</label>
+                                                            <div class="col-lg-9">
+                                                                <input type="text" id="name" name="name" class="form-control" value="<?= $row['name']; ?>" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">รูปภาพ:</label>
+                                                            <div class="col-lg-9">
+                                                                <img src="../upload/<?= $row['img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">เปลี่ยนใหม่:</label>
+                                                            <div class="col-lg-9">
+                                                                <input type="file" id="chooseFile2" name="img" class="form-control" value="" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for=""></label>
+                                                            <div class="col-lg-9">
+                                                                <div class="imgGallery2"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                                                        <button type="submit" name="btn_edit" class="btn btn-warning">ยันยันเปลี่ยนแปลงข้อมูล</button>
+                                                    </div>
+                                                </form>
+
+                                            </div>
                                         </div>
                                     </div>
                                 <?php } ?>
