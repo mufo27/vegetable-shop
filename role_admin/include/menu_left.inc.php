@@ -51,7 +51,7 @@
 
             <li class="<?= $dashboard; ?>">
                 <a href="dashboard.php?dashboard" title="" data-filter-tags="">
-                    <i class="fal fa-analytics"></i><span class="nav-link-text" data-i18n="">Dashboard</span>
+                    <i class="fal fa-analytics"></i><span class="nav-link-text" data-i18n="">รายงานข้อมูล</span>
                 </a>
             </li>
 

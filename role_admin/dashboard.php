@@ -5,9 +5,9 @@
 
     <meta charset="utf-8">
     <title>
-        dashboard - ระบบจัดการสินค้าออนไลน์ 
+        รายงานข้อมูล - ระบบจัดการสินค้าออนไลน์ 
     </title>
-    <meta name="description" content="Dashboard">
+    <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
     <!-- Call App Mode on ios devices -->
@@ -45,12 +45,12 @@
                 <!-- BEGIN Page Content -->
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item active"> Dashboard</li>
+                        <li class="breadcrumb-item active"> รายงานข้อมูล</li>
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
                     </ol>
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-analytics'></i> Dashboard
+                            <i class='subheader-icon fal fa-analytics'></i> รายงานข้อมูล
                         </h1>
                         <div class="subheader-block d-lg-flex align-items-center">
                             <div class="d-flex mr-4">
