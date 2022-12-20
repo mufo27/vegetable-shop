@@ -130,46 +130,11 @@ $select->execute();
                                                         <td style="text-align: center; vertical-align: middle;"><?= $show_send_status; ?></td>
                                                         <td style="text-align: center;  vertical-align: middle;"><?= date('d-m-y H:i:s', strtotime($row['save_time'])); ?></td>
                                                         <td style="text-align: center; vertical-align: middle;">
-                                                            <button type="button" class="btn btn-success btn-sm btn-icon waves-effect waves-themed mb-2" data-toggle="modal" data-target="#orders-detail-modal<?= $row['id']; ?>"><i class="fal fa-search-plus"></i></button>
+                                                            <a href="order_detail.php?order_detail=<?= $row['id']; ?>" class="btn btn-info btn-sm btn-icon waves-effect waves-themed mb-2"><i class="fal fa-info-square"></i></a>
                                                         </td>
                                                     </tr>
 
-                                                    <!-- Modal Detaik -->
-                                                    <div class="modal fade" id="orders-detail-modal<?= $row['id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
-                                                        <div class="modal-dialog modal-xl" role="document">
-                                                            <div class="modal-content">
-                                                                <form action="action/product_db.php" method="post" enctype="multipart/form-data">
-
-                                                                    <div class="modal-header">
-                                                                        <h4 class="modal-title">
-                                                                            รายการสั่งซื้อ / รายละเอียดสินค้า
-                                                                        </h4>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true"><i class="fal fa-times"></i></span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body bg-faded">
-                                                                        <!-- <div class="row">
-                                                                            <div class="col-md-12">
-                                                                                <h5 class="text-success">รายละเอียด</h5>
-                                                                                
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="col-md-12">
-                                                                                <h5 class="text-info">ที่อยู่</h5>
-                                                                            </div>
-                                                                        </div> -->
-                                                                        
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                                                                    </div>
-                                                                </form>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    
 
                                                 <?php } ?>
                                             </tbody>
