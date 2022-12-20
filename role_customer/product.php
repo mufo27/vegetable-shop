@@ -4,7 +4,13 @@ require_once('../database/condb.inc.php');
 $category_id = $_GET['c_id'];
 $c_name = $_GET['c_name'];
 
-$select = $conn->prepare("SELECT p.* , c.name AS category_name FROM product p INNER JOIN category c ON p.category_id = c.id WHERE p.category_id=?");
+$select = $conn->prepare("SELECT p.* , c.name AS category_name FROM product p INNER JOIN category c ON p.category_id = c.id WHERE p.category_id=? AND p.status_sell='เปิด' ");
+
+// sub query เรียกให้ แสดงรูปแรกของสินค้า
+// $select = $conn->prepare("SELECT p.* , c.name AS category_name ,
+// (SELECT im.img FROM product_img im WHERE im.product_id=p.id ORDER BY im.id ASC LIMIT 1) AS show_img
+// FROM product p INNER JOIN category c ON p.category_id = c.id WHERE p.category_id=?");
+
 $select->bindParam(1, $category_id);
 $select->execute();
 
@@ -58,22 +64,29 @@ $select->execute();
                 <!-- BEGIN Page Content -->
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">หมวดหมู่</a></li>
+                        <li class="breadcrumb-item"><a href="index.php">หมวดหมู่</a></li>
+                        <li class="breadcrumb-item">สั่งซื้อสินค้า</li>
                         <li class="breadcrumb-item"><?= $c_name; ?></li>
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date">Sunday, December 18, 2022</span></li>
                     </ol>
                     <div class="panel-container show">
                         <div class="panel-content">
-                            <div class="row">
+                            <div class="row d-flex justify-content-center">
                                 <?php
                                 while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+                                    $select_img = $conn->prepare("SELECT * FROM product_img WHERE product_id=? ORDER BY id ASC LIMIT 1");
+                                    $select_img->bindParam(1, $row['id']);
+                                    $select_img->execute();
+                                    $row_img = $select_img->fetch(PDO::FETCH_ASSOC);
                                 ?>
-                                    <div class="card border m-auto m-lg-0" style="max-width: 18rem;">
-                                        <img src="../upload/<?= $row['img']; ?>" class="card-img-top" alt="...">
+                                    <div class="card border ml-3 mt-3" style="max-width: 18rem;">
+                                        <img src="../share/image/product/<?= $row_img['img']; ?>" class="card-img-top" alt="...">
+                                        <!-- <img src="../share/image/product/<?php //$row['show_img']?>" class="card-img-top" alt="..."> -->
                                         <div class="card-body">
                                             <h5 class="card-title"><?= $row['name']; ?></h5>
+                                            <p class="card-text"><?= $row['detail'] ?></p>
                                             <!-- <p class="card-text text-primary">ราคารับซื้อ : <?= $row['purchase_price']; ?> บาท</p> -->
-                                            <p class="card-text text-success">ราคาขาย : <?= $row['selling_price']; ?> บาท</p>
+                                            <p class="card-text text-success">ราคาขาย : <?= $row['price_sell']; ?> บาท</p>
                                             <a href="#" class="btn btn-info waves-effect waves-themed"><i class="fal fa-eye"></i> ดูรายละเอียด</a>
                                             <button type="button" class="btn btn-warning waves-effect waves-themed" data-toggle="modal" data-target="#edit-modal<?= $row['id']; ?>"><i class="fal fa-shopping-cart"></i> หยิบใส่ตะกร้า</button>
                                         </div>
@@ -106,13 +119,13 @@ $select->execute();
                                                         <div class="form-group row">
                                                             <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">สินค้า :</label>
                                                             <div class="col-lg-9">
-                                                                <input type="text"  class="form-control" value="<?= $row['name']; ?>" readonly>
+                                                                <input type="text" class="form-control" value="<?= $row['name']; ?>" readonly>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
                                                             <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">รูปภาพ :</label>
                                                             <div class="col-lg-9">
-                                                                <img src="../upload/<?= $row['img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px">
+                                                                <img src="../share/image/product/<?= $row_img['img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px">
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">

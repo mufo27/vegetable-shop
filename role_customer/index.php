@@ -59,7 +59,7 @@
                             <div class="p-3 bg-info-200 rounded overflow-hidden position-relative text-white mb-g">
                                 <div class="">
                                     <a href="category.php" style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">
-                                        หมวดหมู่
+                                        สั่งซื้อสินค้า
                                     </a>
                                 </div>
                                 <i class="fal fa-tag position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n4" style="font-size: 6rem;"></i>
@@ -79,7 +79,7 @@
                             <div class="p-3 bg-warning-400 rounded overflow-hidden position-relative text-white mb-g">
                                 <div class="">
                                     <a href="#" style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">
-                                        รายการสั่งซื้อสินค้า
+                                        รายการสั่งซื้อ
                                     </a>
                                 </div>
                                 <i class="fal fa-shopping-bag position-absolute pos-right pos-bottom opacity-15  mb-n1 mr-n4" style="font-size: 6rem;"></i>
@@ -89,7 +89,7 @@
                             <div class="p-3 bg-success-200 rounded overflow-hidden position-relative text-white mb-g">
                                 <div class="">
                                     <a href="#" style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">
-                                        การจัดส่งสินค้า
+                                        จัดส่งสินค้า
                                     </a>
                                 </div>
                                 <i class="fal fa-shipping-fast position-absolute pos-right pos-bottom opacity-15 mb-n5 mr-n6" style="font-size: 8rem;"></i>
@@ -99,7 +99,7 @@
                             <div class="p-3 bg-info-200 rounded overflow-hidden position-relative text-white mb-g">
                                 <div class="">
                                     <a href="#" style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">
-                                        ประวัติการสั่งซื้อ
+                                        ประวัติสั่งซื้อ
                                     </a>
                                 </div>
                                 <i class="fal fa-history position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n4" style="font-size: 6rem;"></i>

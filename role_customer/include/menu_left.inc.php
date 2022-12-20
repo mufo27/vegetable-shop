@@ -45,7 +45,7 @@
 
             <li>
                 <a href="category.php" title="" data-filter-tags="">
-                    <i class="fal fa-tag"></i><span class="nav-link-text" data-i18n="">หมวดหมู่</span>
+                    <i class="fal fa-tag"></i><span class="nav-link-text" data-i18n="">สั่งซื้อสินค้า</span>
                 </a>
             </li>
 
@@ -56,31 +56,15 @@
             </li>
 
             <li>
-                <a href="#" title="Theme Settings" data-filter-tags="theme settings">
-                    <i class="fal fa-shopping-bag"></i>
-                    <span class="nav-link-text" data-i18n="nav.theme_settings">รายการสั่งซื้อสินค้า</span>
+                <a href="#" title="" data-filter-tags="">
+                    <i class="fal fa-shopping-bag"></i><span class="nav-link-text" data-i18n="">รายการสั่งซื้อ</span>
                 </a>
-                <ul>
-                    <li>
-                        <a href="#" title="" data-filter-tags="">
-                            <span class="nav-link-text" data-i18n="">รายละเอียดการสั่งซื้อ</span>
-                        </a>
-                    </li>
-                </ul>
             </li>
 
             <li>
-                <a href="#" title="Theme Settings" data-filter-tags="theme settings">
-                    <i class="fal fa-money-check-alt"></i>
-                    <span class="nav-link-text" data-i18n="nav.theme_settings">การชำระเงิน</span>
+                <a href="#" title="" data-filter-tags="">
+                    <i class="fal fa-money-check-alt"></i><span class="nav-link-text" data-i18n="">การชำระเงิน</span>
                 </a>
-                <ul>
-                    <li>
-                        <a href="#" title="" data-filter-tags="">
-                            <span class="nav-link-text" data-i18n="">รายละเอียดการชำระเงิน</span>
-                        </a>
-                    </li>
-                </ul>
             </li>
 
             <li>

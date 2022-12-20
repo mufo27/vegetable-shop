@@ -51,34 +51,28 @@ require_once('../database/condb.inc.php');
                 <!-- BEGIN Page Content -->
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">หมวดหมู่</a></li>
+                        <li class="breadcrumb-item"><a href="index.php">หมวดหมู่</a></li>
+                        <li class="breadcrumb-item">สั่งซื้อสินค้า</li>
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date">Sunday, December 18, 2022</span></li>
                     </ol>
                     <div class="row">
-                        <div class="col-xl-6">
-                            <div id="panel-1" class="panel">
-                                <div class="panel-hdr">
-                                    <h2>
-                                        หมวดหมู่
-                                    </h2>
-                                </div>
-                                <div class="panel-container show">
-                                    <div class="panel-content">
-                                        <div class="row">
-                                            <?php
-                                            $select = $conn->prepare("SELECT * FROM category");
-                                            $select->execute();
-                                            while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
-                                            ?>
-                                                <div class="card border m-auto m-lg-0" style="max-width: 18rem;">
-                                                    <img src="../upload/<?= $row['img']; ?>" class="card-img-top">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title"><?= $row['name']; ?></h5>
-                                                        <a href="product.php?c_id=<?= $row['id']; ?>&c_name=<?= $row['name']; ?>" class="btn btn-primary waves-effect waves-themed">เลือก</a>
-                                                    </div>
+                        <div class="col-xl-12">
+                            <div class="panel-container show">
+                                <div class="panel-content">
+                                    <div class="row d-flex justify-content-center">
+                                        <?php
+                                        $select = $conn->prepare("SELECT * FROM category");
+                                        $select->execute();
+                                        while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+                                        ?>
+                                            <div class="card border ml-3 mt-3" style="width: 18rem;">
+                                                <img class="card-img-top" src="../share/image/category/<?= $row['img']; ?>">
+                                                <div class="card-body">
+                                                    <h5 class="card-title"><?= $row['name']; ?></h5>
+                                                    <a href="product.php?c_id=<?= $row['id']; ?>&c_name=<?= $row['name']; ?>" class="btn btn-primary btn-block waves-effect waves-themed">เลือก</a>
                                                 </div>
-                                            <?php } ?>
-                                        </div>
+                                            </div>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>
