@@ -176,7 +176,8 @@ if ($act == 'remove' && !empty($p_id)) {
                                                     </div>
                                                     <div class="col-3">
                                                         <div class="single-input">
-                                                            <button type="submit" name="send" value="<?= $_SESSION['cart']; ?>" class="btn btn-success btn-lg"><i class="lni lni-telegram-original"></i> สั่งซื้อสินค้า ตอนนี้</button>
+                                                            <!-- <button type="submit" name="send" value="<?= $_SESSION['cart']; ?>" class="btn btn-success btn-lg"><i class="lni lni-telegram-original"></i> สั่งซื้อสินค้าตอนนี้</button> -->
+                                                            <button type="submit" name="send" value="<?= $_SESSION['cart']; ?>" class="btn btn-success btn-lg"><i class="lni lni-telegram-original"></i> สั่งซื้อสินค้าตอนนี้</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -220,7 +221,7 @@ if ($act == 'remove' && !empty($p_id)) {
 
                     $_POST['send'];
 
-                    echo "<meta http-equiv=\"refresh\" content=\"0; URL=index.php?confirm\">";
+                    echo "<meta http-equiv=\"refresh\" content=\"0; URL=checkout.php\">";
                 }
                 ?>
 
