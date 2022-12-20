@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>กำลังดำเนินการหมวดหมู่</title>
+    <title>กำลังดำเนินการรูปภาพสินค้า</title>
     <!-- sweetalert2 -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -18,10 +18,12 @@
 
         require_once('../../database/condb.inc.php');
 
+        $product_id = $_POST['product_id'];
         $name = $_POST['name'];
 
-        $select_check = $conn->prepare("SELECT name FROM category WHERE name=?");
-        $select_check->bindParam(1, $name);
+        $select_check = $conn->prepare("SELECT * FROM product_img WHERE product_id=? AND name=?");
+        $select_check->bindParam(1, $product_id);
+        $select_check->bindParam(2, $name);
         $select_check->execute();
 
         if ($select_check->rowCount() > 0) {
@@ -33,13 +35,13 @@
                           text: "ข้อมูลซ้ำกันกับในระบบ..!!"
                         });
                       </script>';
-            echo "<meta http-equiv=\"refresh\" content=\"2; URL=../category.php?category\">";
+            echo "<meta http-equiv=\"refresh\" content=\"2; URL=../product_img.php?product_img=$product_id\">";
             exit;
         } else {
 
             try {
 
-                $file_location  = "../../share/image/category/";
+                $file_location  = "../../share/image/product/";
 
                 if ($_FILES['img']['tmp_name'] == "") {
 
@@ -51,14 +53,15 @@
                     $source_file    =   $_FILES['img']['tmp_name'];
                     $size_file      =   $_FILES['img']['size'];
                     $extension      =   end($temp);
-                    $newfilename    =   'ctg_' . round(microtime(true)) . '.' . end($temp);
+                    $newfilename    =   'img_' . round(microtime(true)) . '.' . end($temp);
 
                     move_uploaded_file($source_file, $file_location . $newfilename);
                 }
 
-                $insert = $conn->prepare("INSERT INTO category (name, img) VALUES (?,?)");
+                $insert = $conn->prepare("INSERT INTO product_img (name, img, product_id) VALUES (?,?,?)");
                 $insert->bindParam(1, $name);
                 $insert->bindParam(2, $newfilename);
+                $insert->bindParam(3, $product_id);
                 $insert->execute();
 
                 if ($insert) {
@@ -71,7 +74,7 @@
                                         timer: 2000
                                     });
                                     </script>';
-                    echo "<meta http-equiv=\"refresh\" content=\"2; URL=../category.php?category\">";
+                    echo "<meta http-equiv=\"refresh\" content=\"2; URL=../product_img.php?product_img=$product_id\">";
                     exit;
                 } else {
 
@@ -82,7 +85,7 @@
                                     text: "โปรด ลองใหม่อีกครั้ง..!!"
                                     });
                                 </script>';
-                    echo "<meta http-equiv=\"refresh\" content=\"2; URL=../category.php?category\">";
+                    echo "<meta http-equiv=\"refresh\" content=\"2; URL=../product_img.php?product_img=$product_id\">";
                     exit;
                 }
             } catch (PDOException $e) {
@@ -97,29 +100,31 @@
 
         require_once('../../database/condb.inc.php');
 
+        $product_id = $_POST['product_id'];
         $id   = $_POST['id'];
         $name = $_POST['name'];
 
-        $select_check = $conn->prepare("SELECT * FROM category WHERE name=?");
-        $select_check->bindParam(1, $name);
+        $select_check = $conn->prepare("SELECT * FROM product_img WHERE product_id=? AND name=?");
+        $select_check->bindParam(1, $product_id);
+        $select_check->bindParam(2, $name);
         $select_check->execute();
 
         if ($select_check->rowCount() > 1) {
 
             echo '<script type="text/javascript">
-                            Swal.fire({
-                            icon: "error",
-                            title: "ล้มเหลว",
-                            text: "ข้อมูลซ้ำกันกับในระบบ..!!"
-                            });
-                        </script>';
-            echo "<meta http-equiv=\"refresh\" content=\"2; URL=../category.php?category\">";
+                        Swal.fire({
+                          icon: "error",
+                          title: "ล้มเหลว",
+                          text: "ข้อมูลซ้ำกันกับในระบบ..!!"
+                        });
+                      </script>';
+            echo "<meta http-equiv=\"refresh\" content=\"2; URL=../product_img.php?product_img=$product_id\">";
             exit;
         } else {
 
             try {
 
-                $file_location  = "../../share/image/category/";
+                $file_location  = "../../share/image/product/";
 
                 if ($_FILES['img']['tmp_name'] == "") {
 
@@ -131,13 +136,13 @@
                     $source_file    =   $_FILES['img']['tmp_name'];
                     $size_file      =   $_FILES['img']['size'];
                     $extension      =   end($temp);
-                    $newfilename    =   'ctg_' . round(microtime(true)) . '.' . end($temp);
+                    $newfilename    =   'img_' . round(microtime(true)) . '.' . end($temp);
 
                     unlink($file_location . $_POST['img2']);
                     move_uploaded_file($source_file, $file_location . $newfilename);
                 }
 
-                $update = $conn->prepare("UPDATE category SET name=?, img=? WHERE id=?");
+                $update = $conn->prepare("UPDATE product_img SET name=?, img=? WHERE id=?");
                 $update->bindParam(1 , $name);
                 $update->bindParam(2 , $newfilename);
                 $update->bindParam(3 , $id);
@@ -152,7 +157,7 @@
                                         timer: 2000
                                     });
                                     </script>';
-                    echo "<meta http-equiv=\"refresh\" content=\"2; URL=../category.php?category\">";
+                    echo "<meta http-equiv=\"refresh\" content=\"2; URL=../product_img.php?product_img=$product_id\">";
                     exit;
                 } else {
 
@@ -163,7 +168,7 @@
                                     text: "โปรด ลองใหม่อีกครั้ง..!!"
                                     });
                                 </script>';
-                    echo "<meta http-equiv=\"refresh\" content=\"2; URL=../category.php?category\">";
+                    echo "<meta http-equiv=\"refresh\" content=\"2; URL=../product_img.php?product_img=$product_id\">";
                     exit;
                 }
             } catch (PDOException $e) {
@@ -177,30 +182,27 @@
 
         require_once('../../database/condb.inc.php');
 
+        $product_id = $_POST['product_id'];
         $id =   $_POST['btn_del'];
 
         try {
 
-            $file_location  = "../../share/image/category/";
+            $file_location  = "../../share/image/product/";
 
-            $check_category_img = $conn->prepare("SELECT img FROM category WHERE id=?");
-            $check_category_img->bindParam(1, $id);
-            $check_category_img->execute();
-            $row_img = $check_category_img->fetch(PDO::FETCH_ASSOC);
+            $check_product_img = $conn->prepare("SELECT img FROM product_img WHERE id=?");
+            $check_product_img->bindParam(1, $id);
+            $check_product_img->execute();
+            $row_img = $check_product_img->fetch(PDO::FETCH_ASSOC);
 
             if ($row_img['img'] != '') {
                 unlink($file_location . $row_img['img']);
             }
 
-            // $delete_tb1 = $conn->prepare("DELETE FROM product WHERE category_id=?");
-            // $delete_tb1->bindParam(1, $id);
-            // $delete_tb1->execute();
+            $delete_product_img = $conn->prepare("DELETE FROM product_img WHERE id=?");
+            $delete_product_img->bindParam(1, $id);
+            $delete_product_img->execute();
 
-            $delete_category = $conn->prepare("DELETE FROM category WHERE id=?");
-            $delete_category->bindParam(1, $id);
-            $delete_category->execute();
-
-            if ($delete_category) {
+            if ($delete_product_img) {
 
                 echo '<script type="text/javascript">
                             Swal.fire({
@@ -210,7 +212,7 @@
                                 timer: 2000
                             });
                             </script>';
-                echo "<meta http-equiv=\"refresh\" content=\"2; URL=../category.php?category\">";
+                echo "<meta http-equiv=\"refresh\" content=\"2; URL=../product_img.php?product_img=$product_id\">";
                 exit;
             } else {
 
@@ -221,7 +223,7 @@
                             text: "โปรด ลองใหม่อีกครั้ง..!!"
                             });
                         </script>';
-                echo "<meta http-equiv=\"refresh\" content=\"2; URL=../category.php?category\">";
+                echo "<meta http-equiv=\"refresh\" content=\"2; URL=../product_img.php?product_img=$product_id\">";
                 exit;
             }
         } catch (PDOException $e) {

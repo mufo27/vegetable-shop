@@ -85,7 +85,7 @@ $select->execute();
                                                         <span aria-hidden="true"><i class="fal fa-times"></i></span>
                                                     </button>
                                                 </div>
-                                                <div class="modal-body">
+                                                <div class="modal-body bg-faded">
                                                     <div class="form-group row">
                                                         <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">Category ID:</label>
                                                         <div class="col-lg-9">
@@ -130,9 +130,9 @@ $select->execute();
                                             <thead class="bg-dark text-white">
                                                 <tr>
                                                     <th style="width:10%; text-align: center; vertical-align: middle;">No.</th>
-                                                    <th style="width:30%; text-align: center; vertical-align: middle;">หมวดหมู่</th>
-                                                    <th style="width:40%; text-align: center; vertical-align: middle;">รูปภาพ</th>
-                                                    <th style="width:20%; text-align: center; vertical-align: middle;">จัดการ</th>
+                                                    <th style="width:50%; text-align: center; vertical-align: middle;">หมวดหมู่</th>
+                                                    <th style="width:30%; text-align: center; vertical-align: middle;">รูปภาพ</th>
+                                                    <th style="width:10%; text-align: center; vertical-align: middle;">จัดการ</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -143,7 +143,7 @@ $select->execute();
                                                     <tr>
                                                         <td style="text-align: center; vertical-align: middle;"><?= $i++; ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?= $row['name']; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><img src="upload/<?= $row['img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px"></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><img src="../share/image/category/<?= $row['img']; ?>" class="profile-image-lg" alt="..." width="200px" height="100px"></td>
                                                         <td style="text-align: center; vertical-align: middle;">
                                                             <button type="button" class="btn btn-warning btn-sm btn-icon waves-effect waves-themed" data-toggle="modal" data-target="#edit-modal<?= $row['id']; ?>"><i class="fal fa-edit"></i></button>
                                                             <button type="button" class="btn btn-danger btn-sm btn-icon waves-effect waves-themed" data-toggle="modal" data-target="#del-modal<?= $row['id']; ?>"><i class="fal fa-times"></i></button>
@@ -167,7 +167,7 @@ $select->execute();
                                                                             <span aria-hidden="true"><i class="fal fa-times"></i></span>
                                                                         </button>
                                                                     </div>
-                                                                    <div class="modal-body">
+                                                                    <div class="modal-body bg-faded">
                                                                         <div class="form-group row">
                                                                             <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">Category ID:</label>
                                                                             <div class="col-lg-9">
@@ -183,13 +183,13 @@ $select->execute();
                                                                         <div class="form-group row">
                                                                             <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">รูปภาพ:</label>
                                                                             <div class="col-lg-9">
-                                                                                <img src="upload/<?= $row['img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px">
+                                                                                <img src="../share/image/category/<?= $row['img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px">
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group row">
                                                                             <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">เปลี่ยนใหม่:</label>
                                                                             <div class="col-lg-9">
-                                                                                <input type="file" id="chooseFile2" name="img" class="form-control" value="" required>
+                                                                                <input type="file" id="chooseFile2" name="img" class="form-control" value="">
                                                                                 <input type="hidden" id="img2" name="img2" class="form-control" value="<?= $row['img']; ?>">
                                                                             </div>
                                                                         </div>
@@ -224,11 +224,11 @@ $select->execute();
                                                                             <span aria-hidden="true"><i class="fal fa-times"></i></span>
                                                                         </button>
                                                                     </div>
-                                                                    <div class="modal-body">
+                                                                    <div class="modal-body bg-faded">
                                                                         <div class="row">
                                                                             <div class="col-12 mb-2"><label class="form-label" for="">Category ID:&nbsp;</label> <?= $row['id']; ?></div>
                                                                             <div class="col-12 mb-2"><label class="form-label" for="">หมวดหมู่:&nbsp;</label> <?= $row['name']; ?></div>
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">รูปภาพ:&nbsp;</label> <img src="upload/<?= $row['img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px"></div>
+                                                                            <div class="col-12 mb-2"><label class="form-label" for="">รูปภาพ:&nbsp;</label> <img src="../share/image/category/<?= $row['img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px"></div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">

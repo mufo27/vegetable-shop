@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2022 at 05:43 PM
+-- Generation Time: Dec 20, 2022 at 05:30 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `shoppuk`
+-- Database: `vegetable_shop`
 --
 
 -- --------------------------------------------------------
@@ -29,15 +29,15 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `account` (
   `id` int(11) NOT NULL COMMENT 'รหัส',
-  `user` varchar(50) NOT NULL COMMENT 'ีusername',
+  `phone` varchar(10) NOT NULL COMMENT 'เบอร์โทร',
+  `user` varchar(50) NOT NULL COMMENT 'username',
   `pass` varchar(50) NOT NULL COMMENT 'password',
-  `pkname` varchar(50) NOT NULL COMMENT 'คำนำหน้า',
-  `fname` varchar(250) NOT NULL COMMENT 'ชื่อ',
-  `lname` varchar(250) NOT NULL COMMENT 'นามสกุล',
-  `phone` varchar(10) DEFAULT NULL COMMENT 'เบอร์โทร',
+  `status` int(11) DEFAULT NULL COMMENT 'สถานะ 0=admin 1=เกษตกร 2=ลูกค้า',
+  `pkname` varchar(50) DEFAULT NULL COMMENT 'คำนำหน้า',
+  `fname` varchar(250) DEFAULT NULL COMMENT 'ชื่อ',
+  `lname` varchar(250) DEFAULT NULL COMMENT 'นามสกุล',
   `email` varchar(250) DEFAULT NULL COMMENT 'อีเมล',
-  `address` varchar(1000) DEFAULT NULL COMMENT 'ที่อยู่',
-  `status` int(11) NOT NULL COMMENT 'สถานะ 0=admin 1=เกษตกร 2=ลูกค้า',
+  `address` varchar(2500) DEFAULT NULL COMMENT 'ที่อยู่',
   `save_time` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'เวลาบันทึก'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -45,13 +45,11 @@ CREATE TABLE `account` (
 -- Dumping data for table `account`
 --
 
-INSERT INTO `account` (`id`, `user`, `pass`, `pkname`, `fname`, `lname`, `phone`, `email`, `address`, `status`, `save_time`) VALUES
-(1, 'admin', '123', 'Mr', 'Super', 'Admin', NULL, NULL, NULL, 0, '2022-11-22 04:47:53'),
-(3, 'ctm', '111', 'Mr', 'Cus', 'Tomer', NULL, NULL, NULL, 2, '2022-11-22 04:49:44'),
-(4, 'farmer', '123', 'Mr', 'far', 'mer', NULL, NULL, NULL, 1, '2022-11-22 06:52:59'),
-(6, 'udru', '111', 'นาย', 'Watcharapong', 'kaewphila', '0955845863', NULL, NULL, 2, '2022-11-22 08:42:47'),
-(7, 'ss', '555', 'mr', 'fff', 'ccc', '0989193248', NULL, NULL, 1, '2022-11-22 08:43:52'),
-(8, 'picha', '111', 'น.ส.', 'พิชา', 'มาตอย', '0854476649', 'picha@gmail.com', NULL, 1, '2022-11-23 06:51:33');
+INSERT INTO `account` (`id`, `phone`, `user`, `pass`, `status`, `pkname`, `fname`, `lname`, `email`, `address`, `save_time`) VALUES
+(1, '0989195248', 'admin', '123', 0, 'นาย', 'ศักดา', 'เหล่าจันอัน', 'ning@gmail.com', 'อ.นากลาง จ.หนองบัวลำภู                                                                                                                                                   ', '2022-11-22 04:47:53'),
+(6, '0955845863', 'ctm-1', '123', 2, 'นาย', 'วัชรพงศ์', 'แก้วพิลา', 'watcharapongmufo27@gmail.com', '105/12 บ้านสามพร้าว ตำบลสามพร้าว อำเภอเมือง จังหวัดอุดรธานี 41000', '2022-11-22 08:42:47'),
+(8, '0854476649', 'frm', '123', 1, 'น.ส.', 'พิชา', 'มาตอย', 'picha@gmail.com', '64 ถนน ทหาร ตำบลหมากแข้ง เมือง อุดรธานี 41000', '2022-11-23 06:51:33'),
+(65, '0645521996', 'ctm-2', '123', 2, 'นางสาว', 'ปิยฉัตร', 'โชติแท้', 'cherry@gmail.com', '12354', '2022-12-19 06:54:32');
 
 -- --------------------------------------------------------
 
@@ -71,10 +69,9 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `name`, `img`, `save_time`) VALUES
-(4, 'ผักสด', 'ty_1669109796.png', '2022-11-22 07:13:07'),
-(9, 'ผลไม้สด', 'ty_1669109665.png', '2022-11-22 09:34:24'),
-(10, 'เนื้อสัตว์', 'ty_1669110021.png', '2022-11-22 09:40:20'),
-(11, 'อาหารแห้ง', 'ty_1669110033.png', '2022-11-22 09:40:33');
+(19, 'หัวราก', 'ctg_1671511371.png', '2022-12-20 04:42:50'),
+(20, 'ผลักสลัด', 'ctg_1671511407.png', '2022-12-20 04:43:26'),
+(21, 'เห็ด', 'ctg_1671511420.png', '2022-12-20 04:43:40');
 
 -- --------------------------------------------------------
 
@@ -84,13 +81,20 @@ INSERT INTO `category` (`id`, `name`, `img`, `save_time`) VALUES
 
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL COMMENT 'รหัส',
-  `code` varchar(250) NOT NULL COMMENT 'โค้ด order',
   `account_id` int(11) NOT NULL COMMENT 'รหัส account',
-  `total_price` float NOT NULL COMMENT 'ราคารวม',
-  `payment_status` int(11) NOT NULL DEFAULT 0 COMMENT 'สถานะชำระเงิน',
-  `send_status` int(11) NOT NULL COMMENT 'สถานะการจัดส่ง',
+  `code` varchar(250) NOT NULL COMMENT 'โค้ด order',
+  `total` float NOT NULL COMMENT 'ราคารวม',
   `save_time` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'เวลาบันทึก'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `account_id`, `code`, `total`, `save_time`) VALUES
+(1, 65, '741856341', 1000, '2022-12-20 07:09:11'),
+(2, 65, '963524163', 1500, '2022-12-20 08:10:00'),
+(3, 6, '13456852', 3000, '2022-12-20 07:58:26');
 
 -- --------------------------------------------------------
 
@@ -110,42 +114,57 @@ CREATE TABLE `order_details` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `payment_buy`
+--
+
+CREATE TABLE `payment_buy` (
+  `id` int(11) NOT NULL,
+  `orders_id` int(11) NOT NULL,
+  `code` varchar(250) NOT NULL,
+  `status` enum('ยังไม่ชำระเงิน','ชำระเงินแล้ว') NOT NULL DEFAULT 'ยังไม่ชำระเงิน',
+  `total` float DEFAULT NULL,
+  `form` enum('Null','เงินสด','พร้อมเพย์','โอนผ่านธนาคาร') NOT NULL DEFAULT 'Null',
+  `save_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `confrim_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `payment_buy`
+--
+
+INSERT INTO `payment_buy` (`id`, `orders_id`, `code`, `status`, `total`, `form`, `save_time`, `confrim_time`) VALUES
+(1, 3, '85221263', 'ยังไม่ชำระเงิน', NULL, 'Null', '2022-12-20 08:59:33', '2022-12-20 09:13:42'),
+(2, 1, '45678912', 'ชำระเงินแล้ว', 1500, 'พร้อมเพย์', '2022-12-20 09:09:58', '2022-12-20 09:14:09');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `product`
 --
 
 CREATE TABLE `product` (
   `id` int(11) NOT NULL COMMENT 'รหัสสินค้า',
   `name` varchar(250) NOT NULL COMMENT 'ชื่อสินค้า',
+  `category_id` int(11) NOT NULL COMMENT 'รหัส category',
+  `detail` varchar(2500) NOT NULL,
   `qty` int(11) NOT NULL COMMENT 'จำนวนสินค้า',
   `unit` varchar(50) DEFAULT NULL COMMENT 'หน่วยนับ',
-  `purchase_price` int(11) NOT NULL COMMENT 'ราคาซื้อสินค้า',
-  `selling_price` int(11) NOT NULL COMMENT 'ราคาขายสินค้า',
-  `img` varchar(250) DEFAULT NULL COMMENT 'รูปภาพ',
-  `save_time` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'เวลาที่บันทึก',
-  `category_id` int(11) NOT NULL COMMENT 'รหัส category'
+  `price_buy` float DEFAULT NULL,
+  `price_sell` float DEFAULT NULL,
+  `status_buy` enum('ปิด','เปิด') NOT NULL DEFAULT 'ปิด',
+  `status_sell` enum('ปิด','เปิด') NOT NULL DEFAULT 'ปิด',
+  `save_time` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'เวลาที่บันทึก'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`id`, `name`, `qty`, `unit`, `purchase_price`, `selling_price`, `img`, `save_time`, `category_id`) VALUES
-(6, 'กระเจี๊ยบเขียว', 180, NULL, 5, 10, 'pr_1669104928.jpg', '2022-11-22 08:08:21', 4),
-(8, 'ข้าวโพดดิบปอกเปลือก', 300, NULL, 20, 30, 'pr_1669104917.jpg', '2022-11-22 08:15:17', 4),
-(9, 'ข้าวโพดอ่อนติดหมวก', 200, NULL, 10, 20, 'pr_1669104958.jpg', '2022-11-22 08:15:57', 4),
-(10, 'ข้าวโพดอ่อนเปลือย', 150, NULL, 5, 10, 'pr_1669104981.jpg', '2022-11-22 08:16:21', 4),
-(11, 'หมูบด A ปนมัน 5% ปลอดสาร', 10, NULL, 120, 150, 'pr_1669110130.jpg', '2022-11-22 09:42:10', 10),
-(12, 'ปลานิลแดดเดียว 10 ตัวต่อ กก.', 10, NULL, 300, 350, 'pr_1669110199.jpg', '2022-11-22 09:43:18', 11),
-(13, 'กล้วยไข่สุก 70% 13-18 ลูกต่อหวี', 100, NULL, 20, 50, 'pr_1669110243.jpg', '2022-11-22 09:44:02', 9),
-(14, 'กล้วยน้ำว้าดิบ 13-18 ลูกต่อหวี', 40, NULL, 80, 120, 'pr_1669110265.jpg', '2022-11-22 09:44:24', 9),
-(15, 'กล้วยหอมดิบ 12-16 ลูกต่อหวี', 150, NULL, 80, 100, 'pr_1669110287.jpg', '2022-11-22 09:44:47', 9),
-(16, 'แก้วมังกร เนื้อสีขาว เบอร์-22', 140, NULL, 45, 80, 'pr_1669110307.jpg', '2022-11-22 09:45:07', 9),
-(17, 'คอหมูสำหรับย่าง ยี่เอ้ง ตัดแต่ง ปลอดสาร', 150, NULL, 200, 250, 'pr_1669110433.jpg', '2022-11-22 09:47:12', 10),
-(18, 'ซี่โครงหมูหั่นชิ้น', 300, NULL, 180, 250, 'pr_1669110469.jpg', '2022-11-22 09:47:48', 10),
-(19, 'หมูสามชั้นแผ่นตัดแต่ง A ปลอดสาร', 200, NULL, 250, 300, 'pr_1669110506.jpg', '2022-11-22 09:48:26', 10),
-(20, 'พริกขี้หนูแห้ง เด็ดก้าน', 300, NULL, 50, 80, 'pr_1669110610.jpg', '2022-11-22 09:50:10', 11),
-(21, 'กุ้งแห้งเล็กใส่ส้มตำ-กิมฉุ่ยเล็ก', 250, NULL, 200, 300, 'pr_1669110649.jpg', '2022-11-22 09:50:49', 11),
-(22, 'แคปหมูไร้มัน อย่างดี ห่อเล็ก', 500, NULL, 10, 20, 'pr_1669110686.jpg', '2022-11-22 09:51:25', 11);
+INSERT INTO `product` (`id`, `name`, `category_id`, `detail`, `qty`, `unit`, `price_buy`, `price_sell`, `status_buy`, `status_sell`, `save_time`) VALUES
+(28, 'หัวไชเท้า คละขนาด เจ๊หงส์ส่งผัก', 19, 'หัวไชเท้า คละขนาด เจ๊หงส์ส่งผัก 5 กก./แพ็ค', 10, 'แพ็ค', 5, 15, 'ปิด', 'ปิด', '2022-12-20 04:51:31'),
+(29, 'มันฝรั่ง คละขนาด ขนาด 3-10 หัว/กก.', 19, 'มันฝรั่งคละขนาด ขนาด 3-10 หัว/กก. 500 กรัม/แพ็ค', 50, 'แพ็ค', 8, 16, 'ปิด', 'ปิด', '2022-12-20 04:55:49'),
+(30, 'หัวไชเท้า ขนาดกลาง คัดตัดแต่ง', 19, 'หัวไชเท้า ขนาดกลาง คัดตัดแต่ง', 20, 'หัว', 39, 59, 'ปิด', 'ปิด', '2022-12-20 04:59:04'),
+(31, 'คอส คัดตัดแต่ง', 20, 'คอส คัดตัดแต่ง 500 กรัม/แพ็ค', 5, 'แพ็ค', 40, 50, 'ปิด', 'ปิด', '2022-12-20 06:19:37');
 
 -- --------------------------------------------------------
 
@@ -156,8 +175,47 @@ INSERT INTO `product` (`id`, `name`, `qty`, `unit`, `purchase_price`, `selling_p
 CREATE TABLE `product_img` (
   `id` int(11) NOT NULL,
   `img` varchar(250) NOT NULL,
-  `pproduct_id` int(11) NOT NULL
+  `name` varchar(250) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `save_time` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `product_img`
+--
+
+INSERT INTO `product_img` (`id`, `img`, `name`, `product_id`, `save_time`) VALUES
+(8, 'img_1671512041.png', 'img-1', 28, '2022-12-20 04:52:56'),
+(10, 'img_1671512070.png', 'img-2', 28, '2022-12-20 04:54:30'),
+(11, 'img_1671512208.png', 'img-1', 29, '2022-12-20 04:56:47'),
+(12, 'img_1671512220.png', 'img-2', 29, '2022-12-20 04:56:59'),
+(13, 'img_1671515435.png', 'img-1', 30, '2022-12-20 05:50:35'),
+(14, 'img_1671515445.png', 'img-2', 30, '2022-12-20 05:50:44'),
+(15, 'img_1671517204.png', 'img-1', 31, '2022-12-20 06:20:04'),
+(16, 'img_1671517213.png', 'img-2', 31, '2022-12-20 06:20:12'),
+(17, 'img_1671517222.png', 'img-3', 31, '2022-12-20 06:20:22');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `send_buy`
+--
+
+CREATE TABLE `send_buy` (
+  `id` int(11) NOT NULL,
+  `orders_id` int(11) NOT NULL,
+  `code` varchar(250) NOT NULL,
+  `status` enum('ยังไม่จัดส่ง','รอการจัดส่ง','จัดส่งแล้ว') NOT NULL DEFAULT 'ยังไม่จัดส่ง',
+  `save_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `update_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `send_buy`
+--
+
+INSERT INTO `send_buy` (`id`, `orders_id`, `code`, `status`, `save_time`, `update_time`) VALUES
+(1, 3, '96378962', 'ยังไม่จัดส่ง', '2022-12-20 09:09:11', '2022-12-20 09:09:11');
 
 --
 -- Indexes for dumped tables
@@ -191,6 +249,13 @@ ALTER TABLE `order_details`
   ADD KEY `product_id` (`product_id`);
 
 --
+-- Indexes for table `payment_buy`
+--
+ALTER TABLE `payment_buy`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `orders_id` (`orders_id`);
+
+--
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
@@ -204,6 +269,13 @@ ALTER TABLE `product_img`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `send_buy`
+--
+ALTER TABLE `send_buy`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `orders_id` (`orders_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -211,19 +283,19 @@ ALTER TABLE `product_img`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัส', AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัส', AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัส', AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัส', AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัส';
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัส', AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `order_details`
@@ -232,16 +304,28 @@ ALTER TABLE `order_details`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัส';
 
 --
+-- AUTO_INCREMENT for table `payment_buy`
+--
+ALTER TABLE `payment_buy`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสสินค้า', AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสสินค้า', AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `product_img`
 --
 ALTER TABLE `product_img`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `send_buy`
+--
+ALTER TABLE `send_buy`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -261,10 +345,22 @@ ALTER TABLE `order_details`
   ADD CONSTRAINT `order_details_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
+-- Constraints for table `payment_buy`
+--
+ALTER TABLE `payment_buy`
+  ADD CONSTRAINT `payment_buy_ibfk_1` FOREIGN KEY (`orders_id`) REFERENCES `orders` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
 -- Constraints for table `product`
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Constraints for table `send_buy`
+--
+ALTER TABLE `send_buy`
+  ADD CONSTRAINT `send_buy_ibfk_1` FOREIGN KEY (`orders_id`) REFERENCES `orders` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

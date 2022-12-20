@@ -2,16 +2,29 @@
 
 require_once('../database/condb.inc.php');
 
-$product_id = $_GET['product_img'];
+if (isset($_GET['payment_buy'])) {
 
-$select_product_name = $conn->prepare("SELECT name AS product_name FROM product WHERE id=?");
-$select_product_name->bindParam(1, $product_id);
-$select_product_name->execute();
-$row_product_name = $select_product_name->fetch(PDO::FETCH_ASSOC);
+    $check_order_status = $_GET['payment_buy'];
 
-$select = $conn->prepare("SELECT * FROM product_img WHERE product_id=? ORDER BY id ASC");
-$select->bindParam(1, $product_id);
-$select->execute();
+    if ($check_order_status === 'ยังไม่ชำระเงิน') {
+
+        $select = $conn->prepare("SELECT o.* , concat(a.pkname,'',a.fname,' ',a.lname) as account_name FROM orders o INNER JOIN account a ON o.account_id = a.id WHERE o.payment_status=? ORDER BY o.save_time DESC");
+        $select->bindParam(1, $check_order_status);
+        $select->execute();
+
+    } else if ($check_order_status === 'ชำระเงินแล้ว') {
+
+        $select = $conn->prepare("SELECT o.* , concat(a.pkname,'',a.fname,' ',a.lname) as account_name FROM orders o INNER JOIN account a ON o.account_id = a.id WHERE o.payment_status=? ORDER BY o.save_time DESC");
+        $select->bindParam(1, $check_order_status);
+        $select->execute();
+
+    } else {
+
+        $select = $conn->prepare("SELECT o.* , concat(a.pkname,'',a.fname,' ',a.lname) as account_name FROM orders o INNER JOIN account a ON o.account_id = a.id ORDER BY o.save_time DESC");
+        $select->execute();
+
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -21,7 +34,7 @@ $select->execute();
     <meta charset="utf-8">
     <title>
 
-        รูปภาพสินค้า / <?= $row_product_name['product_name']; ?> - ระบบจัดการสินค้าออนไลน์
+        รายการสั่งซื้อ - ระบบจัดการสินค้าออนไลน์
 
     </title>
     <meta name="description" content="Basic">
@@ -62,79 +75,29 @@ $select->execute();
                 <!-- BEGIN Page Content -->
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item"><a href="product.php?product">สินค้า</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">รูปภาพสินค้า<?= $row_product_name['product_name']; ?></li>
+                        <li class="breadcrumb-item active"> รายการสั่งซื้อ </li>
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
                     </ol>
+
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="demo">
+                                <a href="payment_buy.php?payment_buy='ยังไม่ชำระเงิน'" class="btn btn-outline-danger waves-effect waves-themed">ยังไม่ชำระเงิน</a>
+                                <a href="payment_buy.php?payment_buy='ชำระเงินแล้ว'" class="btn btn-outline-success waves-effect waves-themed">ชำระเงินแล้ว</a>
+                                <a href="payment_buy.php?payment_buy" class="btn btn-outline-dark waves-effect waves-themed">ทั้งหมด</a>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-xl-12">
                             <div id="panel-1" class="panel">
                                 <div class="panel-hdr">
                                     <h2>
-                                        แสดงรูปภาพสินค้า / <?= $row_product_name['product_name']; ?>
+                                        แสดงรายการข้อมูลรายการสั่งซื้อ
                                     </h2>
                                     <div class="panel-toolbar">
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-sm btn-success waves-effect waves-themed" data-toggle="modal" data-target="#add-modal"><span class="fal fa-plus mr-1"></span> เพิ่มรูปภาพ</button>
-                                    </div>
-                                </div>
 
-                                <!-- Modal Add-->
-                                <div class="modal fade" id="add-modal" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-
-                                            <form action="action/product_img_db.php" method="post" enctype="multipart/form-data">
-
-                                                <input type="hidden" id="product_id" name="product_id" class="form-control" value="<?= $product_id; ?>" required>
-
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title">
-                                                        เพิ่มรูปภาพ
-                                                    </h4>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="form-group row">
-                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">สินค้า:</label>
-                                                        <div class="col-lg-9">
-                                                            <input type="text" id="" name="" class="form-control" value="<?= $row_product_name['product_name']; ?>" readonly="">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">Image ID:</label>
-                                                        <div class="col-lg-9">
-                                                            <input type="text" id="id" name="id" class="form-control" value="" placeholder="ระบบสร้างอัตโนมัติ" readonly="">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">ชื่อรูปภาพ:</label>
-                                                        <div class="col-lg-9">
-                                                            <input type="text" id="name" name="name" class="form-control" value="" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">รูปภาพ:</label>
-                                                        <div class="col-lg-9">
-                                                            <input type="file" id="chooseFile" name="img" class="form-control" value="" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for=""></label>
-                                                        <div class="col-lg-9">
-                                                            <div class="imgGallery"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                                                    <button type="submit" name="btn_add" class="btn btn-success">ยันยันบันทึกข้อมูล</button>
-                                                </div>
-                                            </form>
-
-                                        </div>
                                     </div>
                                 </div>
 
@@ -145,24 +108,46 @@ $select->execute();
                                         <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
                                             <thead class="bg-dark text-white">
                                                 <tr>
-                                                    <th style="width:10%; text-align: center; vertical-align: middle;">No.</th>
-                                                    <th style="width:50%; text-align: center; vertical-align: middle;">ชื่อรูปภาพ</th>
-                                                    <th style="width:30%; text-align: center; vertical-align: middle;">รูปภาพ</th>
-                                                    <th style="width:10%; text-align: center; vertical-align: middle;">จัดการ</th>
+                                                    <th style="width:5%; text-align: center; vertical-align: middle;">No.</th>
+                                                    <th style="width:20%; vertical-align: middle;">ชื่อ-นามสกุล</th>
+                                                    <th style="width:10%; vertical-align: middle;">เลขที่ใบสั่งซื้อ</th>
+                                                    <th style="width:10%; text-align: center; vertical-align: middle;">ยอดรวม</th>
+                                                    <th style="width:10%; text-align: center; vertical-align: middle;">สถานะชำระเงิน</th>
+                                                    <th style="width:10%; text-align: center; vertical-align: middle;">สถานะจัดส่ง</th>
+                                                    <th style="width:5%; text-align: center; vertical-align: middle;">จัดการ</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
                                                 $i = 1;
                                                 while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+
+                                                    if($row['payment_status'] === 'ยังไม่ชำระเงิน'){
+                                                        $show_payment_status = '<span class="badge badge-danger badge-pill">ยังไม่ชำระเงิน</span>';
+                                                    } else {
+                                                        $show_payment_status = '<span class="badge badge-success badge-pill">ชำระเงินแล้ว</span>';
+                                                    }
+
+                                                    if($row['send_status'] === 'ยังไม่จัดส่ง'){
+                                                        $show_send_status = '<span class="badge badge-danger badge-pill">ยังไม่จัดส่ง</span>';
+                                                    } else if($row['send_status'] === 'รอการจัดส่ง'){
+                                                        $show_send_status = '<span class="badge badge-warning badge-pill">รอการจัดส่ง</span>';
+                                                    }else {
+                                                        $show_send_status = '<span class="badge badge-success badge-pill">จัดส่งแล้ว</span>';
+                                                    }
+                                                    
+
                                                 ?>
                                                     <tr>
                                                         <td style="text-align: center; vertical-align: middle;"><?= $i++; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['name']; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><img src="../share/image/product/<?= $row['img']; ?>" class="profile-image-lg" alt="..." width="200px" height="100px"></td>
+                                                        <td style="vertical-align: middle;"><?= $row['account_name']; ?></td>
+                                                        <td style="vertical-align: middle;"><?= $row['code']; ?></td>
+                                                        <td style="vertical-align: middle;"><?= $row['total']; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $show_payment_status; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $show_send_status; ?></td>
                                                         <td style="text-align: center; vertical-align: middle;">
-                                                            <button type="button" class="btn btn-warning btn-sm btn-icon waves-effect waves-themed" data-toggle="modal" data-target="#edit-modal<?= $row['id']; ?>"><i class="fal fa-edit"></i></button>
-                                                            <button type="button" class="btn btn-danger btn-sm btn-icon waves-effect waves-themed" data-toggle="modal" data-target="#del-modal<?= $row['id']; ?>"><i class="fal fa-times"></i></button>
+                                                            <button type="button" class="btn btn-warning btn-sm btn-icon waves-effect waves-themed mb-2" data-toggle="modal" data-target="#edit-modal<?= $row['id']; ?>"><i class="fal fa-edit"></i></button>
+                                                            <button type="button" class="btn btn-danger btn-sm btn-icon waves-effect waves-themed mb-2" data-toggle="modal" data-target="#del-modal<?= $row['id']; ?>"><i class="fal fa-times"></i></button>
                                                         </td>
                                                     </tr>
 
@@ -171,13 +156,13 @@ $select->execute();
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
 
-                                                                <form action="action/product_img_db.php" method="post" enctype="multipart/form-data">
+                                                                <form action="action/product_db.php" method="post" enctype="multipart/form-data">
 
-                                                                    <input type="hidden" id="product_id" name="product_id" class="form-control" value="<?= $row['product_id']; ?>" required>
+
 
                                                                     <div class="modal-header">
                                                                         <h4 class="modal-title">
-                                                                            แก้ไขรูปภาพ
+                                                                            แก้ไขข้อมูลสินค้า
                                                                         </h4>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true"><i class="fal fa-times"></i></span>
@@ -185,40 +170,60 @@ $select->execute();
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">สินค้า:</label>
+                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">หมวดหมู่:</label>
                                                                             <div class="col-lg-9">
-                                                                                <input type="text" id="" name="" class="form-control" value="<?= $row_product_name['product_name']; ?>" readonly="">
+                                                                                <select class="custom-select form-control" name="category_id" required>
+                                                                                    <option value="<?= $row['category_id']; ?>">-- <?= $row['category_name']; ?> --</option>
+                                                                                    <?php
+                                                                                    $select_t2 = $conn->prepare("SELECT * FROM category ORDER BY id ASC");
+                                                                                    $select_t2->execute();
+                                                                                    while ($row_t2 = $select_t2->fetch(PDO::FETCH_ASSOC)) {
+                                                                                    ?>
+                                                                                        <option value="<?= $row_t2['id']; ?>"> <?= $row_t2['name']; ?> </option>
+                                                                                    <?php } ?>
+                                                                                </select>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">Image ID:</label>
+                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">Product ID:</label>
                                                                             <div class="col-lg-9">
                                                                                 <input type="text" id="id" name="id" class="form-control" value="<?= $row['id']; ?>" placeholder="ระบบสร้างอัตโนมัติ" readonly="">
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">ชื่อรูปภาพ:</label>
+                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">สินค้า:</label>
                                                                             <div class="col-lg-9">
                                                                                 <input type="text" id="name" name="name" class="form-control" value="<?= $row['name']; ?>" required>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">รูปภาพ:</label>
+                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">รายละเอียด:</label>
                                                                             <div class="col-lg-9">
-                                                                                <img src="../share/image/product/<?= $row['img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px">
+                                                                                <textarea class="form-control" id="" name="detail" rows="3"><?= $row['name']; ?></textarea>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">เปลี่ยนใหม่:</label>
+                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">จำนวนสินค้า:</label>
                                                                             <div class="col-lg-9">
-                                                                                <input type="file" id="chooseFile2" name="img" class="form-control" value="">
-                                                                                <input type="hidden" id="img2" name="img2" class="form-control" value="<?= $row['img']; ?>">
+                                                                                <input type="number" id="qty" name="qty" class="form-control" value="<?= $row['qty']; ?>" min="0" max="10000" required>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for=""></label>
+                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">หน่วยนับ:</label>
                                                                             <div class="col-lg-9">
-                                                                                <div class="imgGallery2"></div>
+                                                                                <input type="text" id="unit" name="unit" class="form-control" value="<?= $row['unit']; ?>" required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">ราคาซื้อ:</label>
+                                                                            <div class="col-lg-9">
+                                                                                <input type="number" id="price_buy" name="price_buy" class="form-control" min="0" max="999999" value="<?= $row['price_buy']; ?>" required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">ราคาขาย:</label>
+                                                                            <div class="col-lg-9">
+                                                                                <input type="number" id="price_sell" name="price_sell" class="form-control" min="0" max="999999" value="<?= $row['price_sell']; ?>" required>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -236,13 +241,11 @@ $select->execute();
                                                     <div class="modal fade" id="del-modal<?= $row['id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
-                                                                <form action="action/product_img_db.php" method="post" enctype="multipart/form-data">
-
-                                                                    <input type="hidden" id="product_id" name="product_id" class="form-control" value="<?= $row['product_id']; ?>" required>
+                                                                <form action="action/product_db.php" method="post" enctype="multipart/form-data">
 
                                                                     <div class="modal-header">
                                                                         <h4 class="modal-title">
-                                                                            ลบรูปภาพ
+                                                                            ลบข้อมูลสินค้า
                                                                         </h4>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true"><i class="fal fa-times"></i></span>
@@ -250,10 +253,11 @@ $select->execute();
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <div class="row">
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">สินค้า:&nbsp;</label> <?= $row_product_name['product_name']; ?></div>
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">Image ID:&nbsp;</label> <?= $row['id']; ?></div>
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">ชื่อรูปภาพ:&nbsp;</label> <?= $row['name']; ?></div>
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">รูปภาพ:&nbsp;</label> <img src="../share/image/product/<?= $row['img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px"></div>
+                                                                            <div class="col-12 mb-2"><label class="form-label" for="">Product ID:&nbsp;</label> <?= $row['id']; ?></div>
+                                                                            <div class="col-12 mb-2"><label class="form-label" for="">สินค้า:&nbsp;</label> <?= $row['name']; ?></div>
+                                                                            <div class="col-12 mb-2"><label class="form-label" for="">จำนวนสินค้า:&nbsp;</label> <?= $row['qty']; ?></div>
+                                                                            <div class="col-12 mb-2"><label class="form-label" for="">หน่วย:&nbsp;</label> <?= $row['unit']; ?></div>
+
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
@@ -312,35 +316,6 @@ $select->execute();
                 $('#dt-basic-example').removeClassPrefix('bg-').addClass(theadColor);
             });
 
-        });
-    </script>
-    <script>
-        $(function() {
-            // Multiple images preview with JavaScript
-            var multiImgPreview = function(input, imgPreviewPlaceholder) {
-
-                if (input.files) {
-                    var filesAmount = input.files.length;
-
-                    for (i = 0; i < filesAmount; i++) {
-                        var reader = new FileReader();
-
-                        reader.onload = function(event) {
-                            $($.parseHTML('<img width="250px" height="150px">')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
-                        }
-
-                        reader.readAsDataURL(input.files[i]);
-                    }
-                }
-
-            };
-
-            $('#chooseFile').on('change', function() {
-                multiImgPreview(this, 'div.imgGallery');
-            });
-            $('#chooseFile2').on('change', function() {
-                multiImgPreview(this, 'div.imgGallery2');
-            });
         });
     </script>
 </body>
