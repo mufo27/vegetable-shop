@@ -2,8 +2,18 @@
 
 require_once('../database/condb.inc.php');
 
-$select = $conn->prepare("SELECT p.*, c.name AS category_name FROM product p INNER JOIN category c ON p.category_id = c.id ORDER BY p.category_id ASC");
+$select = $conn->prepare("SELECT o.*, 
+                            concat(a.pkname,'',a.fname,' ',a.lname) AS account_name,
+                            pb.code AS payment_code, pb.status AS payment_status, 
+                            sb.code AS send_code, sb.status AS send_status
+                            FROM orders o 
+                            INNER JOIN account a ON o.account_id = a.id
+                            INNER JOIN payment_buy pb ON o.id = pb.orders_id
+                            INNER JOIN send_buy sb ON o.id = sb.orders_id
+                            ORDER BY o.save_time DESC
+                        ");
 $select->execute();
+
 
 ?>
 <!DOCTYPE html>
@@ -57,6 +67,7 @@ $select->execute();
                         <li class="breadcrumb-item active"> รายการสั่งซื้อ </li>
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
                     </ol>
+
                     <div class="row">
                         <div class="col-xl-12">
                             <div id="panel-1" class="panel">
@@ -65,11 +76,9 @@ $select->execute();
                                         แสดงรายการข้อมูลรายการสั่งซื้อ
                                     </h2>
                                     <div class="panel-toolbar">
-                                       
+
                                     </div>
                                 </div>
-
-                               
 
                                 <div class="panel-container show">
                                     <div class="panel-content">
@@ -79,152 +88,82 @@ $select->execute();
                                             <thead class="bg-dark text-white">
                                                 <tr>
                                                     <th style="width:5%; text-align: center; vertical-align: middle;">No.</th>
-                                                    <th style="width:10%; vertical-align: middle;">ประเภท</th>
-                                                    <th style="width:20%; vertical-align: middle;">สินค้า</th>
-                                                    <th style="width:30%; vertical-align: middle;">รายละเอียด</th>
-                                                    <th style="width:10%; text-align: center; vertical-align: middle;">รูปภาพ</th>
-                                                    <th style="width:5%; text-align: center; vertical-align: middle;">จำนวนสินค้า</th>
-                                                    <th style="width:5%; text-align: center; vertical-align: middle;">หน่วยนับ</th>
-                                                    <th style="width:5%; text-align: center; vertical-align: middle;">ราคาซื้อ</th>
-                                                    <th style="width:5%; text-align: center; vertical-align: middle;">ราคาขาย</th>
-                                                    <th style="width:5%; text-align: center; vertical-align: middle;">จัดการ</th>
+                                                    <th style="width:15%; vertical-align: middle;">ชื่อ-นามสกุล</th>
+                                                    <th style="width:10%; text-align: center; vertical-align: middle;">เลขที่ใบสั่งซื้อ</th>
+                                                    <th style="width:10%; text-align: center; vertical-align: middle;">เลขที่ใบชำระเงิน</th>
+                                                    <th style="width:10%; text-align: center; vertical-align: middle;">เลขที่ใบจัดส่ง</th>
+                                                    <th style="width:10%; text-align: center; vertical-align: middle;">ยอดรวม</th>
+                                                    <th style="width:5%; text-align: center; vertical-align: middle;">สถานะชำระเงิน</th>
+                                                    <th style="width:5%; text-align: center; vertical-align: middle;">สถานะจัดส่ง</th>
+                                                    <th style="width:10%; text-align: center; vertical-align: middle;">วันที่สั่งซื้อ</th>
+                                                    <th style="width:5%; text-align: center; vertical-align: middle;">รายละเอียด</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
                                                 $i = 1;
                                                 while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+
+                                                    if ($row['payment_status'] === 'ยังไม่ชำระเงิน') {
+                                                        $show_payment_status = '<span class="badge badge-danger badge-pill">ยังไม่ชำระเงิน</span>';
+                                                    } else {
+                                                        $show_payment_status = '<span class="badge badge-success badge-pill">ชำระเงินแล้ว</span>';
+                                                    }
+
+                                                    if ($row['send_status'] === 'ยังไม่จัดส่ง') {
+                                                        $show_send_status = '<span class="badge badge-danger badge-pill">ยังไม่จัดส่ง</span>';
+                                                    } else if ($row['send_status'] === 'รอการจัดส่ง') {
+                                                        $show_send_status = '<span class="badge badge-warning badge-pill">รอการจัดส่ง</span>';
+                                                    } else {
+                                                        $show_send_status = '<span class="badge badge-success badge-pill">จัดส่งแล้ว</span>';
+                                                    }
+
                                                 ?>
                                                     <tr>
                                                         <td style="text-align: center; vertical-align: middle;"><?= $i++; ?></td>
-                                                        <td style="vertical-align: middle;"><?= $row['category_name']; ?></td>
-                                                        <td style="vertical-align: middle;"><?= $row['name']; ?></td>
-                                                        <td style="vertical-align: middle;"><?= $row['detail']; ?></td>
+                                                        <td style="vertical-align: middle;"><?= $row['account_name']; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['code']; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['payment_code']; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['send_code']; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['total']; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $show_payment_status; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $show_send_status; ?></td>
+                                                        <td style="text-align: center;  vertical-align: middle;"><?= date('d-m-y H:i:s', strtotime($row['save_time'])); ?></td>
                                                         <td style="text-align: center; vertical-align: middle;">
-                                                            <a href="product_img.php?product_img=<?= $row['id']; ?>" class="btn btn-info btn-sm waves-effect waves-themed"><span class="fal fa-upload mr-1"></span>อัพโหลด</a>
-                                                        </td>
-                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['qty']; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['unit']; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['price_buy']; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['price_sell']; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;">
-                                                            <button type="button" class="btn btn-warning btn-sm btn-icon waves-effect waves-themed mb-2" data-toggle="modal" data-target="#edit-modal<?= $row['id']; ?>"><i class="fal fa-edit"></i></button>
-                                                            <button type="button" class="btn btn-danger btn-sm btn-icon waves-effect waves-themed mb-2" data-toggle="modal" data-target="#del-modal<?= $row['id']; ?>"><i class="fal fa-times"></i></button>
+                                                            <button type="button" class="btn btn-success btn-sm btn-icon waves-effect waves-themed mb-2" data-toggle="modal" data-target="#orders-detail-modal<?= $row['id']; ?>"><i class="fal fa-search-plus"></i></button>
                                                         </td>
                                                     </tr>
 
-                                                    <!-- Modal Edit-->
-                                                    <div class="modal fade" id="edit-modal<?= $row['id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-
-                                                                <form action="action/product_db.php" method="post" enctype="multipart/form-data">
-
-
-
-                                                                    <div class="modal-header">
-                                                                        <h4 class="modal-title">
-                                                                            แก้ไขข้อมูลสินค้า
-                                                                        </h4>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true"><i class="fal fa-times"></i></span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">หมวดหมู่:</label>
-                                                                            <div class="col-lg-9">
-                                                                                <select class="custom-select form-control" name="category_id" required>
-                                                                                    <option value="<?= $row['category_id']; ?>">-- <?= $row['category_name']; ?> --</option>
-                                                                                    <?php
-                                                                                    $select_t2 = $conn->prepare("SELECT * FROM category ORDER BY id ASC");
-                                                                                    $select_t2->execute();
-                                                                                    while ($row_t2 = $select_t2->fetch(PDO::FETCH_ASSOC)) {
-                                                                                    ?>
-                                                                                        <option value="<?= $row_t2['id']; ?>"> <?= $row_t2['name']; ?> </option>
-                                                                                    <?php } ?>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">Product ID:</label>
-                                                                            <div class="col-lg-9">
-                                                                                <input type="text" id="id" name="id" class="form-control" value="<?= $row['id']; ?>" placeholder="ระบบสร้างอัตโนมัติ" readonly="">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">สินค้า:</label>
-                                                                            <div class="col-lg-9">
-                                                                                <input type="text" id="name" name="name" class="form-control" value="<?= $row['name']; ?>" required>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">รายละเอียด:</label>
-                                                                            <div class="col-lg-9">
-                                                                                <textarea class="form-control" id="" name="detail" rows="3"><?= $row['name']; ?></textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">จำนวนสินค้า:</label>
-                                                                            <div class="col-lg-9">
-                                                                                <input type="number" id="qty" name="qty" class="form-control" value="<?= $row['qty']; ?>" min="0" max="10000" required>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">หน่วยนับ:</label>
-                                                                            <div class="col-lg-9">
-                                                                                <input type="text" id="unit" name="unit" class="form-control" value="<?= $row['unit']; ?>" required>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">ราคาซื้อ:</label>
-                                                                            <div class="col-lg-9">
-                                                                                <input type="number" id="price_buy" name="price_buy" class="form-control" min="0" max="999999" value="<?= $row['price_buy']; ?>" required>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">ราคาขาย:</label>
-                                                                            <div class="col-lg-9">
-                                                                                <input type="number" id="price_sell" name="price_sell" class="form-control" min="0" max="999999" value="<?= $row['price_sell']; ?>" required>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                                                                        <button type="submit" name="btn_edit" class="btn btn-warning">ยันยันเปลี่ยนแปลงข้อมูล</button>
-                                                                    </div>
-                                                                </form>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Modal Alert Delete -->
-                                                    <div class="modal fade" id="del-modal<?= $row['id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
+                                                    <!-- Modal Detaik -->
+                                                    <div class="modal fade" id="orders-detail-modal<?= $row['id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                                        <div class="modal-dialog modal-xl" role="document">
                                                             <div class="modal-content">
                                                                 <form action="action/product_db.php" method="post" enctype="multipart/form-data">
 
                                                                     <div class="modal-header">
                                                                         <h4 class="modal-title">
-                                                                            ลบข้อมูลสินค้า
+                                                                            รายการสั่งซื้อ / รายละเอียดสินค้า
                                                                         </h4>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true"><i class="fal fa-times"></i></span>
                                                                         </button>
                                                                     </div>
-                                                                    <div class="modal-body">
+                                                                    <div class="modal-body bg-faded">
+                                                                        <!-- <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                <h5 class="text-success">รายละเอียด</h5>
+                                                                                
+                                                                            </div>
+                                                                        </div>
                                                                         <div class="row">
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">Product ID:&nbsp;</label> <?= $row['id']; ?></div>
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">สินค้า:&nbsp;</label> <?= $row['name']; ?></div>
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">จำนวนสินค้า:&nbsp;</label> <?= $row['qty']; ?></div>
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">หน่วย:&nbsp;</label> <?= $row['unit']; ?></div>
-
-                                                                        </div>
+                                                                            <div class="col-md-12">
+                                                                                <h5 class="text-info">ที่อยู่</h5>
+                                                                            </div>
+                                                                        </div> -->
+                                                                        
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                                                                        <button type="submit" name="btn_del" value="<?= $row['id']; ?>" class="btn btn-danger"><i class="fal fa-times"></i> ยันยันลบข้อมูล</button>
                                                                     </div>
                                                                 </form>
 
