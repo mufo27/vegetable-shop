@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>กำละงดำเนินการสินค้า</title>
+    <title>กำลังดำเนินการสินค้า</title>
     <!-- sweetalert2 -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -157,30 +157,30 @@
 
         try {
 
-            $file_location  = "../upload/";
+            $file_location  = "../../share/image/product/";
 
-            $select_img = $conn->prepare("SELECT img FROM product_img WHERE id=?");
-            $select_img->bindParam(1, $id);
-            $select_img->execute();
+            $check_product_img = $conn->prepare("SELECT img FROM product_img WHERE id=?");
+            $check_product_img->bindParam(1, $id);
+            $check_product_img->execute();
 
-            while($row_img = $select_img->fetch(PDO::FETCH_ASSOC)){
+            while($row_img = $check_product_img->fetch(PDO::FETCH_ASSOC)){
 
                 if ($row_img['img'] != '') {
                     unlink($file_location . $row_img['img']);
                 }
             }
 
-            $delete = $conn->prepare("DELETE FROM product_img WHERE id=?");
-            $delete->bindParam(1, $id);
+            $delete_product_img = $conn->prepare("DELETE FROM product_img WHERE id=?");
+            $delete_product_img->bindParam(1, $id);
 
-            $delete = $conn->prepare("DELETE FROM product_buy WHERE id=?");
-            $delete->bindParam(1, $id);
+            $delete_product_buy = $conn->prepare("DELETE FROM product_buy WHERE id=?");
+            $delete_product_buy->bindParam(1, $id);
 
-            $delete = $conn->prepare("DELETE FROM product_sell WHERE id=?");
-            $delete->bindParam(1, $id);
+            $delete_sell = $conn->prepare("DELETE FROM product_sell WHERE id=?");
+            $delete_sell->bindParam(1, $id);
 
-            $delete = $conn->prepare("DELETE FROM order_details WHERE id=?");
-            $delete->bindParam(1, $id);
+            $delete_order_details = $conn->prepare("DELETE FROM order_details WHERE id=?");
+            $delete_order_details->bindParam(1, $id);
             
             $delete = $conn->prepare("DELETE FROM product WHERE id=?");
             $delete->bindParam(1, $id);

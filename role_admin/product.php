@@ -165,7 +165,7 @@ $select->execute();
                                                         <td style="text-align: center; vertical-align: middle;"><?= $row['qty']; ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?= $row['unit']; ?></td>
                                                         <td style="text-align: center; vertical-align: middle;">
-                                                            <a href="product_img.php?id=<?= $row['id']; ?>" class="btn btn-info btn-sm waves-effect waves-themed"><span class="fal fa-upload mr-1"></span>อัพโหลด</a>
+                                                            <a href="product_img.php?product_img=<?= $row['id']; ?>" class="btn btn-info btn-sm waves-effect waves-themed"><span class="fal fa-upload mr-1"></span>อัพโหลด</a>
                                                         </td>
                                                         <td style="text-align: center; vertical-align: middle;">
                                                             <button type="button" class="btn btn-warning btn-sm btn-icon waves-effect waves-themed" data-toggle="modal" data-target="#edit-modal<?= $row['id']; ?>"><i class="fal fa-edit"></i></button>
@@ -321,35 +321,6 @@ $select->execute();
                 $('#dt-basic-example').removeClassPrefix('bg-').addClass(theadColor);
             });
 
-        });
-    </script>
-    <script>
-        $(function() {
-            // Multiple images preview with JavaScript
-            var multiImgPreview = function(input, imgPreviewPlaceholder) {
-
-                if (input.files) {
-                    var filesAmount = input.files.length;
-
-                    for (i = 0; i < filesAmount; i++) {
-                        var reader = new FileReader();
-
-                        reader.onload = function(event) {
-                            $($.parseHTML('<img width="250px" height="150px">')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
-                        }
-
-                        reader.readAsDataURL(input.files[i]);
-                    }
-                }
-
-            };
-
-            $('#chooseFile').on('change', function() {
-                multiImgPreview(this, 'div.imgGallery');
-            });
-            $('#chooseFile2').on('change', function() {
-                multiImgPreview(this, 'div.imgGallery2');
-            });
         });
     </script>
 </body>

@@ -43,7 +43,7 @@ if (isset($_GET['account'])) {
     }
 }
 
-if (isset($_GET['category']) || isset($_GET['product'])) {
+if (isset($_GET['category']) || isset($_GET['product']) || isset($_GET['product_img'])) {
 
     $manage = 'active';
 
@@ -52,7 +52,7 @@ if (isset($_GET['category']) || isset($_GET['product'])) {
         $category = 'active';
     } 
 
-    if (isset($_GET['product'])) {
+    if (isset($_GET['product']) || isset($_GET['product_img'])) {
 
         $product = 'active';
     } 
