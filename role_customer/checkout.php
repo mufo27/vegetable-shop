@@ -105,21 +105,28 @@
                                 </div>
                                 <div class="panel-container show">
                                     <div class="panel-content">
-                                        <div id="cp-1" class="card border">
-                                            <div class="card-header">
-                                                <button class="btn btn-sm btn-default waves-effect waves-themed" data-toggle="collapse" data-target="#cp-1 > .card-body" aria-expanded="true">
-                                                    <span class="collapsed-hidden">Expand</span>
-                                                    <span class="collapsed-reveal">Collapse</span>
-                                                </button>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">สินค้า</span>
                                             </div>
-                                            <div class="card-body p-0 show">
-                                                <!-- notice we place the padding inside another div and remove the padding from the card body -->
-                                                <div class="p-4">
-                                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                                </div>
+                                            <input type="text" class="form-control" readonly="">
+                                        </div>
+                                        <div class="input-group mt-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">มูลค่า</span>
                                             </div>
+                                            <input type="text" class="form-control" readonly="">
+                                        </div>
+                                        <div class="input-group mt-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon3">ราคารวมทั้งหมด</span>
+                                            </div>
+                                            <input type="text" class="form-control" readonly="">
                                         </div>
                                     </div>
+                                    <div class="panel-content border-faded border-left-0 border-right-0 border-bottom-0 d-flex flex-row">
+                                                <button class="btn btn-primary ml-auto waves-effect waves-themed" type="submit">Submit form</button>
+                                            </div>
                                 </div>
                             </div>
                             <!-- Card decks -->

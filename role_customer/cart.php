@@ -114,7 +114,7 @@ if ($act == 'remove' && !empty($p_id)) {
                                         if (empty($_SESSION['cart'])) {
                                         ?>
                                             <div class="row d-flex justify-content-center mt-2">
-                                                <h2 class="text-primary"><i class="lni lni-cart-full"></i> ยังไม่มี สินค้าในตระกล้า</h2>
+                                                <h2 class="text-primary"><i class="lni lni-cart-full"></i> ยังไม่มี สินค้าในตะกล้า</h2>
                                             </div>
 
                                         <?php
@@ -171,13 +171,13 @@ if ($act == 'remove' && !empty($p_id)) {
                                                     <div class="col-6"></div>
                                                     <div class="col-3">
                                                         <div class="single-input">
-                                                            <button type="submit" name="update" value="update" class="btn btn-warning btn-lg"><i class="lni lni-pencil-alt"></i> อัพเดท ตระกร้าสินค้า</button>
+                                                            <button type="submit" name="update" value="update" class="btn btn-warning">ปรับปรุงสินค้าในตะกร้า</button>
                                                         </div>
                                                     </div>
                                                     <div class="col-3">
                                                         <div class="single-input">
                                                             <!-- <button type="submit" name="send" value="<?= $_SESSION['cart']; ?>" class="btn btn-success btn-lg"><i class="lni lni-telegram-original"></i> สั่งซื้อสินค้าตอนนี้</button> -->
-                                                            <button type="submit" name="send" value="<?= $_SESSION['cart']; ?>" class="btn btn-success btn-lg"><i class="lni lni-telegram-original"></i> สั่งซื้อสินค้าตอนนี้</button>
+                                                            <button type="submit" name="send" value="<?= $_SESSION['cart']; ?>" class="btn btn-success">สั่งซื้อสินค้าตอนนี้</button>
                                                         </div>
                                                     </div>
                                                 </div>
