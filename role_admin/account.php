@@ -105,7 +105,7 @@ $select->execute();
 
                                                 <div class="modal-body">
                                                     <div class="form-group row">
-                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">ID:</label>
+                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">Account ID:</label>
                                                         <div class="col-lg-9">
                                                             <input type="text" id="id" name="id" class="form-control" value="" placeholder="ระบบสร้างอัตโนมัติ" readonly="">
                                                         </div>
@@ -153,13 +153,13 @@ $select->execute();
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">บัญชีผู้ใช้งาน:</label>
+                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">Username:</label>
                                                         <div class="col-lg-9">
                                                             <input type="text" id="user" name="user" class="form-control" value="" required>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">รหัสผ่าน:</label>
+                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">Password:</label>
                                                         <div class="col-lg-9">
                                                             <input type="password" id="pass" name="pass" class="form-control" value="" required>
                                                         </div>
@@ -183,12 +183,12 @@ $select->execute();
                                             <thead class="bg-dark text-white">
                                                 <tr>
                                                     <th style="width:5%; text-align: center; vertical-align: middle;">No.</th>
-                                                    <th style="width:20%; text-align: center; vertical-align: middle;">ชื่อ-นามสกุล</th>
+                                                    <th style="width:20%; vertical-align: middle;">ชื่อ-นามสกุล</th>
                                                     <th style="width:10%; text-align: center; vertical-align: middle;">เบอร์โทร</th>
-                                                    <th style="width:10%; text-align: center; vertical-align: middle;">อีเมล</th>
-                                                    <th style="width:20%; text-align: center; vertical-align: middle;">ที่อยู่</th>
-                                                    <th style="width:15%; text-align: center; vertical-align: middle;">บัญชีผู้ใช้งาน</th>
-                                                    <th style="width:10%; text-align: center; vertical-align: middle;">รหัสผ่าน</th>
+                                                    <th style="width:10%; vertical-align: middle;">อีเมล</th>
+                                                    <th style="width:20%; vertical-align: middle;">ที่อยู่</th>
+                                                    <th style="width:15%; text-align: center; vertical-align: middle;">Uername</th>
+                                                    <th style="width:10%; text-align: center; vertical-align: middle;">Password</th>
                                                     <th style="width:15%; text-align: center; vertical-align: middle;">จัดการ</th>
                                                 </tr>
                                             </thead>
@@ -204,8 +204,8 @@ $select->execute();
                                                         <td style="text-align: center; vertical-align: middle;"><?= $row['phone']; ?></td>
                                                         <td style="vertical-align: middle;"><?= $row['email']; ?></td>
                                                         <td style="vertical-align: middle;"><?= $row['address']; ?></td>
-                                                        <td style="vertical-align: middle;"><?= $row['user']; ?></td>
-                                                        <td style="vertical-align: middle;"><?= $row['pass']; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['user']; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['pass']; ?></td>
                                                         <td style="text-align: center; vertical-align: middle;">
                                                             <button type="button" class="btn btn-warning btn-sm btn-icon waves-effect waves-themed" data-toggle="modal" data-target="#edit-modal<?= $row['id']; ?>"><i class="fal fa-edit"></i></button>
                                                             <button type="button" class="btn btn-danger btn-sm btn-icon waves-effect waves-themed" data-toggle="modal" data-target="#del-modal<?= $row['id']; ?>"><i class="fal fa-times"></i></button>
@@ -232,7 +232,7 @@ $select->execute();
 
                                                                     <div class="modal-body">
                                                                         <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">ID:</label>
+                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">Account ID:</label>
                                                                             <div class="col-lg-9">
                                                                                 <input type="text" id="id" name="id" class="form-control" value="<?= $row['id']; ?>" placeholder="ระบบสร้างอัตโนมัติ" readonly="">
                                                                             </div>
@@ -287,14 +287,14 @@ $select->execute();
 
                                                                         </div>
                                                                         <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">บัญชีผู้ใช้งาน:</label>
+                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">Username:</label>
                                                                             <div class="col-lg-9">
                                                                                 <input type="text" id="user" name="user" class="form-control" value="<?= $row['user']; ?>" required>
                                                                             </div>
 
                                                                         </div>
                                                                         <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">รหัสผ่าน:</label>
+                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">Password:</label>
                                                                             <div class="col-lg-9">
                                                                                 <input type="password" id="pass" name="pass" class="form-control" value="<?= $row['pass']; ?>" required>
                                                                             </div>
@@ -329,15 +329,13 @@ $select->execute();
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <div class="row">
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">id:&nbsp;</label> <?= $row['id']; ?></div>
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">คำนำหน้า:&nbsp;</label> <?= $row['pkname']; ?></div>
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">ชื่อ:&nbsp;</label> <?= $row['fname']; ?></div>
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">นามสกุล:&nbsp;</label> <?= $row['lname']; ?></div>
+                                                                            <div class="col-12 mb-2"><label class="form-label" for="">Account ID:&nbsp;</label> <?= $row['id']; ?></div>
+                                                                            <div class="col-12 mb-2"><label class="form-label" for="">ชื่อ-นามสกุล:&nbsp;</label> <?= $row['pkname']; ?><?= $row['fname']; ?> <?= $row['lname']; ?></div>
                                                                             <div class="col-12 mb-2"><label class="form-label" for="">เบอร์โทร:&nbsp;</label> <?= $row['phone']; ?></div>
                                                                             <div class="col-12 mb-2"><label class="form-label" for="">email:&nbsp;</label> <?= $row['email']; ?></div>
                                                                             <div class="col-12 mb-2"><label class="form-label" for="">ที่อยู่:&nbsp;</label> <?= $row['address']; ?></div>
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">บัญชีผู้ใช้งาน:&nbsp;</label> <?= $row['user']; ?></div>
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">รหัสผ่าน:&nbsp;</label> <?= $row['pass']; ?></div>
+                                                                            <div class="col-12 mb-2"><label class="form-label" for="">Username:&nbsp;</label> <?= $row['user']; ?></div>
+                                                                            <div class="col-12 mb-2"><label class="form-label" for="">Password:&nbsp;</label> <?= $row['pass']; ?></div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">

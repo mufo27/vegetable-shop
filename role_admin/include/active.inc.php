@@ -43,32 +43,32 @@ if (isset($_GET['category']) || isset($_GET['product']) || isset($_GET['product_
     } 
 }
 
+if (isset($_GET['order'])) {
+
+    $order = 'active';
+}
+
 if (isset($_GET['order_buy'])) {
 
     $order_buy = 'active';
 }
 
-if (isset($_GET['payment_buy'])) {
+if (isset($_GET['payment_order'])) {
 
-    $payment_buy = 'active';
+    $payment_order = 'active';
 }
 
-if (isset($_GET['send_buy'])) {
+if (isset($_GET['payment_order_buy'])) {
 
-    $send_buy = 'active';
+    $payment_order_buy = 'active';
 }
 
-if (isset($_GET['order_sell'])) {
+if (isset($_GET['send_order'])) {
 
-    $order_sell = 'active';
+    $send_order = 'active';
 }
 
-if (isset($_GET['payment_sell'])) {
+if (isset($_GET['send_order_buy'])) {
 
-    $payment_sell = 'active';
-}
-
-if (isset($_GET['send_sell'])) {
-
-    $send_sell = 'active';
+    $send_order_buy = 'active';
 }
