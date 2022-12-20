@@ -85,7 +85,7 @@ $select->execute();
                                                         <span aria-hidden="true"><i class="fal fa-times"></i></span>
                                                     </button>
                                                 </div>
-                                                <div class="modal-body">
+                                                <div class="modal-body bg-faded">
                                                     <div class="form-group row">
                                                         <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">หมวดหมู่:</label>
                                                         <div class="col-lg-9">
@@ -133,15 +133,35 @@ $select->execute();
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">ราคาซื้อ:</label>
+                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">ราคารับซื้อ:</label>
                                                         <div class="col-lg-9">
-                                                            <input type="number" id="price_buy" name="price_buy" class="form-control" min="0" max="999999" value="" placeholder="ตั้งราคาที่ต้องการซื้อ" required>
+                                                            <input type="number" id="price_buy" name="price_buy" class="form-control" min="0" max="999999" value="" placeholder="" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">สถานะรับซื้อ:</label>
+                                                        <div class="col-lg-9">
+                                                            <select class="custom-select form-control" name="status_buy" required>
+                                                                <option value="">-- เลือก --</option>
+                                                                <option value="ปิด">ปิด</option>
+                                                                <option value="เปิด">เปิด</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
                                                         <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">ราคาขาย:</label>
                                                         <div class="col-lg-9">
-                                                            <input type="number" id="price_sell" name="price_sell" class="form-control" min="0" max="999999" value="" placeholder="ตั้งราคาที่ต้องการขาย" required>
+                                                            <input type="number" id="price_sell" name="price_sell" class="form-control" min="0" max="999999" value="" placeholder="" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">สถานะขาย:</label>
+                                                        <div class="col-lg-9">
+                                                            <select class="custom-select form-control" name="status_sell" required>
+                                                                <option value="">-- เลือก --</option>
+                                                                <option value="ปิด">ปิด</option>
+                                                                <option value="เปิด">เปิด</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -163,14 +183,16 @@ $select->execute();
                                             <thead class="bg-dark text-white">
                                                 <tr>
                                                     <th style="width:5%; text-align: center; vertical-align: middle;">No.</th>
-                                                    <th style="width:10%; vertical-align: middle;">ประเภท</th>
-                                                    <th style="width:20%; vertical-align: middle;">สินค้า</th>
-                                                    <th style="width:30%; vertical-align: middle;">รายละเอียด</th>
+                                                    <th style="width:15%; vertical-align: middle;">ประเภท</th>
+                                                    <th style="width:15%; vertical-align: middle;">สินค้า</th>
+                                                    <th style="width:20%; vertical-align: middle;">รายละเอียด</th>
                                                     <th style="width:10%; text-align: center; vertical-align: middle;">รูปภาพ</th>
                                                     <th style="width:5%; text-align: center; vertical-align: middle;">จำนวนสินค้า</th>
                                                     <th style="width:5%; text-align: center; vertical-align: middle;">หน่วยนับ</th>
-                                                    <th style="width:5%; text-align: center; vertical-align: middle;">ราคาซื้อ</th>
+                                                    <th style="width:5%; text-align: center; vertical-align: middle;">ราคารับซื้อ</th>
+                                                    <th style="width:5%; text-align: center; vertical-align: middle;">สถานะรับซื้อ</th>
                                                     <th style="width:5%; text-align: center; vertical-align: middle;">ราคาขาย</th>
+                                                    <th style="width:5%; text-align: center; vertical-align: middle;">สถานะขาย</th>
                                                     <th style="width:5%; text-align: center; vertical-align: middle;">จัดการ</th>
                                                 </tr>
                                             </thead>
@@ -178,6 +200,19 @@ $select->execute();
                                                 <?php
                                                 $i = 1;
                                                 while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+
+                                                    if ($row['status_buy'] === 'ปิด') {
+                                                        $show_status_buy = '<span class="badge badge-danger badge-pill">ปิด</span>';
+                                                    } else {
+                                                        $show_status_buy = '<span class="badge badge-success badge-pill">เปิด</span>';
+                                                    }
+
+                                                    if ($row['status_sell'] === 'ปิด') {
+                                                        $show_status_sell = '<span class="badge badge-danger badge-pill">ปิด</span>';
+                                                    } else {
+                                                        $show_status_sell = '<span class="badge badge-success badge-pill">เปิด</span>';
+                                                    }
+
                                                 ?>
                                                     <tr>
                                                         <td style="text-align: center; vertical-align: middle;"><?= $i++; ?></td>
@@ -185,12 +220,14 @@ $select->execute();
                                                         <td style="vertical-align: middle;"><?= $row['name']; ?></td>
                                                         <td style="vertical-align: middle;"><?= $row['detail']; ?></td>
                                                         <td style="text-align: center; vertical-align: middle;">
-                                                            <a href="product_img.php?product_img=<?= $row['id']; ?>" class="btn btn-info btn-sm waves-effect waves-themed"><span class="fal fa-upload mr-1"></span>อัพโหลด</a>
+                                                            <a href="product_img.php?product_img=<?= $row['id']; ?>" class="btn btn-info btn-sm waves-effect waves-themed"><span class="fal fa-images mr-1"></span> เปิด</a>
                                                         </td>
                                                         <td style="text-align: center; vertical-align: middle;"><?= $row['qty']; ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?= $row['unit']; ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?= $row['price_buy']; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $show_status_buy; ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?= $row['price_sell']; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $show_status_sell; ?></td>
                                                         <td style="text-align: center; vertical-align: middle;">
                                                             <button type="button" class="btn btn-warning btn-sm btn-icon waves-effect waves-themed mb-2" data-toggle="modal" data-target="#edit-modal<?= $row['id']; ?>"><i class="fal fa-edit"></i></button>
                                                             <button type="button" class="btn btn-danger btn-sm btn-icon waves-effect waves-themed mb-2" data-toggle="modal" data-target="#del-modal<?= $row['id']; ?>"><i class="fal fa-times"></i></button>
@@ -214,7 +251,7 @@ $select->execute();
                                                                             <span aria-hidden="true"><i class="fal fa-times"></i></span>
                                                                         </button>
                                                                     </div>
-                                                                    <div class="modal-body">
+                                                                    <div class="modal-body bg-faded">
                                                                         <div class="form-group row">
                                                                             <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">หมวดหมู่:</label>
                                                                             <div class="col-lg-9">
@@ -261,15 +298,35 @@ $select->execute();
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">ราคาซื้อ:</label>
+                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">ราคารับซื้อ:</label>
                                                                             <div class="col-lg-9">
                                                                                 <input type="number" id="price_buy" name="price_buy" class="form-control" min="0" max="999999" value="<?= $row['price_buy']; ?>" required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">สถานะรับซื้อ:</label>
+                                                                            <div class="col-lg-9">
+                                                                                <select class="custom-select form-control" name="status_buy" required>
+                                                                                    <option value="<?= $row['status_buy']; ?>">-- <?= $row['status_buy']; ?> --</option>
+                                                                                    <option value="ปิด">ปิด</option>
+                                                                                    <option value="เปิด">เปิด</option>
+                                                                                </select>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group row">
                                                                             <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">ราคาขาย:</label>
                                                                             <div class="col-lg-9">
                                                                                 <input type="number" id="price_sell" name="price_sell" class="form-control" min="0" max="999999" value="<?= $row['price_sell']; ?>" required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">สถานะขาย:</label>
+                                                                            <div class="col-lg-9">
+                                                                                <select class="custom-select form-control" name="status_sell" required>
+                                                                                    <option value="<?= $row['status_sell']; ?>">-- <?= $row['status_sell']; ?> --</option>
+                                                                                    <option value="ปิด">ปิด</option>
+                                                                                    <option value="เปิด">เปิด</option>
+                                                                                </select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -297,13 +354,44 @@ $select->execute();
                                                                             <span aria-hidden="true"><i class="fal fa-times"></i></span>
                                                                         </button>
                                                                     </div>
-                                                                    <div class="modal-body">
+                                                                    <div class="modal-body bg-faded">
                                                                         <div class="row">
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">Product ID:&nbsp;</label> <?= $row['id']; ?></div>
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">สินค้า:&nbsp;</label> <?= $row['name']; ?></div>
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">จำนวนสินค้า:&nbsp;</label> <?= $row['qty']; ?></div>
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">หน่วย:&nbsp;</label> <?= $row['unit']; ?></div>
-
+                                                                            <div class="col-12 mb-2">
+                                                                                <label class="form-label" for="">หมวดหมู่:&nbsp;</label> 
+                                                                                <?= $row['category_name']; ?>
+                                                                            </div>
+                                                                            <div class="col-12 mb-2">
+                                                                                <label class="form-label" for="">Product ID:&nbsp;</label> 
+                                                                                <?= $row['id']; ?>
+                                                                            </div>
+                                                                            <div class="col-12 mb-2">
+                                                                                <label class="form-label" for="">สินค้า:&nbsp;</label> 
+                                                                                <?= $row['name']; ?>
+                                                                            </div>
+                                                                            <div class="col-12 mb-2">
+                                                                                <label class="form-label" for="">รายละเอียด:&nbsp;</label> 
+                                                                                <?= $row['detail']; ?>
+                                                                            </div>
+                                                                            <div class="col-12 mb-2">
+                                                                                <label class="form-label" for="">จำนวนสินค้า:&nbsp;</label> 
+                                                                                <?= $row['qty']; ?> <?= $row['unit']; ?>
+                                                                            </div>
+                                                                            <div class="col-12 mb-2">
+                                                                                <label class="form-label" for="">ราคารับซื้อ:&nbsp;</label> 
+                                                                                <?= $row['price_buy']; ?> บาท
+                                                                            </div>
+                                                                            <div class="col-12 mb-2">
+                                                                                <label class="form-label" for="">สถานะรับซื้อ:&nbsp;</label> 
+                                                                                <?= $show_status_buy; ?>
+                                                                            </div>
+                                                                            <div class="col-12 mb-2">
+                                                                                <label class="form-label" for="">ราคาขาย:&nbsp;</label> 
+                                                                                <?= $row['price_sell']; ?> บาท
+                                                                            </div>
+                                                                            <div class="col-12 mb-2">
+                                                                                <label class="form-label" for="">สถานะขาย:&nbsp;</label> 
+                                                                                <?= $show_status_sell; ?>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">

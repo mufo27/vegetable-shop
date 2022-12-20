@@ -85,7 +85,7 @@ $select->execute();
                                                         <span aria-hidden="true"><i class="fal fa-times"></i></span>
                                                     </button>
                                                 </div>
-                                                <div class="modal-body">
+                                                <div class="modal-body bg-faded">
                                                     <div class="form-group row">
                                                         <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">Category ID:</label>
                                                         <div class="col-lg-9">
@@ -167,7 +167,7 @@ $select->execute();
                                                                             <span aria-hidden="true"><i class="fal fa-times"></i></span>
                                                                         </button>
                                                                     </div>
-                                                                    <div class="modal-body">
+                                                                    <div class="modal-body bg-faded">
                                                                         <div class="form-group row">
                                                                             <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">Category ID:</label>
                                                                             <div class="col-lg-9">
@@ -224,7 +224,7 @@ $select->execute();
                                                                             <span aria-hidden="true"><i class="fal fa-times"></i></span>
                                                                         </button>
                                                                     </div>
-                                                                    <div class="modal-body">
+                                                                    <div class="modal-body bg-faded">
                                                                         <div class="row">
                                                                             <div class="col-12 mb-2"><label class="form-label" for="">Category ID:&nbsp;</label> <?= $row['id']; ?></div>
                                                                             <div class="col-12 mb-2"><label class="form-label" for="">หมวดหมู่:&nbsp;</label> <?= $row['name']; ?></div>

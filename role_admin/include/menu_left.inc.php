@@ -55,10 +55,12 @@
                 </a>
             </li>
 
+            <li class="nav-title">จัดการข้อมูลทั่วไป</li>
+
             <li class="<?= $account; ?>">
                 <a href="#" title="" data-filter-tags="">
                     <i class="fal fa-users"></i>
-                    <span class="nav-link-text" data-i18n="">บัญชีผู้ใช้งาน</span>
+                    <span class="nav-link-text" data-i18n="">ข้อมูลบัญชีผู้ใช้งาน</span>
                 </a>
                 <ul>
                     <li class="<?= $status0; ?>">
@@ -88,7 +90,7 @@
             <li class="<?= $manage; ?>">
                 <a href="#" title="" data-filter-tags="">
                     <i class="fal fa-store-alt"></i>
-                    <span class="nav-link-text" data-i18n="">จัดการข้อมูล</span>
+                    <span class="nav-link-text" data-i18n="">ข้อมูลสินค้า</span>
                 </a>
                 <ul>
                     <li class="<?= $category; ?>">
@@ -104,7 +106,7 @@
                 </ul>
             </li>
 
-            <li class="nav-title">ข้อมูลการสั่งซื้อ</li>
+            <li class="nav-title">จัดการข้อมูลการสั่งซื้อ</li>
 
             <li class="<?= $order_buy; ?>">
                 <a href="order_buy.php?order_buy" title="" data-filter-tags="">
@@ -114,17 +116,17 @@
 
             <li class="<?= $payment_buy; ?>">
                 <a href="payment_buy.php?payment_buy" title="" data-filter-tags="">
-                    <i class="fal fa-money-check-alt"></i><span class="nav-link-text" data-i18n="">รายการชำระเงิน</span>
+                    <i class="fal fa-money-check-alt"></i><span class="nav-link-text" data-i18n="">ชำระเงิน</span>
                 </a>
             </li>
 
             <li class="<?= $send_buy; ?>">
                 <a href="send_buy.php?send_buy" title="" data-filter-tags="">
-                    <i class="fal fa-shipping-timed"></i><span class="nav-link-text" data-i18n="">รายการจัดส่ง</span>
+                    <i class="fal fa-shipping-timed"></i><span class="nav-link-text" data-i18n="">จัดส่งสินค้า</span>
                 </a>
             </li>
 
-            <li class="nav-title">ข้อมูลการรับซื้อ</li>
+            <li class="nav-title">จัดการข้อมูลการรับซื้อ</li>
 
             <li class="<?= $order_sell; ?>">
                 <a href="order_sell.php?order_sell" title="" data-filter-tags="">
@@ -134,13 +136,22 @@
 
             <li class="<?= $payment_sell; ?>">
                 <a href="payment_sell.php?payment_sell" title="" data-filter-tags="">
-                    <i class="fal fa-money-check-alt"></i><span class="nav-link-text" data-i18n="">รายการชำระเงิน</span>
+                    <i class="fal fa-money-check-alt"></i><span class="nav-link-text" data-i18n="">ชำระเงิน</span>
                 </a>
             </li>
 
             <li class="<?= $send_sell; ?>">
                 <a href="send_sell.php?send_sell" title="" data-filter-tags="">
-                    <i class="fal fa-shipping-timed"></i><span class="nav-link-text" data-i18n="">รายการจัดส่ง</span>
+                    <i class="fal fa-shipping-timed"></i><span class="nav-link-text" data-i18n="">จัดส่งสินค้า</span>
+                </a>
+            </li>
+
+            <li class="nav-title"></li>
+
+
+            <li class="<?= $send_sell; ?>">
+                <a href="../../logout.php" title="" data-filter-tags="">
+                    <i class="fal fa-power-off"></i><span class="nav-link-text" data-i18n="">ออกจากระบบ</span>
                 </a>
             </li>
 

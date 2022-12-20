@@ -25,6 +25,8 @@
         $unit           =   $_POST['unit'];
         $price_buy      =   $_POST['price_buy'];
         $price_sell     =   $_POST['price_sell'];
+        $status_buy     =   $_POST['status_buy'];
+        $status_sell    =   $_POST['status_sell'];
 
         $select_check = $conn->prepare("SELECT * FROM product WHERE category_id=? AND name=?");
         $select_check->bindParam(1, $category_id);
@@ -46,7 +48,7 @@
 
             try {
 
-                $insert = $conn->prepare("INSERT INTO product (category_id, name, detail, qty, unit, price_buy, price_sell) VALUES (?,?,?,?,?,?,?) ");
+                $insert = $conn->prepare("INSERT INTO product (category_id, name, detail, qty, unit, price_buy, price_sell, status_buy, status_sell) VALUES (?,?,?,?,?,?,?,?,?) ");
                 $insert->bindParam(1, $category_id);
                 $insert->bindParam(2, $name);
                 $insert->bindParam(3, $detail);
@@ -54,6 +56,8 @@
                 $insert->bindParam(5, $unit);
                 $insert->bindParam(6, $price_buy);
                 $insert->bindParam(7, $price_sell);
+                $insert->bindParam(8, $status_buy);
+                $insert->bindParam(9, $status_sell);
 
                 if ($insert->execute()) {
 
@@ -98,6 +102,8 @@
         $unit           =   $_POST['unit'];
         $price_buy      =   $_POST['price_buy'];
         $price_sell     =   $_POST['price_sell'];
+        $status_buy     =   $_POST['status_buy'];
+        $status_sell    =   $_POST['status_sell'];
         $id             =   $_POST['id'];
 
         $select_check = $conn->prepare("SELECT * FROM product WHERE category_id=? AND name=?");
@@ -120,7 +126,7 @@
 
             try {
 
-                $update = $conn->prepare("UPDATE product SET category_id=?, name=?, detail=?, qty=?, unit=?, price_buy=?, price_sell=? WHERE id=?");
+                $update = $conn->prepare("UPDATE product SET category_id=?, name=?, detail=?, qty=?, unit=?, price_buy=?, price_sell=?, status_buy=?, status_sell=? WHERE id=?");
                 $update->bindParam(1, $category_id);
                 $update->bindParam(2, $name);
                 $update->bindParam(3, $detail);
@@ -128,7 +134,9 @@
                 $update->bindParam(5, $unit);
                 $update->bindParam(6, $price_buy);
                 $update->bindParam(7, $price_sell);
-                $update->bindParam(8, $id);
+                $update->bindParam(8, $status_buy);
+                $update->bindParam(9, $status_sell);
+                $update->bindParam(10, $id);
 
                 if ( $update->execute()) {
 
