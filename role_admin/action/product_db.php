@@ -20,8 +20,11 @@
 
         $category_id    =   $_POST['category_id'];
         $name           =   $_POST['name'];
+        $detail         =   $_POST['detail'];
         $qty            =   $_POST['qty'];
         $unit           =   $_POST['unit'];
+        $price_buy      =   $_POST['price_buy'];
+        $price_sell     =   $_POST['price_sell'];
 
         $select_check = $conn->prepare("SELECT * FROM product WHERE category_id=? AND name=?");
         $select_check->bindParam(1, $category_id);
@@ -43,11 +46,14 @@
 
             try {
 
-                $insert = $conn->prepare("INSERT INTO product (category_id, name, qty, unit) VALUES (?,?,?,?) ");
+                $insert = $conn->prepare("INSERT INTO product (category_id, name, detail, qty, unit, price_buy, price_sell) VALUES (?,?,?,?,?,?,?) ");
                 $insert->bindParam(1, $category_id);
                 $insert->bindParam(2, $name);
-                $insert->bindParam(3, $qty);
-                $insert->bindParam(4, $unit);
+                $insert->bindParam(3, $detail);
+                $insert->bindParam(4, $qty);
+                $insert->bindParam(5, $unit);
+                $insert->bindParam(6, $price_buy);
+                $insert->bindParam(7, $price_sell);
 
                 if ($insert->execute()) {
 
@@ -87,8 +93,11 @@
 
         $category_id    =   $_POST['category_id'];
         $name           =   $_POST['name'];
+        $detail         =   $_POST['detail'];
         $qty            =   $_POST['qty'];
         $unit           =   $_POST['unit'];
+        $price_buy      =   $_POST['price_buy'];
+        $price_sell     =   $_POST['price_sell'];
         $id             =   $_POST['id'];
 
         $select_check = $conn->prepare("SELECT * FROM product WHERE category_id=? AND name=?");
@@ -111,12 +120,15 @@
 
             try {
 
-                $update = $conn->prepare("UPDATE product SET category_id=?, name=?, qty=?, unit=? WHERE id=?");
+                $update = $conn->prepare("UPDATE product SET category_id=?, name=?, detail=?, qty=?, unit=?, price_buy=?, price_sell=? WHERE id=?");
                 $update->bindParam(1, $category_id);
                 $update->bindParam(2, $name);
-                $update->bindParam(3, $qty);
-                $update->bindParam(4, $unit);
-                $update->bindParam(5, $id);
+                $update->bindParam(3, $detail);
+                $update->bindParam(4, $qty);
+                $update->bindParam(5, $unit);
+                $update->bindParam(6, $price_buy);
+                $update->bindParam(7, $price_sell);
+                $update->bindParam(8, $id);
 
                 if ( $update->execute()) {
 
@@ -159,7 +171,7 @@
 
             $file_location  = "../../share/image/product/";
 
-            $check_product_img = $conn->prepare("SELECT img FROM product_img WHERE id=?");
+            $check_product_img = $conn->prepare("SELECT img FROM product_img WHERE product_id=?");
             $check_product_img->bindParam(1, $id);
             $check_product_img->execute();
 

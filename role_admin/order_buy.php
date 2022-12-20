@@ -13,7 +13,7 @@ $select->execute();
     <meta charset="utf-8">
     <title>
 
-        สินค้า - ระบบจัดการสินค้าออนไลน์
+        รายการสั่งซื้อ - ระบบจัดการสินค้าออนไลน์
 
     </title>
     <meta name="description" content="Basic">
@@ -54,7 +54,7 @@ $select->execute();
                 <!-- BEGIN Page Content -->
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item active"> สินค้า </li>
+                        <li class="breadcrumb-item active"> รายการสั่งซื้อ </li>
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
                     </ol>
                     <div class="row">
@@ -62,98 +62,14 @@ $select->execute();
                             <div id="panel-1" class="panel">
                                 <div class="panel-hdr">
                                     <h2>
-                                        แสดงรายการข้อมูลสินค้า
+                                        แสดงรายการข้อมูลรายการสั่งซื้อ
                                     </h2>
                                     <div class="panel-toolbar">
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-sm btn-success waves-effect waves-themed" data-toggle="modal" data-target="#add-modal"><span class="fal fa-plus mr-1"></span> เพิ่มข้อมูล</button>
+                                       
                                     </div>
                                 </div>
 
-                                <!-- Modal Add-->
-                                <div class="modal fade" id="add-modal" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-
-                                            <form action="action/product_db.php" method="post" enctype="multipart/form-data">
-
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title">
-                                                        เพิ่มข้อมูลสินค้า
-                                                    </h4>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="form-group row">
-                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">หมวดหมู่:</label>
-                                                        <div class="col-lg-9">
-                                                            <select class="custom-select form-control" name="category_id" required>
-                                                                <option value="">-- เลือก --</option>
-                                                                <?php
-                                                                $select_t1 = $conn->prepare("SELECT * FROM category ORDER BY id ASC");
-                                                                $select_t1->execute();
-                                                                while ($row_t1 = $select_t1->fetch(PDO::FETCH_ASSOC)) {
-                                                                ?>
-                                                                    <option value="<?= $row_t1['id']; ?>"> <?= $row_t1['name']; ?> </option>
-                                                                <?php } ?>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">Product ID:</label>
-                                                        <div class="col-lg-9">
-                                                            <input type="text" id="id" name="id" class="form-control" value="" placeholder="ระบบสร้างอัตโนมัติ" readonly="">
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">สินค้า:</label>
-                                                        <div class="col-lg-9">
-                                                            <input type="text" id="name" name="name" class="form-control" value="" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">รายละเอียด:</label>
-                                                        <div class="col-lg-9">
-                                                            <textarea class="form-control" id="" name="detail" rows="3"></textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">จำนวนสินค้า:</label>
-                                                        <div class="col-lg-9">
-                                                            <input type="number" id="qty" name="qty" class="form-control" value="" min="0" max="10000" placeholder="ระบุจำนวนสินค้าในคลัง" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">หน่วยนับ:</label>
-                                                        <div class="col-lg-9">
-                                                            <input type="text" id="unit" name="unit" class="form-control" value="" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">ราคาซื้อ:</label>
-                                                        <div class="col-lg-9">
-                                                            <input type="number" id="price_buy" name="price_buy" class="form-control" min="0" max="999999" value="" placeholder="ตั้งราคาที่ต้องการซื้อ" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">ราคาขาย:</label>
-                                                        <div class="col-lg-9">
-                                                            <input type="number" id="price_sell" name="price_sell" class="form-control" min="0" max="999999" value="" placeholder="ตั้งราคาที่ต้องการขาย" required>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                                                    <button type="submit" name="btn_add" class="btn btn-success">ยันยันบันทึกข้อมูล</button>
-                                                </div>
-                                            </form>
-
-                                        </div>
-                                    </div>
-                                </div>
+                               
 
                                 <div class="panel-container show">
                                     <div class="panel-content">

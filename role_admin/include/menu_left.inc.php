@@ -26,10 +26,11 @@
             <div class="info-card-text">
                 <a href="#" class="d-flex align-items-center text-white">
                     <span class="text-truncate text-truncate-sm d-inline-block">
-                        Dr. Codex Lantern
+                        ผู้ดูแลระบบ
                     </span>
                 </a>
-                <span class="d-inline-block text-truncate text-truncate-sm">Toronto, Canada</span>
+                <span class="d-inline-block text-truncate text-truncate-sm"><?php //$_SESSION['fname']; 
+                                                                            ?></span>
             </div>
             <img src="../assets/dist/img/card-backgrounds/cover-2-lg.png" class="cover" alt="cover">
             <a href="#" onclick="return false;" class="pull-trigger-btn" data-action="toggle" data-class="list-filter-active" data-target=".page-sidebar" data-focus="nav_filter_input">
@@ -38,6 +39,9 @@
         </div>
 
         <ul id="js-nav-menu" class="nav-menu">
+
+            <li class="nav-title">Menu</li>
+
 
             <li class="<?= $main; ?>">
                 <a href="index.php?main" title="" data-filter-tags="">
@@ -52,9 +56,9 @@
             </li>
 
             <li class="<?= $account; ?>">
-                <a href="#" title="Theme Settings" data-filter-tags="theme settings">
+                <a href="#" title="" data-filter-tags="">
                     <i class="fal fa-users"></i>
-                    <span class="nav-link-text" data-i18n="nav.theme_settings">บัญชีผู้ใช้งาน</span>
+                    <span class="nav-link-text" data-i18n="">บัญชีผู้ใช้งาน</span>
                 </a>
                 <ul>
                     <li class="<?= $status0; ?>">
@@ -82,9 +86,9 @@
             </li>
 
             <li class="<?= $manage; ?>">
-                <a href="#" title="Theme Settings" data-filter-tags="theme settings">
-                    <i class="fal fa-cog"></i>
-                    <span class="nav-link-text" data-i18n="nav.theme_settings">จัดการข้อมูล</span>
+                <a href="#" title="" data-filter-tags="">
+                    <i class="fal fa-store-alt"></i>
+                    <span class="nav-link-text" data-i18n="">จัดการข้อมูล</span>
                 </a>
                 <ul>
                     <li class="<?= $category; ?>">
@@ -100,23 +104,43 @@
                 </ul>
             </li>
 
+            <li class="nav-title">ข้อมูลการสั่งซื้อ</li>
 
-
-            <li class="<?= $order; ?>">
-                <a href="order.php?order" title="" data-filter-tags="">
-                    <i class="fal fa-clipboard-list-check"></i><span class="nav-link-text" data-i18n="">รายการสั่งซื้อสินค้า</span>
+            <li class="<?= $order_buy; ?>">
+                <a href="order_buy.php?order_buy" title="" data-filter-tags="">
+                    <i class="fal fa-arrow-alt-from-right"></i><span class="nav-link-text" data-i18n="">รายการสั่งซื้อ</span>
                 </a>
             </li>
 
-            <li class="<?= $payment; ?>">
-                <a href="payment.php?payment" title="" data-filter-tags="">
-                    <i class="fal fa-money-check-alt"></i><span class="nav-link-text" data-i18n="">การชำระเงิน</span>
+            <li class="<?= $payment_buy; ?>">
+                <a href="payment_buy.php?payment_buy" title="" data-filter-tags="">
+                    <i class="fal fa-money-check-alt"></i><span class="nav-link-text" data-i18n="">รายการชำระเงิน</span>
                 </a>
             </li>
 
-            <li class="<?= $send; ?>">
-                <a href="send.php?send" title="" data-filter-tags="">
-                    <i class="fal fa-money-check-alt"></i><span class="nav-link-text" data-i18n="">การจัดส่งสินค้า</span>
+            <li class="<?= $send_buy; ?>">
+                <a href="send_buy.php?send_buy" title="" data-filter-tags="">
+                    <i class="fal fa-shipping-timed"></i><span class="nav-link-text" data-i18n="">รายการจัดส่ง</span>
+                </a>
+            </li>
+
+            <li class="nav-title">ข้อมูลการรับซื้อ</li>
+
+            <li class="<?= $order_sell; ?>">
+                <a href="order_sell.php?order_sell" title="" data-filter-tags="">
+                    <i class="fal fa-arrow-alt-from-left"></i><span class="nav-link-text" data-i18n="">รายการรับซื้อ</span>
+                </a>
+            </li>
+
+            <li class="<?= $payment_sell; ?>">
+                <a href="payment_sell.php?payment_sell" title="" data-filter-tags="">
+                    <i class="fal fa-money-check-alt"></i><span class="nav-link-text" data-i18n="">รายการชำระเงิน</span>
+                </a>
+            </li>
+
+            <li class="<?= $send_sell; ?>">
+                <a href="send_sell.php?send_sell" title="" data-filter-tags="">
+                    <i class="fal fa-shipping-timed"></i><span class="nav-link-text" data-i18n="">รายการจัดส่ง</span>
                 </a>
             </li>
 
