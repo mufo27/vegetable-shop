@@ -128,8 +128,8 @@
 
             <li class="nav-title">จัดการข้อมูลการรับซื้อ</li>
 
-            <li class="<?= $order_order_buy; ?>">
-                <a href="order_order_buy.php?order_order_buy" title="" data-filter-tags="">
+            <li class="<?= $order_buy; ?>">
+                <a href="order_buy.php?order_buy" title="" data-filter-tags="">
                     <i class="fal fa-list-alt"></i><span class="nav-link-text" data-i18n="">รายการรับซื้อ</span>
                 </a>
             </li>
@@ -141,7 +141,7 @@
             </li>
 
             <li class="<?= $send_order_buy; ?>">
-                <a href="send_sell.php?send_sell" title="" data-filter-tags="">
+                <a href="send_order_buy.php?send_order_buy" title="" data-filter-tags="">
                     <i class="fal fa-shipping-timed"></i><span class="nav-link-text" data-i18n="">จัดส่งสินค้า</span>
                 </a>
             </li>
