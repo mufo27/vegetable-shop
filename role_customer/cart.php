@@ -9,6 +9,8 @@ require_once('../database/condb.inc.php');
 // $select->execute();
 // $row = $select->fetch(PDO::FETCH_ASSOC);
 
+$select = $conn->prepare("SELECT * FROM product");
+
 
 $p_id = $_POST['cart'];
 $act = $_POST['act'];
