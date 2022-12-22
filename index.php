@@ -1,3 +1,7 @@
 <?php
-header("location: login/");
+
+    if(empty($_GET)){
+        header("Location: login/index.php");
+    }
+
 ?>

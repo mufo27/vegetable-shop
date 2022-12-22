@@ -1,5 +1,10 @@
-
-
+<<<<<<< HEAD
+<?php
+require_once('include/auth.inc.php');
+require_once('../database/condb.inc.php');
+?>
+=======
+>>>>>>> 49dea60203eed017fe13ed2e8763fcd3ec78b4c7
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +16,7 @@
     <meta name="description" content="Profile">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
-    <!-- Call App Mode on ios devices -->
+    <!-- Call App Mode on ios devices --> 
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <!-- Remove Tap Highlight on Windows Phone IE -->
     <meta name="msapplication-tap-highlight" content="no">
@@ -66,40 +71,48 @@
                                 </div>
                                 <div class="panel-container show">
                                     <div class="panel-content p-0">
-                                        <form>
-                                            <div class="panel-content">
-                                                <div class="form-row">
-                                                    <div class="col-md-4 mb-3">
-                                                        <label class="form-label" for="validationDefault01">First name</label>
-                                                        <input type="text" class="form-control" id="validationDefault01" placeholder="First name" value="Mark" required="">
+                                        <form action="" method="post">
+                                            <?php
+                                            session_start();
+                                            require_once('../database/condb.inc.php');
+                                            $select = $conn->prepare("SELECT * FROM account");
+                                            $select->execute();
+                                            while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+                                            ?>
+                                                <div class="panel-content">
+                                                    <div class="form-row">
+                                                        <div class="col-md-4 mb-3">
+                                                            <label class="form-label" for="validationDefault01">First name</label>
+                                                            <input type="text" class="form-control" id="validationDefault01" placeholder="First name" value="<?= $row['fname']?>" required="">
+                                                        </div>
+                                                        <div class="col-md-4 mb-3">
+                                                            <label class="form-label" for="validationDefault02">Last name</label>
+                                                            <input type="text" class="form-control" id="validationDefault02" placeholder="Last name" value="Otto" required="">
+                                                        </div>
+                                                        <div class="col-md-4 mb-3">
+                                                            <label class="form-label" for="validationDefault02">Username</label>
+                                                            <input type="text" class="form-control" id="validationDefault02" placeholder="Username" value="" required="">
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-4 mb-3">
-                                                        <label class="form-label" for="validationDefault02">Last name</label>
-                                                        <input type="text" class="form-control" id="validationDefault02" placeholder="Last name" value="Otto" required="">
-                                                    </div>
-                                                    <div class="col-md-4 mb-3">
-                                                        <label class="form-label" for="validationDefault02">Username</label>
-                                                        <input type="text" class="form-control" id="validationDefault02" placeholder="Username" value="" required="">
+                                                    <div class="form-row mb-2">
+                                                        <div class="col-md-6 mb-3">
+                                                            <label class="form-label" for="validationDefault03">City</label>
+                                                            <input type="text" class="form-control" id="validationDefault03" placeholder="City" required="">
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label class="form-label" for="validationDefault04">State</label>
+                                                            <input type="text" class="form-control" id="validationDefault04" placeholder="State" required="">
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label class="form-label" for="validationDefault05">Zip</label>
+                                                            <input type="text" class="form-control" id="validationDefault05" placeholder="Zip" required="">
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-row mb-2">
-                                                    <div class="col-md-6 mb-3">
-                                                        <label class="form-label" for="validationDefault03">City</label>
-                                                        <input type="text" class="form-control" id="validationDefault03" placeholder="City" required="">
-                                                    </div>
-                                                    <div class="col-md-3 mb-3">
-                                                        <label class="form-label" for="validationDefault04">State</label>
-                                                        <input type="text" class="form-control" id="validationDefault04" placeholder="State" required="">
-                                                    </div>
-                                                    <div class="col-md-3 mb-3">
-                                                        <label class="form-label" for="validationDefault05">Zip</label>
-                                                        <input type="text" class="form-control" id="validationDefault05" placeholder="Zip" required="">
-                                                    </div>
+                                                <div class="panel-content border-faded border-left-0 border-right-0 border-bottom-0 d-flex flex-row">
+                                                    <button class="btn btn-primary ml-auto waves-effect waves-themed" type="submit">Submit form</button>
                                                 </div>
-                                            </div>
-                                            <div class="panel-content border-faded border-left-0 border-right-0 border-bottom-0 d-flex flex-row">
-                                                <button class="btn btn-primary ml-auto waves-effect waves-themed" type="submit">Submit form</button>
-                                            </div>
+                                            <?php } ?>
                                         </form>
                                     </div>
                                 </div>

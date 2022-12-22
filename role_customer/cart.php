@@ -1,45 +1,48 @@
 <?php
-session_start();
+require_once('include/auth.inc.php');
 require_once('../database/condb.inc.php');
 
-// $id = $_SESSION['id'];
+if (isset($_POST['cart'])) {
 
-// $select = $conn->prepare("SELECT * FROM accuont WHERE id = ?");
-// $select->bindParam(1, $id);
-// $select->execute();
-// $row = $select->fetch(PDO::FETCH_ASSOC);
+    // $id = $_SESSION['id'];
 
+    // $select = $conn->prepare("SELECT * FROM accuont WHERE id = ?");
+    // $select->bindParam(1, $id);
+    // $select->execute();
+    // $row = $select->fetch(PDO::FETCH_ASSOC);
 
+<<<<<<< HEAD
+
+    $p_id = $_POST['cart'];
+    $act = $_POST['act'];
+    $check_number = $_POST['number'];
+=======
 $p_id = $_POST['cart'];
 $act = $_POST['act'];
-$check_number = $_POST['check_number'];
+$check_number = $_POST['number'];
+>>>>>>> 49dea60203eed017fe13ed2e8763fcd3ec78b4c7
 
-for ($k = 1; $k <= $check_number; $k++) {
-    if ($act == 'add' && !empty($p_id)) {
+    for ($k = 1; $k <= $check_number; $k++) {
+        if ($act == 'add' && !empty($p_id)) {
 
-        if (isset($_SESSION['cart'][$p_id])) {
+            if (isset($_SESSION['cart'][$p_id])) {
 
-            $_SESSION['cart'][$p_id]++;
-        } else {
+                $_SESSION['cart'][$p_id]++;
+            } else {
 
-            $_SESSION['cart'][$p_id] = 1;
+                $_SESSION['cart'][$p_id] = 1;
+            }
+        }
+        if ($k >= $check_number) {
+            header("location: cart.php");
+            exit;
         }
     }
-    // if ($k <= $check_number) {
-    //     header("location: cart.php");
-    //     exit;
-    // }
+
+    if ($act == 'remove' && !empty($p_id)) {
+        unset($_SESSION['cart'][$p_id]);
+    }
 }
-
-
-if ($act == 'remove' && !empty($p_id)) {
-    unset($_SESSION['cart'][$p_id]);
-}
-
-print_r('<pre>');
-print_r($_POST);
-print_r('<pre>');
-
 ?>
 
 <!DOCTYPE html>
@@ -69,7 +72,10 @@ print_r('<pre>');
     <!-- Optional: page related CSS-->
     <link rel="stylesheet" media="screen, print" href="../assets/dist/css/fa-brands.css">
     <link rel="stylesheet" media="screen, print" href="../assets/dist/css/fa-solid.css">
+    <!-- font google -->
     <link rel="stylesheet" href="./include/style.css">
+    <!-- sweetalert2 -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -93,7 +99,7 @@ print_r('<pre>');
                         <li class="breadcrumb-item"><a href="javascript:void(0);">ตะกร้าสินค้า</a></li>
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date">Sunday, December 18, 2022</span></li>
                     </ol>
-
+                    
                     <div class="row">
                         <div class="col-xl-12">
                             <div id="panel-1" class="panel">
@@ -109,8 +115,8 @@ print_r('<pre>');
                                         <?php
                                         if (empty($_SESSION['cart'])) {
                                         ?>
-                                            <div class="row text-center mt-5">
-                                                <h2 class="text-primary"><i class="lni lni-cart-full"></i> ยังไม่มี สินค้าในตระกล้า</h2>
+                                            <div class="row d-flex justify-content-center mt-2">
+                                                <h2 class="text-primary"><i class="lni lni-cart-full"></i> ยังไม่มี สินค้าในตะกล้า</h2>
                                             </div>
 
                                         <?php
@@ -121,13 +127,14 @@ print_r('<pre>');
                                                 <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
                                                     <thead class="bg-dark text-white">
                                                         <tr>
-                                                            <th style="width:10%; text-align: center; vertical-align: middle;">No.</th>
-                                                            <th style="width:40%; text-align: center; vertical-align: middle;">รูปภาพ</th>
+                                                            <th style="width:5%; text-align: center; vertical-align: middle;">No.</th>
+                                                            <th style="width:10%; text-align: center; vertical-align: middle;">รูปภาพ</th>
                                                             <th style="width:30%; text-align: center; vertical-align: middle;">สินค้า</th>
-                                                            <th style="width:30%; text-align: center; vertical-align: middle;">จำนวนสินค้า</th>
-                                                            <th style="width:30%; text-align: center; vertical-align: middle;">ราคา</th>
-                                                            <th style="width:30%; text-align: center; vertical-align: middle;">ราคารวมทั้งหมด</th>
-                                                            <th style="width:20%; text-align: center; vertical-align: middle;">จัดการ</th>
+                                                            <th style="width:10%; text-align: center; vertical-align: middle;">ราคา</th>
+                                                            <th style="width:10%; text-align: center; vertical-align: middle;">จำนวน</th>
+                                                            <th style="width:10%; text-align: center; vertical-align: middle;">หน่วยนับ</th>
+                                                            <th style="width:10%; text-align: center; vertical-align: middle;">ราคารวม</th>
+                                                            <th style="width:10%; text-align: center; vertical-align: middle;">จัดการ</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -135,31 +142,75 @@ print_r('<pre>');
                                                         $i  =  1;
                                                         $sum    =  0;
                                                         $total  =  0;
+                                                        $price =  0;
                                                         foreach ($_SESSION['cart'] as $p_id => $qty) {
-                                                            $select_p = $conn->prepare("SELECT * FROM product WHERE id=?");
+<<<<<<< HEAD
+                                                            $select_p = $conn->prepare("SELECT p.id, p.name, p.price_sell, p.unit,
+                                                                                        (SELECT im.img FROM product_img im WHERE im.product_id=p.id ORDER BY im.id ASC LIMIT 1) AS show_img
+                                                                                        FROM product p WHERE p.id=?
+                                                                                        ");
+=======
+                                                            $select_p = $conn->prepare("SELECT p.* 
+                                                            (SELECT im.img FROM product_img im WHERE im.product_id=p.id ORDER BY im.id ASC LIMIT 1) AS show_img
+                                                            FROM product p
+                                                            WHERE p.id=?
+                                                            ");
+>>>>>>> 49dea60203eed017fe13ed2e8763fcd3ec78b4c7
                                                             $select_p->bindParam(1, $p_id);
                                                             $select_p->execute();
                                                             $row_p = $select_p->fetch(PDO::FETCH_ASSOC);
-                                                            $sum = $row_p['selling_price'] * $qty;
+                                                            $sum = $row_p['price_sell'] * $qty;
                                                             $total += $sum;
+
                                                         ?>
                                                             <tr>
                                                                 <td style="text-align: center; vertical-align: middle;"><?= $i++; ?></td>
-                                                                <td style="text-align: center; vertical-align: middle;"><img src="../upload/<?= $row_p['img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px"></td>
+<<<<<<< HEAD
+                                                                <td style="text-align: center; vertical-align: middle;">
+                                                                    <img src="../share/image/product/<?= $row_p['show_img']; ?>" class="profile-image-lg" alt="..." width="100px" height="70px">
+                                                                </td>
+=======
+                                                                <td style="text-align: center; vertical-align: middle;"><img src="../share/image/product/<?= $row_p['show_img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px"></td>
+>>>>>>> 49dea60203eed017fe13ed2e8763fcd3ec78b4c7
                                                                 <td style="text-align: center; vertical-align: middle;"><?= $row_p['name']; ?></td>
-                                                                <td style="text-align: center; vertical-align: middle;"><input type="number" name="amount[<?= $p_id ?>];" value="<?= $qty; ?>" min="1" max="100" class="px-3 py-2 border rounded"></td>
-                                                                <td style="text-align: center; vertical-align: middle;"><?= $row_p['selling_price']; ?></td>
+                                                                <td style="text-align: center; vertical-align: middle;"><?= $row_p['price_sell']; ?></td>
+                                                                <td style="text-align: center; vertical-align: middle;">
+                                                                    <input type="number" name="amount[<?= $p_id ?>];" value="<?= $qty; ?>" min="1" max="100" class="px-3 py-2 border rounded">
+                                                                </td>
+                                                                <td style="text-align: center; vertical-align: middle;"><?= $row_p['unit']; ?></td>
                                                                 <td style="text-align: center; vertical-align: middle;"><?= $sum; ?></td>
                                                                 <td style="text-align: center; vertical-align: middle;">
-                                                                    <!-- <button type="button" class="btn btn-warning btn-sm btn-icon waves-effect waves-themed"><i class="fal fa-edit"></i></button> -->
+
+                                                                    <input type="hidden" name="cart" value="<?= $row_p['id']; ?>">
+                                                                    <input type="hidden" name="act" value="remove">
+
                                                                     <button type="submit" class="btn btn-danger btn-sm btn-icon waves-effect waves-themed"><i class="fal fa-times"></i></button>
                                                                 </td>
                                                             </tr>
-                                                        <?php } ?>
+                                                        <?php 
+                                                            $_SESSION['num'] = $i;
+                                                    
+                                                    } ?>
                                                     </tbody>
                                                 </table>
+                                                <!-- datatable end -->
+
+                                                <div class="row mt-5">
+                                                    <div class="col-6"></div>
+                                                    <div class="col-3">
+                                                        <div class="single-input">
+                                                            <button type="submit" name="update" value="update" class="btn btn-warning">อัพเดทตะกร้าสินค้า</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <div class="single-input">
+                                                            <button type="submit" name="send" value="<?= $_SESSION['cart']; ?>" class="btn btn-success">ยืนยันซื้อสินค้าตอนนี้</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </form>
-                                            <!-- datatable end -->
+
                                         <?php } ?>
                                     </div>
                                 </div>
@@ -168,6 +219,39 @@ print_r('<pre>');
                     </div>
 
                 </main>
+
+                <?php
+
+                if (isset($_POST['update'])) {
+
+                    $act = $_POST['update'];
+
+                    if ($act === 'update') {
+                        $amount_array = $_POST['amount'];
+                        foreach ($amount_array as $p_id => $amount) {
+                            $_SESSION['cart'][$p_id] = $amount;
+                        }
+                    }
+
+                    echo '<script type="text/javascript">
+                              Swal.fire({
+                                icon: "success",
+                                title: "อัพเดท ตระกร้าสินค้า เรียบร้อยแล้ว",", 
+                                showConfirmButton: false,
+                                timer: 2000
+                              });
+                            </script>';
+                    echo "<meta http-equiv=\"refresh\" content=\"3; URL=cart.php\">";
+                    exit;
+                }
+
+                if (isset($_POST['send'])) {
+
+                    $_POST['send'];
+
+                    echo "<meta http-equiv=\"refresh\" content=\"0; URL=checkout.php\">";
+                }
+                ?>
 
                 <?php include('include/footer.inc.php'); ?>
 

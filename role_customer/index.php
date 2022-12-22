@@ -1,3 +1,5 @@
+<?php require_once('include/auth.inc.php'); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,7 +48,7 @@
                 <!-- BEGIN Page Content -->
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">หน้าแรก</a></li>
+                        <li class="breadcrumb-item active">หน้าแรก</li>
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
                     </ol>
                     <div class="subheader">
@@ -54,57 +56,86 @@
                             <i class='subheader-icon fal fa-home'></i><span class='fw-300'>หน้าแรก</span>
                         </h1>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-6 col-xl-3">
-                            <div class="p-3 bg-info-200 rounded overflow-hidden position-relative text-white mb-g">
-                                <div class="">
-                                    <a href="category.php" style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">
-                                        หมวดหมู่
-                                    </a>
+                    <div class="row text-center">
+                        <div class="col-12 col-sm-4">
+                            <a href="category.php?category">
+                                <div class="p-3 bg-success rounded overflow-hidden position-relative text-white mb-g">
+                                    <div class="">
+                                        <h3 style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">
+                                            สั่งซื้อสินค้า
+                                        </h3>
+                                    </div>
+                                    <i class="fal fa-store-alt position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n1" style="font-size: 6rem;"></i>
                                 </div>
-                                <i class="fal fa-tag position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n4" style="font-size: 6rem;"></i>
-                            </div>
+                            </a>
                         </div>
-                        <div class="col-sm-6 col-xl-3">
-                            <div class="p-3 bg-primary-300 rounded overflow-hidden position-relative text-white mb-g">
-                                <div class="">
-                                    <a href="cart.php" style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">
-                                        ตะกร้าสินค้า
-                                    </a>
+
+                        <div class="col-12 col-sm-4">
+                            <a href="cart.php?cart">
+                                <div class="p-3 bg-dark rounded overflow-hidden position-relative text-white mb-g">
+                                    <div class="">
+                                        <h3 style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">
+                                            ตะกร้าสินค้า
+                                        </h3>
+                                    </div>
+                                    <i class="fal fa-shopping-basket position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n1" style="font-size:6rem"></i>
                                 </div>
-                                <i class="fal fa-shopping-basket position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n1" style="font-size:6rem"></i>
-                            </div>
+                            </a>
                         </div>
-                        <div class="col-sm-6 col-xl-3">
-                            <div class="p-3 bg-warning-400 rounded overflow-hidden position-relative text-white mb-g">
-                                <div class="">
-                                    <a href="#" style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">
-                                        รายการสั่งซื้อสินค้า
-                                    </a>
+
+                        <div class="col-12 col-sm-4">
+                            <a href="order.php?order">
+                                <div class="p-3 bg-dark rounded overflow-hidden position-relative text-white mb-g">
+                                    <div class="">
+                                        <h3 style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">
+                                            รายการสั่งซื้อ
+                                        </h3>
+                                    </div>
+                                    <i class="fal fa-shopping-bag position-absolute pos-right pos-bottom opacity-15  mb-n1 mr-n4" style="font-size: 6rem;"></i>
                                 </div>
-                                <i class="fal fa-shopping-bag position-absolute pos-right pos-bottom opacity-15  mb-n1 mr-n4" style="font-size: 6rem;"></i>
-                            </div>
+                            </a>
                         </div>
-                        <div class="col-sm-6 col-xl-3">
-                            <div class="p-3 bg-success-200 rounded overflow-hidden position-relative text-white mb-g">
-                                <div class="">
-                                    <a href="#" style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">
-                                        การจัดส่งสินค้า
-                                    </a>
+
+                        <div class="col-12 col-sm-4">
+                            <a href="payment.php?payment">
+                                <div class="p-3 bg-dark rounded overflow-hidden position-relative text-white mb-g">
+                                    <div class="">
+                                        <h3 style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">
+                                            การชำระเงิน
+                                        </h3>
+                                    </div>
+                                    <i class="fal fa-money-check-alt position-absolute pos-right pos-bottom opacity-15  mb-n1 mr-n4" style="font-size: 6rem;"></i>
                                 </div>
-                                <i class="fal fa-shipping-fast position-absolute pos-right pos-bottom opacity-15 mb-n5 mr-n6" style="font-size: 8rem;"></i>
-                            </div>
+                            </a>
                         </div>
-                        <div class="col-sm-6 col-xl-3">
-                            <div class="p-3 bg-info-200 rounded overflow-hidden position-relative text-white mb-g">
-                                <div class="">
-                                    <a href="#" style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">
-                                        ประวัติการสั่งซื้อ
-                                    </a>
+
+                        <div class="col-12 col-sm-4">
+                            <a href="send.php?send">
+                                <div class="p-3 bg-dark rounded overflow-hidden position-relative text-white mb-g">
+                                    <div class="">
+                                        <h3 style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">
+                                            การจัดส่ง
+                                        </h3>
+                                    </div>
+                                    <i class="fal fa-shipping-fast position-absolute pos-right pos-bottom opacity-15  mb-n1 mr-n4" style="font-size: 6rem;"></i>
                                 </div>
-                                <i class="fal fa-history position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n4" style="font-size: 6rem;"></i>
-                            </div>
+                            </a>
                         </div>
+
+                        <div class="col-12 col-sm-4">
+                            <a href="history.php?history">
+                                <div class="p-3 bg-dark rounded overflow-hidden position-relative text-white mb-g">
+                                    <div class="">
+                                        <h3 style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">
+                                            ประวัติ
+                                        </h3>
+                                    </div>
+                                    <i class="fal fa-history position-absolute pos-right pos-bottom opacity-15  mb-n1 mr-n4" style="font-size: 6rem;"></i>
+                                </div>
+                            </a>
+                        </div>
+
+
                     </div>
                 </main>
 

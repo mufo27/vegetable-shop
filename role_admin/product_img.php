@@ -1,5 +1,5 @@
 <?php
-
+require_once('include/auth.inc.php');
 require_once('../database/condb.inc.php');
 
 $product_id = $_GET['product_img'];

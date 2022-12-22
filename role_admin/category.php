@@ -1,5 +1,5 @@
 <?php
-
+require_once('include/auth.inc.php');
 require_once('../database/condb.inc.php');
 
 $select = $conn->prepare("SELECT * FROM category");
@@ -87,7 +87,7 @@ $select->execute();
                                                 </div>
                                                 <div class="modal-body bg-faded">
                                                     <div class="form-group row">
-                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">Category ID:</label>
+                                                        <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">Category ID:</label>
                                                         <div class="col-lg-9">
                                                             <input type="text" id="id" name="id" class="form-control" value="" placeholder="ระบบสร้างอัตโนมัติ" readonly="">
                                                         </div>

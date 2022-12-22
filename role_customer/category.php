@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once('include/auth.inc.php');
 require_once('../database/condb.inc.php');
 ?>
 
@@ -9,7 +9,7 @@ require_once('../database/condb.inc.php');
 <head>
     <meta charset="utf-8">
     <title>
-        หน้าแรก - ระบบจัดการสินค้าออนไลน์
+        สั่งซื้อสินค้า - ระบบจัดการสินค้าออนไลน์
     </title>
     <meta name="description" content="Profile">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -51,38 +51,40 @@ require_once('../database/condb.inc.php');
                 <!-- BEGIN Page Content -->
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">หมวดหมู่</a></li>
+                        <li class="breadcrumb-item active">สั่งซื้อสินค้า / เลือกหมวดหมู่</li>
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date">Sunday, December 18, 2022</span></li>
                     </ol>
+
+                 
+                    <div class="input-group input-group-lg mb-3">
+                        <input type="text" class="form-control shadow-inset-2" id="filter-icon" aria-label="type 2 or more letters">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fal fa-search"></i></span>
+                        </div>
+                    </div>
+
+                    <h1><B>แสดงหมวดหมู่</B></h1>
+
                     <div class="row">
-                        <div class="col-xl-6">
-                            <div id="panel-1" class="panel">
-                                <div class="panel-hdr">
-                                    <h2>
-                                        หมวดหมู่
-                                    </h2>
-                                </div>
-                                <div class="panel-container show">
-                                    <div class="panel-content">
-                                        <div class="row">
-                                            <?php
-                                            $select = $conn->prepare("SELECT * FROM category");
-                                            $select->execute();
-                                            while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
-                                            ?>
-                                                <div class="card border m-auto m-lg-0" style="max-width: 18rem;">
-                                                    <img src="../upload/<?= $row['img']; ?>" class="card-img-top">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title"><?= $row['name']; ?></h5>
-                                                        <a href="product.php?c_id=<?= $row['id']; ?>&c_name=<?= $row['name']; ?>" class="btn btn-primary waves-effect waves-themed">เลือก</a>
-                                                    </div>
-                                                </div>
-                                            <?php } ?>
-                                        </div>
+                        <?php
+                        $select = $conn->prepare("SELECT * FROM category");
+                        $select->execute();
+                        while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+                        ?>
+ 
+                            <div class="col-6 col-md-3 mb-4">
+                                <div class="card h-100">
+                                    <img class="card-img-top" src="../share/image/category/<?= $row['img']; ?>" height="150px" width="100%">
+                                    <div class="card-body">
+                                        <h4><B><?= $row['name']; ?></B></h4>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <a href="product.php?product=<?= $row['id']; ?>" class="btn btn-success btn-block waves-effect waves-themed">เลือก</a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+
+                        <?php } ?>
                     </div>
                 </main>
 

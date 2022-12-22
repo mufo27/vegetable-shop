@@ -84,7 +84,7 @@
                             <span class="nav-link-text" data-i18n="">พนักงาน (Employee)</span>
                         </a>
                     </li>
-                </ul>
+                </ul> 
             </li>
 
             <li class="<?= $manage; ?>">
@@ -129,19 +129,22 @@
             <li class="nav-title">จัดการข้อมูลการรับซื้อ</li>
 
             <li class="<?= $order_buy; ?>">
-                <a href="order_buy.php?order_buy" title="" data-filter-tags="">
+                <a href="blank_page.php" title="" data-filter-tags="">
+                <!-- <a href="order_buy.php?order_buy" title="" data-filter-tags=""> -->
                     <i class="fal fa-list-alt"></i><span class="nav-link-text" data-i18n="">รายการรับซื้อ</span>
                 </a>
             </li>
 
             <li class="<?= $payment_order_buy; ?>">
-                <a href="payment_order_buy.php?payment_order_buy" title="" data-filter-tags="">
+                <a href="blank_page.php" title="" data-filter-tags="">
+                <!-- <a href="payment_order_buy.php?payment_order_buy" title="" data-filter-tags=""> -->
                     <i class="fal fa-money-check-alt"></i><span class="nav-link-text" data-i18n="">ชำระเงิน</span>
                 </a>
             </li>
 
             <li class="<?= $send_order_buy; ?>">
-                <a href="send_order_buy.php?send_order_buy" title="" data-filter-tags="">
+                <a href="blank_page.php" title="" data-filter-tags="">
+                <!-- <a href="send_order_buy.php?send_order_buy" title="" data-filter-tags=""> -->
                     <i class="fal fa-shipping-timed"></i><span class="nav-link-text" data-i18n="">จัดส่งสินค้า</span>
                 </a>
             </li>
@@ -149,7 +152,7 @@
             <li class="nav-title"></li>
 
             <li>
-                <a href="../../logout.php" title="" data-filter-tags="">
+                <a href="../login/logout.php" title="" data-filter-tags="">
                     <i class="fal fa-power-off"></i><span class="nav-link-text" data-i18n="">ออกจากระบบ</span>
                 </a>
             </li>

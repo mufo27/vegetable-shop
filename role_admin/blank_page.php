@@ -1,5 +1,3 @@
-<?php require_once('include/auth.inc.php'); ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,54 +46,28 @@
                 <!-- BEGIN Page Content -->
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item active"> หน้าแรก</li>
+                        <li class="breadcrumb-item active"> หมายเหตุ</li>
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
                     </ol>
                     <div class="subheader">
                         <h1 class="subheader-title">
-                            <i class='subheader-icon fal fa-home'></i> หน้าแรก
+                            <i class='subheader-icon fal fa-question'></i> หมายเหตุ
                         </h1>
                         <div class="subheader-block d-lg-flex align-items-center">
 
                         </div>
                     </div>
 
-                    <h1>ข้อมูลส่วนของลูกค้า</h1>
-
                     <div class="row text-center">
-                        <div class="col-12 col-md-4">
+                        <div class="col-12 col-md-12">
                             <a href="order.php?order">
-                                <div class="p-3 bg-dark rounded overflow-hidden position-relative text-white mb-g">
+                                <div class="p-3 bg-danger rounded overflow-hidden position-relative text-white mb-g">
                                     <div class="">
                                         <h3 class="display-4 d-block l-h-n m-0 fw-500">
-                                            รายการสั่งซื้อ
+                                            ยังเปิดให้ใช้งาน
                                         </h3>
                                     </div>
                                     <i class="fal fa-shopping-bag position-absolute pos-right pos-bottom opacity-15  mb-n1 mr-n4" style="font-size: 6rem;"></i>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <a href="order.php?payment">
-                                <div class="p-3 bg-dark rounded overflow-hidden position-relative text-white mb-g">
-                                    <div class="">
-                                        <h3 class="display-4 d-block l-h-n m-0 fw-500">
-                                            การชำระเงิน
-                                        </h3>
-                                    </div>
-                                    <i class="fal fa-money-check-alt position-absolute pos-right pos-bottom opacity-15 mb-n5 mr-n6" style="font-size: 8rem;"></i>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <a href="order.php?send">
-                                <div class="p-3 bg-dark rounded overflow-hidden position-relative text-white mb-g">
-                                    <div class="">
-                                        <h3 class="display-4 d-block l-h-n m-0 fw-500">
-                                            การจัดส่ง
-                                        </h3>
-                                    </div>
-                                    <i class="fal fa-shipping-fast position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n4" style="font-size: 6rem;"></i>
                                 </div>
                             </a>
                         </div>
