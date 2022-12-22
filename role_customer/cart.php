@@ -9,9 +9,6 @@ require_once('../database/condb.inc.php');
 // $select->execute();
 // $row = $select->fetch(PDO::FETCH_ASSOC);
 
-$select = $conn->prepare("SELECT * FROM product");
-
-
 $p_id = $_POST['cart'];
 $act = $_POST['act'];
 $check_number = $_POST['number'];
@@ -141,8 +138,13 @@ if ($act == 'remove' && !empty($p_id)) {
                                                         $i  =  1;
                                                         $sum    =  0;
                                                         $total  =  0;
+                                                        $price =  0;
                                                         foreach ($_SESSION['cart'] as $p_id => $qty) {
-                                                            $select_p = $conn->prepare("SELECT * FROM product  WHERE id=?");
+                                                            $select_p = $conn->prepare("SELECT p.* 
+                                                            (SELECT im.img FROM product_img im WHERE im.product_id=p.id ORDER BY im.id ASC LIMIT 1) AS show_img
+                                                            FROM product p
+                                                            WHERE p.id=?
+                                                            ");
                                                             $select_p->bindParam(1, $p_id);
                                                             $select_p->execute();
                                                             $row_p = $select_p->fetch(PDO::FETCH_ASSOC);
@@ -151,7 +153,7 @@ if ($act == 'remove' && !empty($p_id)) {
                                                         ?>
                                                             <tr>
                                                                 <td style="text-align: center; vertical-align: middle;"><?= $i++; ?></td>
-                                                                <td style="text-align: center; vertical-align: middle;"><img src="../share/image/product/<?= $row_img['show_img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px"></td>
+                                                                <td style="text-align: center; vertical-align: middle;"><img src="../share/image/product/<?= $row_p['show_img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px"></td>
                                                                 <td style="text-align: center; vertical-align: middle;"><?= $row_p['name']; ?></td>
                                                                 <td style="text-align: center; vertical-align: middle;"><input type="number" name="amount[<?= $p_id ?>];" value="<?= $qty; ?>" min="1" max="100" class="px-3 py-2 border rounded"></td>
                                                                 <td style="text-align: center; vertical-align: middle;"><?= $row_p['selling_price']; ?></td>
