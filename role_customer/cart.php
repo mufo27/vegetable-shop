@@ -11,16 +11,9 @@ if (isset($_POST['cart'])) {
     // $select->execute();
     // $row = $select->fetch(PDO::FETCH_ASSOC);
 
-<<<<<<< HEAD
-
     $p_id = $_POST['cart'];
     $act = $_POST['act'];
     $check_number = $_POST['number'];
-=======
-$p_id = $_POST['cart'];
-$act = $_POST['act'];
-$check_number = $_POST['number'];
->>>>>>> 49dea60203eed017fe13ed2e8763fcd3ec78b4c7
 
     for ($k = 1; $k <= $check_number; $k++) {
         if ($act == 'add' && !empty($p_id)) {
@@ -144,18 +137,10 @@ $check_number = $_POST['number'];
                                                         $total  =  0;
                                                         $price =  0;
                                                         foreach ($_SESSION['cart'] as $p_id => $qty) {
-<<<<<<< HEAD
                                                             $select_p = $conn->prepare("SELECT p.id, p.name, p.price_sell, p.unit,
                                                                                         (SELECT im.img FROM product_img im WHERE im.product_id=p.id ORDER BY im.id ASC LIMIT 1) AS show_img
                                                                                         FROM product p WHERE p.id=?
                                                                                         ");
-=======
-                                                            $select_p = $conn->prepare("SELECT p.* 
-                                                            (SELECT im.img FROM product_img im WHERE im.product_id=p.id ORDER BY im.id ASC LIMIT 1) AS show_img
-                                                            FROM product p
-                                                            WHERE p.id=?
-                                                            ");
->>>>>>> 49dea60203eed017fe13ed2e8763fcd3ec78b4c7
                                                             $select_p->bindParam(1, $p_id);
                                                             $select_p->execute();
                                                             $row_p = $select_p->fetch(PDO::FETCH_ASSOC);
@@ -165,13 +150,9 @@ $check_number = $_POST['number'];
                                                         ?>
                                                             <tr>
                                                                 <td style="text-align: center; vertical-align: middle;"><?= $i++; ?></td>
-<<<<<<< HEAD
                                                                 <td style="text-align: center; vertical-align: middle;">
                                                                     <img src="../share/image/product/<?= $row_p['show_img']; ?>" class="profile-image-lg" alt="..." width="100px" height="70px">
                                                                 </td>
-=======
-                                                                <td style="text-align: center; vertical-align: middle;"><img src="../share/image/product/<?= $row_p['show_img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px"></td>
->>>>>>> 49dea60203eed017fe13ed2e8763fcd3ec78b4c7
                                                                 <td style="text-align: center; vertical-align: middle;"><?= $row_p['name']; ?></td>
                                                                 <td style="text-align: center; vertical-align: middle;"><?= $row_p['price_sell']; ?></td>
                                                                 <td style="text-align: center; vertical-align: middle;">

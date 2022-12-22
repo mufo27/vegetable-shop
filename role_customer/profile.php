@@ -1,10 +1,7 @@
-<<<<<<< HEAD
 <?php
 require_once('include/auth.inc.php');
 require_once('../database/condb.inc.php');
 ?>
-=======
->>>>>>> 49dea60203eed017fe13ed2e8763fcd3ec78b4c7
 <!DOCTYPE html>
 <html lang="en">
 
