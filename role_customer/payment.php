@@ -2,63 +2,63 @@
 require_once('include/auth.inc.php');
 require_once('../database/condb.inc.php');
 
-if (isset($_GET['payment_order_buy'])) {
+if (isset($_GET['payment'])) {
 
-    $check_payment_buy_status = $_GET['payment_order_buy'];
+    $check_payment_status = $_GET['payment'];
 
-    if ($check_payment_buy_status === '1' || $check_payment_buy_status === '2') {
- 
-        if ($check_payment_buy_status === '1') {
+    if ($check_payment_status === '1' || $check_payment_status === '2') {
 
-            $val_payment_buy_status = 'ยังไม่ชำระเงิน';
-            $btn_payment_buy_status = '<a href="payment_order_buy.php?payment_order_buy" class="btn btn-outline-dark waves-effect waves-themed">ทั้งหมด</a>
-                                   <a href="payment_order_buy.php?payment_order_buy=1" class="btn btn-dark waves-effect waves-themed">ยังไม่ชำระเงิน</a>
-                                   <a href="payment_order_buy.php?payment_order_buy=2" class="btn btn-outline-dark waves-effect waves-themed">ชำระเงินแล้ว</a>
+        if ($check_payment_status === '1') {
+
+            $val_payment_status = 'ยังไม่ชำระเงิน';
+            $btn_payment_status = '<a href="payment.php?payment" class="btn btn-outline-dark waves-effect waves-themed">ทั้งหมด</a>
+                                   <a href="payment.php?payment=1" class="btn btn-dark waves-effect waves-themed">ยังไม่ชำระเงิน</a>
+                                   <a href="payment.php?payment=2" class="btn btn-outline-dark waves-effect waves-themed">ชำระเงินแล้ว</a>
                                    ';
         } else {
 
-            $val_payment_buy_status = 'ชำระเงินแล้ว';
-            $btn_payment_buy_status = '<a href="payment_order_buy.php?payment_order_buy" class="btn btn-outline-dark waves-effect waves-themed">ทั้งหมด</a>
-                                   <a href="payment_order_buy.php?payment_order_buy=1" class="btn btn-outline-dark waves-effect waves-themed">ยังไม่ชำระเงิน</a>
-                                   <a href="payment_order_buy.php?payment_order_buy=2" class="btn btn-dark waves-effect waves-themed">ชำระเงินแล้ว</a>
+            $val_payment_status = 'ชำระเงินแล้ว';
+            $btn_payment_status = '<a href="payment.php?payment" class="btn btn-outline-dark waves-effect waves-themed">ทั้งหมด</a>
+                                   <a href="payment.php?payment=1" class="btn btn-outline-dark waves-effect waves-themed">ยังไม่ชำระเงิน</a>
+                                   <a href="payment.php?payment=2" class="btn btn-dark waves-effect waves-themed">ชำระเงินแล้ว</a>
                                    ';
 
         }
 
-        $select = $conn->prepare("SELECT o.id AS orders_buy_id, 
+        $select = $conn->prepare("SELECT o.id AS orders_id, 
                                             o.total AS orders_total,
-                                            pb.id AS payment_buy_id, 
-                                            pb.code AS payment_buy_code, 
-                                            pb.status AS payment_buy_status,
-                                            pb.total AS payment_buy_total,
-                                            pb.form AS payment_buy_form,
-                                            pb.img AS payment_buy_img
+                                            p.id AS payment_id, 
+                                            p.code AS payment_code, 
+                                            p.status AS payment_status,
+                                            p.total AS payment_total,
+                                            p.form AS payment_form,
+                                            p.img AS payment_img
                                             
-                                    FROM orders_buy o 
-                                    INNER JOIN payment_buy pb ON o.id = pb.orders_buy_id
-                                    WHERE pb.status = ?
+                                    FROM orders o 
+                                    INNER JOIN payment p ON o.id = p.orders_id
+                                    WHERE p.status = ?
                                     ORDER BY o.save_time DESC
                                 ");
-        $select->bindParam(1, $val_payment_buy_status);
+        $select->bindParam(1, $val_payment_status);
         $select->execute();
     } else {
 
-        $btn_payment_buy_status = '<a href="payment_order_buy.php?payment_order_buy" class="btn btn-dark waves-effect waves-themed">ทั้งหมด</a>
-                               <a href="payment_order_buy.php?payment_order_buy=1" class="btn btn-outline-dark waves-effect waves-themed">ยังไม่ชำระเงิน</a>
-                               <a href="payment_order_buy.php?payment_order_buy=2" class="btn btn-outline-dark waves-effect waves-themed">ชำระเงินแล้ว</a>
+        $btn_payment_status = '<a href="payment.php?payment" class="btn btn-dark waves-effect waves-themed">ทั้งหมด</a>
+                               <a href="payment.php?payment=1" class="btn btn-outline-dark waves-effect waves-themed">ยังไม่ชำระเงิน</a>
+                               <a href="payment.php?payment=2" class="btn btn-outline-dark waves-effect waves-themed">ชำระเงินแล้ว</a>
                                 ';
 
-        $select = $conn->prepare("SELECT o.id AS orders_buy_id, 
+        $select = $conn->prepare("SELECT o.id AS orders_id, 
                                             o.total AS orders_total,
-                                            pb.id AS payment_buy_id, 
-                                            pb.code AS payment_buy_code, 
-                                            pb.status AS payment_buy_status,
-                                            pb.total AS payment_buy_total,
-                                            pb.form AS payment_buy_form,
-                                            pb.img AS payment_buy_img
+                                            p.id AS payment_id, 
+                                            p.code AS payment_code, 
+                                            p.status AS payment_status,
+                                            p.total AS payment_total,
+                                            p.form AS payment_form,
+                                            p.img AS payment_img
                                             
-                                    FROM orders_buy o 
-                                    INNER JOIN payment_buy pb ON o.id = pb.orders_buy_id
+                                    FROM orders o 
+                                    INNER JOIN payment p ON o.id = p.orders_id
                                     ORDER BY o.save_time DESC
                                 ");
         $select->execute();
@@ -122,7 +122,7 @@ if (isset($_GET['payment_order_buy'])) {
                         <div class="col-xl-12">
                             <div class="demo">
 
-                                <?= $btn_payment_buy_status; ?>
+                                <?= $btn_payment_status; ?>
 
                             </div>
                         </div>
@@ -162,49 +162,49 @@ if (isset($_GET['payment_order_buy'])) {
                                                 $i = 1;
                                                 while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
 
-                                                    if ($row['payment_buy_status'] === 'ยังไม่ชำระเงิน') {
-                                                        $show_payment_buy_status = '<span class="badge badge-danger badge-pill">ยังไม่ชำระเงิน</span>';
+                                                    if ($row['payment_status'] === 'ยังไม่ชำระเงิน') {
+                                                        $show_payment_status = '<span class="badge badge-danger badge-pill">ยังไม่ชำระเงิน</span>';
                                                     } else {
-                                                        $show_payment_buy_status = '<span class="badge badge-success badge-pill">ชำระเงินแล้ว</span>';
+                                                        $show_payment_status = '<span class="badge badge-success badge-pill">ชำระเงินแล้ว</span>';
                                                     }
 
-                                                    if ($row['payment_buy_form'] === '-') {
-                                                        $show_payment_buy_form = '';
-                                                        $show_payment_buy_form_modal = 'เลือก';
+                                                    if ($row['payment_form'] === '-') {
+                                                        $show_payment_form = '';
+                                                        $show_payment_form_modal = 'เลือก';
                                                     } else {
-                                                        $show_payment_buy_form = $row['payment_buy_form'];
-                                                        $show_payment_buy_form_modal = $row['payment_buy_form'];
+                                                        $show_payment_form = $row['payment_form'];
+                                                        $show_payment_form_modal = $row['payment_form'];
                                                     }
 
-                                                    if (isset($row['payment_buy_img'])) {
-                                                        $show_payment_buy_img = '<img src="../share/image/payment-slip/' . $row['payment_buy_img'] . '" class="profile-image-lg" alt="..." width="200px" height="100px">';
+                                                    if (isset($row['payment_img'])) {
+                                                        $show_payment_img = '<img src="../share/image/payment-slip/' . $row['payment_img'] . '" class="profile-image-lg" alt="..." width="200px" height="100px">';
                                                     } else {
-                                                        $show_payment_buy_img = '';
+                                                        $show_payment_img = '';
                                                     }
 
 
                                                 ?>
                                                     <tr>
                                                         <td style="text-align: center; vertical-align: middle;"><?= $i++; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['payment_buy_code']; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['payment_code']; ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?= $row['orders_total']; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><?= $show_payment_buy_status; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['payment_buy_total']; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><?= $show_payment_buy_form; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"> <?= $show_payment_buy_img ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $show_payment_status; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['payment_total']; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $show_payment_form; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"> <?= $show_payment_img ?></td>
                                                         <td style="text-align: center; vertical-align: middle;">
-                                                            <button type="button" class="btn btn-warning btn-sm btn-icon waves-effect waves-themed mb-2" data-toggle="modal" data-target="#payment-modal<?= $row['orders_buy_id']; ?>"><i class="fal fa-money-check-edit-alt"></i></button>
+                                                            <button type="button" class="btn btn-warning btn-sm btn-icon waves-effect waves-themed mb-2" data-toggle="modal" data-target="#payment-modal<?= $row['orders_id']; ?>"><i class="fal fa-money-check-edit-alt"></i></button>
                                                         </td>
                                                     </tr>
 
                                                     <!-- Modal Payment-->
-                                                    <div class="modal fade" id="payment-modal<?= $row['orders_buy_id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal fade" id="payment-modal<?= $row['orders_id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
 
-                                                                <form action="action/payment_order_buy_db.php" method="post" enctype="multipart/form-data">
+                                                                <form action="action/payment_db.php" method="post" enctype="multipart/form-data">
 
-                                                                    <input type="hidden" name="payment_buy_id" value="<?= $row['payment_buy_id']; ?>" required>
+                                                                    <input type="hidden" name="payment_id" value="<?= $row['payment_id']; ?>" required>
 
                                                                     <div class="modal-header">
                                                                         <h4 class="modal-title">
@@ -219,20 +219,20 @@ if (isset($_GET['payment_order_buy'])) {
                                                                         <div class="form-group row">
                                                                             <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">เลขที่ใบชำระเงิน:</label>
                                                                             <div class="col-lg-9">
-                                                                                <input type="text" class="form-control" value="<?= $row['payment_buy_code']; ?>" readonly="">
+                                                                                <input type="text" class="form-control" value="<?= $row['payment_code']; ?>" readonly="">
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group row">
                                                                             <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">จำนวนเงิน:</label>
                                                                             <div class="col-lg-9">
-                                                                                <input type="number" id="payment_buy_total" name="payment_buy_total" class="form-control" value="<?= $row['payment_buy_total']; ?>" min="0" max="999999" required>
+                                                                                <input type="number" id="payment_total" name="payment_total" class="form-control" value="<?= $row['payment_total']; ?>" min="0" max="999999" required>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group row">
                                                                             <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">ช่องทาง:</label>
                                                                             <div class="col-lg-9">
-                                                                                <select class="custom-select form-control" name="payment_buy_form" required>
-                                                                                    <option value="<?= $row['payment_buy_form']; ?>">-- <?= $show_payment_buy_form_modal; ?> --</option>
+                                                                                <select class="custom-select form-control" name="payment_form" required>
+                                                                                    <option value="<?= $row['payment_form']; ?>">-- <?= $show_payment_form_modal; ?> --</option>
                                                                                     <option value="-">-</option>
                                                                                     <option value="เงินสด">เงินสด</option>
                                                                                     <option value="พร้อมเพย์">พร้อมเพย์</option>
@@ -243,14 +243,14 @@ if (isset($_GET['payment_order_buy'])) {
                                                                         <!-- <div class="form-group row">
                                                                             <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">หลักฐาน:</label>
                                                                             <div class="col-lg-9">
-                                                                                <img src="../share/image/payment-slip/<?= $row['payment_buy_img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px">
+                                                                                <img src="../share/image/payment-slip/<?= $row['payment_img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px">
                                                                             </div>
                                                                         </div> -->
                                                                         <div class="form-group row">
                                                                             <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">อัพโหลดหลักฐาน:</label>
                                                                             <div class="col-lg-9">
-                                                                                <input type="file" id="chooseFile2" name="payment_buy_img" class="form-control" value="">
-                                                                                <input type="hidden" id="payment_buy_img2" name="payment_buy_img2" class="form-control" value="<?= $row['payment_buy_img']; ?>">
+                                                                                <input type="file" id="chooseFile2" name="payment_img" class="form-control" value="">
+                                                                                <input type="hidden" id="payment_img2" name="payment_img2" class="form-control" value="<?= $row['payment_img']; ?>">
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group row">

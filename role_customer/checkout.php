@@ -143,7 +143,7 @@
     </div>
     <!-- END Page Wrapper -->
 
-    <?php include('include/settings_page.inc.php'); ?>
+    <?php include('include/settings_page.inc.php'); ?> 
 
     <script src="../assets/dist/js/vendors.bundle.js"></script>
     <script src="../assets/dist/js/app.bundle.js"></script>

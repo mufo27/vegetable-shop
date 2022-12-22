@@ -2,18 +2,19 @@
 require_once('include/auth.inc.php');
 require_once('../database/condb.inc.php');
 
-if (isset($_GET['order_buy'])) {
+if (isset($_GET['history'])) {
+
     $select = $conn->prepare("SELECT o.*, 
                             concat(a.pkname,'',a.fname,' ',a.lname) AS account_name,
-                            pb.code AS payment_buy_code, 
-                            pb.status AS payment_buy_status, 
-                            sb.code AS send_buy_code, 
-                            sb.status AS send_buy_status
-
-                            FROM orders_buy o 
+                            p.code AS payment_code, 
+                            p.status AS payment_status, 
+                            s.code AS send_code, 
+                            s.status AS send_status
+                            
+                            FROM orders o 
                             INNER JOIN account a ON o.account_id = a.id
-                            INNER JOIN payment_buy pb ON o.id = pb.orders_buy_id
-                            INNER JOIN send_buy sb ON o.id = sb.orders_buy_id
+                            INNER JOIN payment p ON o.id = p.orders_id
+                            INNER JOIN send s ON o.id = s.orders_id
                             ORDER BY o.save_time DESC
                         ");
     $select->execute();
@@ -27,7 +28,7 @@ if (isset($_GET['order_buy'])) {
     <meta charset="utf-8">
     <title>
 
-        รายการสั่งซื้อ - ระบบจัดการสินค้าออนไลน์
+        ประวัติ - ระบบจัดการสินค้าออนไลน์
 
     </title>
     <meta name="description" content="Basic">
@@ -68,7 +69,7 @@ if (isset($_GET['order_buy'])) {
                 <!-- BEGIN Page Content -->
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item active"> รายการสั่งซื้อ </li>
+                        <li class="breadcrumb-item active"> ประวัติ </li>
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
                     </ol>
 
@@ -77,7 +78,7 @@ if (isset($_GET['order_buy'])) {
                             <div id="panel-1" class="panel">
                                 <div class="panel-hdr">
                                     <h2>
-                                        แสดงรายการข้อมูลรายการสั่งซื้อ
+                                        แสดงรายการข้อมูลประวัติ
                                     </h2>
                                     <div class="panel-toolbar">
 
@@ -108,18 +109,18 @@ if (isset($_GET['order_buy'])) {
                                                 $i = 1;
                                                 while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
 
-                                                    if ($row['payment_buy_status'] === 'ยังไม่ชำระเงิน') {
-                                                        $show_payment_buy_status = '<span class="badge badge-danger badge-pill">ยังไม่ชำระเงิน</span>';
+                                                    if ($row['payment_status'] === 'ยังไม่ชำระเงิน') {
+                                                        $show_payment_status = '<span class="badge badge-danger badge-pill">ยังไม่ชำระเงิน</span>';
                                                     } else {
-                                                        $show_payment_buy_status = '<span class="badge badge-success badge-pill">ชำระเงินแล้ว</span>';
+                                                        $show_payment_status = '<span class="badge badge-success badge-pill">ชำระเงินแล้ว</span>';
                                                     }
 
-                                                    if ($row['send_buy_status'] === 'ยังไม่จัดส่ง') {
-                                                        $show_send_buy_status = '<span class="badge badge-danger badge-pill">ยังไม่จัดส่ง</span>';
-                                                    } else if ($row['send_buy_status'] === 'รอการจัดส่ง') {
-                                                        $show_send_buy_status = '<span class="badge badge-warning badge-pill">รอการจัดส่ง</span>';
+                                                    if ($row['send_status'] === 'ยังไม่จัดส่ง') {
+                                                        $show_send_status = '<span class="badge badge-danger badge-pill">ยังไม่จัดส่ง</span>';
+                                                    } else if ($row['send_status'] === 'รอการจัดส่ง') {
+                                                        $show_send_status = '<span class="badge badge-warning badge-pill">รอการจัดส่ง</span>';
                                                     } else {
-                                                        $show_send_buy_status = '<span class="badge badge-success badge-pill">จัดส่งแล้ว</span>';
+                                                        $show_send_status = '<span class="badge badge-success badge-pill">จัดส่งแล้ว</span>';
                                                     }
 
                                                 ?>
@@ -127,14 +128,14 @@ if (isset($_GET['order_buy'])) {
                                                         <td style="text-align: center; vertical-align: middle;"><?= $i++; ?></td>
                                                         <td style="vertical-align: middle;"><?= $row['account_name']; ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?= $row['code']; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['payment_buy_code']; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['send_buy_code']; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['payment_code']; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['send_code']; ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?= $row['total']; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><?= $show_payment_buy_status; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><?= $show_send_buy_status; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $show_payment_status; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $show_send_status; ?></td>
                                                         <td style="text-align: center;  vertical-align: middle;"><?= date('d-m-y H:i:s', strtotime($row['save_time'])); ?></td>
                                                         <td style="text-align: center; vertical-align: middle;">
-                                                            <a href="order_buy_detail.php?order_buy_detail=<?= $row['id']; ?>" class="btn btn-info btn-sm btn-icon waves-effect waves-themed mb-2"><i class="fal fa-info-square"></i></a>
+                                                            <a href="order_detail.php?order_detail=<?= $row['id']; ?>" class="btn btn-info btn-sm btn-icon waves-effect waves-themed mb-2"><i class="fal fa-info-square"></i></a>
                                                         </td>
                                                     </tr>
 

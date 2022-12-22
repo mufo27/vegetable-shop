@@ -23,23 +23,11 @@
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/dist/img/favicon/favicon-32x32.png">
   <link rel="mask-icon" href="../assets/dist/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
   <link rel="stylesheet" media="screen, print" href="../assets/dist/css/fa-brands.css">
-  <!-- sweetalert2 -->
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!-- font google -->
-  <style type="text/css">
-    @import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap");
-
-    body {
-      font-family: "Kanit", sans-serif;
-      font-size: 16px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
-
-  <?php require_once('check_register.inc.php'); ?>
 
   <div class="page-wrapper auth">
     <div class="page-inner bg-brand-gradient">
@@ -89,26 +77,23 @@
                   แบบฟอร์มสมัครสมาชิกใหม่
                 </h1>
                 <div class="card p-4 rounded-plus bg-faded">
-                  <form id="js-login" novalidate="" action="" method="post">
+                  <form action="check_register.php" method="post">
                     <div class="form-group">
-                      <label class="form-label" for="phone">Phone</label>
-                      <input type="phone" id="phone" name="phone" class="form-control form-control-lg" placeholder="เบอร์โทร" value="" required>
+                      <label class="form-label" for="">บัญชีผู้ใช้งาน</label>
+                      <input type="email" id="" name="user" class="form-control form-control-lg" placeholder="" required>
                       <div class="invalid-feedback">คุณไม่ได้กรอกข้อมูลช่องนี้...!!</div>
                     </div>
                     <div class="form-group">
-                      <label class="form-label" for="username">Username</label>
-                      <input type="email" id="username" name="user" class="form-control form-control-lg" placeholder="ชื่อบัญชีผู้ใช้งาน" value="" required>
-                      <div class="invalid-feedback">คุณไม่ได้กรอกข้อมูลช่องนี้...!!</div>
+                      <label class="form-label" for="">รหัสผ่าน</label>
+                      <input type="password" id="" name="pass" class="form-control form-control-lg" placeholder="" required>
                     </div>
                     <div class="form-group">
-                      <label class="form-label" for="password">Password</label>
-                      <input type="password" id="password" name="pass" class="form-control form-control-lg" placeholder="รหัสผ่าน" value="" required>
-                      <div class="invalid-feedback">คุณไม่ได้กรอกข้อมูลช่องนี้...!!</div>
+                      <label class="form-label" for="password">ยืนยันรหัสผ่าน</label>
+                      <input type="password" id="" name="cpass" class="form-control form-control-lg" placeholder="" required>
                     </div>
                     <div class="form-group">
-                      <label class="form-label" for="password">Confirm Password</label>
-                      <input type="password" id="re-password" name="cpass" class="form-control form-control-lg" placeholder="ยืนยันรหัสผ่าน" value="" required>
-                      <div class="invalid-feedback">คุณไม่ได้กรอกข้อมูลช่องนี้...!!</div>
+                      <label class="form-label" for="">เบอร์โทร</label>
+                      <input type="phone" id="" name="phone" class="form-control form-control-lg" placeholder="" required>
                     </div>
                     <div class="form-group">
                       <label for="">สถานะพันธมิตร</label>
@@ -120,16 +105,13 @@
                       <div class="invalid-feedback">คุณไม่ได้กรอกข้อมูลช่องนี้...!!</div>
                     </div>
                     <div class="row no-gutters">
-                      <div class="col-lg-6 pr-lg-1 my-2">
-                        <button type="submit" name="btn_register" class="btn btn-info btn-block btn-lg">ยืนยัน</button>
-                      </div>
-                      <div class="col-lg-6 pl-lg-1 my-2">
-                        <button id="js-login-btn" type="submit" class="btn btn-danger btn-block btn-lg">ตรวจสอบข้อมูล</button>
+                      <div class="col-lg-12 pr-lg-1 my-2">
+                        <button type="submit" name="btn_register" class="btn btn-info btn-block btn-lg">ยืนยันสมัครสมาชิก</button>
                       </div>
                     </div>
-                    <p class="mt-5 text-muted text-center">
+                    <p class="mt-5 text-center">
                       มีบัญชีอยู่แล้ว?
-                      <a href="../login/index.php">เข้าสู่ระบบ</a>
+                      <a href="../login/index.php" class="text-success">เข้าสู่ระบบ</a>
                     </p>
                   </form>
                 </div>
@@ -147,21 +129,7 @@
 
   <script src="../assets/dist/js/vendors.bundle.js"></script>
   <script src="../assets/dist/js/app.bundle.js"></script>
-  <script>
-    $("#js-login-btn").click(function(event) {
 
-      // Fetch form to apply custom Bootstrap validation
-      var form = $("#js-login")
-
-      if (form[0].checkValidity() === false) {
-        event.preventDefault()
-        event.stopPropagation()
-      }
-
-      form.addClass('was-validated');
-      // Perform ajax submit here...
-    });
-  </script>
 </body>
 <!-- END Body -->
 

@@ -1,46 +1,42 @@
 <?php
-session_start();
+require_once('include/auth.inc.php');
 require_once('../database/condb.inc.php');
 
-// $id = $_SESSION['id'];
+if (isset($_POST['cart'])) {
 
-// $select = $conn->prepare("SELECT * FROM accuont WHERE id = ?");
-// $select->bindParam(1, $id);
-// $select->execute();
-// $row = $select->fetch(PDO::FETCH_ASSOC);
+    // $id = $_SESSION['id'];
+
+    // $select = $conn->prepare("SELECT * FROM accuont WHERE id = ?");
+    // $select->bindParam(1, $id);
+    // $select->execute();
+    // $row = $select->fetch(PDO::FETCH_ASSOC);
 
 
-$p_id = $_POST['cart'];
-$act = $_POST['act'];
-$check_number = $_POST['number'];
+    $p_id = $_POST['cart'];
+    $act = $_POST['act'];
+    $check_number = $_POST['number'];
 
-for ($k = 1; $k <= $check_number; $k++) {
-    if ($act == 'add' && !empty($p_id)) {
+    for ($k = 1; $k <= $check_number; $k++) {
+        if ($act == 'add' && !empty($p_id)) {
 
-        if (isset($_SESSION['cart'][$p_id])) {
+            if (isset($_SESSION['cart'][$p_id])) {
 
-            $_SESSION['cart'][$p_id]++;
-        } else {
+                $_SESSION['cart'][$p_id]++;
+            } else {
 
-            $_SESSION['cart'][$p_id] = 1;
+                $_SESSION['cart'][$p_id] = 1;
+            }
+        }
+        if ($k >= $check_number) {
+            header("location: cart.php");
+            exit;
         }
     }
-    if ($k >= $check_number) {
-        header("location: cart.php");
-        exit;
+
+    if ($act == 'remove' && !empty($p_id)) {
+        unset($_SESSION['cart'][$p_id]);
     }
 }
-
-
-if ($act == 'remove' && !empty($p_id)) {
-    unset($_SESSION['cart'][$p_id]);
-}
-
-
-// print_r('<pre>');
-// print_r($_POST);
-// print_r('<pre>');
-
 ?>
 
 <!DOCTYPE html>
@@ -97,7 +93,7 @@ if ($act == 'remove' && !empty($p_id)) {
                         <li class="breadcrumb-item"><a href="javascript:void(0);">ตะกร้าสินค้า</a></li>
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date">Sunday, December 18, 2022</span></li>
                     </ol>
-
+                    
                     <div class="row">
                         <div class="col-xl-12">
                             <div id="panel-1" class="panel">
@@ -125,13 +121,14 @@ if ($act == 'remove' && !empty($p_id)) {
                                                 <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
                                                     <thead class="bg-dark text-white">
                                                         <tr>
-                                                            <th style="width:10%; text-align: center; vertical-align: middle;">No.</th>
-                                                            <th style="width:40%; text-align: center; vertical-align: middle;">รูปภาพ</th>
+                                                            <th style="width:5%; text-align: center; vertical-align: middle;">No.</th>
+                                                            <th style="width:10%; text-align: center; vertical-align: middle;">รูปภาพ</th>
                                                             <th style="width:30%; text-align: center; vertical-align: middle;">สินค้า</th>
-                                                            <th style="width:30%; text-align: center; vertical-align: middle;">จำนวนสินค้า</th>
-                                                            <th style="width:30%; text-align: center; vertical-align: middle;">ราคา</th>
-                                                            <th style="width:30%; text-align: center; vertical-align: middle;">ราคารวมทั้งหมด</th>
-                                                            <th style="width:20%; text-align: center; vertical-align: middle;">จัดการ</th>
+                                                            <th style="width:10%; text-align: center; vertical-align: middle;">ราคา</th>
+                                                            <th style="width:10%; text-align: center; vertical-align: middle;">จำนวน</th>
+                                                            <th style="width:10%; text-align: center; vertical-align: middle;">หน่วยนับ</th>
+                                                            <th style="width:10%; text-align: center; vertical-align: middle;">ราคารวม</th>
+                                                            <th style="width:10%; text-align: center; vertical-align: middle;">จัดการ</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -140,22 +137,30 @@ if ($act == 'remove' && !empty($p_id)) {
                                                         $sum    =  0;
                                                         $total  =  0;
                                                         foreach ($_SESSION['cart'] as $p_id => $qty) {
-                                                            $select_p = $conn->prepare("SELECT * FROM product  WHERE id=?");
+                                                            $select_p = $conn->prepare("SELECT p.id, p.name, p.price_sell, p.unit,
+                                                                                        (SELECT im.img FROM product_img im WHERE im.product_id=p.id ORDER BY im.id ASC LIMIT 1) AS show_img
+                                                                                        FROM product p WHERE p.id=?
+                                                                                        ");
                                                             $select_p->bindParam(1, $p_id);
                                                             $select_p->execute();
                                                             $row_p = $select_p->fetch(PDO::FETCH_ASSOC);
                                                             $sum = $row_p['price_sell'] * $qty;
                                                             $total += $sum;
+
                                                         ?>
                                                             <tr>
                                                                 <td style="text-align: center; vertical-align: middle;"><?= $i++; ?></td>
-                                                                <td style="text-align: center; vertical-align: middle;"><img src="../share/image/product/<?= $row_img['show_img']; ?>" class="profile-image-lg" alt="..." width="250px" height="150px"></td>
+                                                                <td style="text-align: center; vertical-align: middle;">
+                                                                    <img src="../share/image/product/<?= $row_p['show_img']; ?>" class="profile-image-lg" alt="..." width="100px" height="70px">
+                                                                </td>
                                                                 <td style="text-align: center; vertical-align: middle;"><?= $row_p['name']; ?></td>
-                                                                <td style="text-align: center; vertical-align: middle;"><input type="number" name="amount[<?= $p_id ?>];" value="<?= $qty; ?>" min="1" max="100" class="px-3 py-2 border rounded"></td>
-                                                                <td style="text-align: center; vertical-align: middle;"><?= $row_p['selling_price']; ?></td>
+                                                                <td style="text-align: center; vertical-align: middle;"><?= $row_p['price_sell']; ?></td>
+                                                                <td style="text-align: center; vertical-align: middle;">
+                                                                    <input type="number" name="amount[<?= $p_id ?>];" value="<?= $qty; ?>" min="1" max="100" class="px-3 py-2 border rounded">
+                                                                </td>
+                                                                <td style="text-align: center; vertical-align: middle;"><?= $row_p['unit']; ?></td>
                                                                 <td style="text-align: center; vertical-align: middle;"><?= $sum; ?></td>
                                                                 <td style="text-align: center; vertical-align: middle;">
-                                                                    <!-- <button type="button" class="btn btn-warning btn-sm btn-icon waves-effect waves-themed"><i class="fal fa-edit"></i></button> -->
 
                                                                     <input type="hidden" name="cart" value="<?= $row_p['id']; ?>">
                                                                     <input type="hidden" name="act" value="remove">
@@ -163,24 +168,28 @@ if ($act == 'remove' && !empty($p_id)) {
                                                                     <button type="submit" class="btn btn-danger btn-sm btn-icon waves-effect waves-themed"><i class="fal fa-times"></i></button>
                                                                 </td>
                                                             </tr>
-                                                        <?php } ?>
+                                                        <?php 
+                                                            $_SESSION['num'] = $i;
+                                                    
+                                                    } ?>
                                                     </tbody>
                                                 </table>
                                                 <!-- datatable end -->
+
                                                 <div class="row mt-5">
                                                     <div class="col-6"></div>
                                                     <div class="col-3">
                                                         <div class="single-input">
-                                                            <button type="submit" name="update" value="update" class="btn btn-warning">ปรับปรุงสินค้าในตะกร้า</button>
+                                                            <button type="submit" name="update" value="update" class="btn btn-warning">อัพเดทตะกร้าสินค้า</button>
                                                         </div>
                                                     </div>
                                                     <div class="col-3">
                                                         <div class="single-input">
-                                                            <!-- <button type="submit" name="send" value="<?= $_SESSION['cart']; ?>" class="btn btn-success btn-lg"><i class="lni lni-telegram-original"></i> สั่งซื้อสินค้าตอนนี้</button> -->
-                                                            <button type="submit" name="send" value="<?= $_SESSION['cart']; ?>" class="btn btn-success">สั่งซื้อสินค้าตอนนี้</button>
+                                                            <button type="submit" name="send" value="<?= $_SESSION['cart']; ?>" class="btn btn-success">ยืนยันซื้อสินค้าตอนนี้</button>
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </form>
 
                                         <?php } ?>

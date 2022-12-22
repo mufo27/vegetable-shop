@@ -445,7 +445,7 @@
                 </a>
 
                 <div class="dropdown-divider m-0"></div>
-                <a class="dropdown-item fw-500 pt-3 pb-3" href="../../logout.php">
+                <a class="dropdown-item fw-500 pt-3 pb-3" href="../login/logout.php">
                     <span data-i18n="drpdwn.page-logout">ออกจากระบบ</span>
                 </a>
             </div>

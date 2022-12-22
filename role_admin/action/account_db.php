@@ -1,3 +1,5 @@
+<?php require_once('../include/auth.inc.php'); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,10 +8,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>กำลังดำเนินการบัญชีผู้ใช้งาน</title>
+    
+    <link rel="stylesheet" href="../include/style.css">
     <!-- sweetalert2 -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-
+ 
 <body>
 
     <?php

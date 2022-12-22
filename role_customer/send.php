@@ -2,78 +2,78 @@
 require_once('include/auth.inc.php');
 require_once('../database/condb.inc.php');
 
-if (isset($_GET['send_order_buy'])) {
+if (isset($_GET['send'])) {
 
-    $check_send_buy_status = $_GET['send_order_buy'];
+    $check_send_status = $_GET['send'];
     $check_payment_status = 'ชำระเงินแล้ว';
 
-    if ($check_send_buy_status === '1' || $check_send_buy_status === '2' || $check_send_buy_status === '3') {
+    if ($check_send_status === '1' || $check_send_status === '2' || $check_send_status === '3') {
 
 
-        if ($check_send_buy_status === '1') {
+        if ($check_send_status === '1') {
 
-            $val_send_buy_status = 'ยังไม่จัดส่ง';
-            $btn_send_buy_status = '<a href="send_order_buy.php?send_order_buy" class="btn btn-outline-dark waves-effect waves-themed">ทั้งหมด</a>
-                                <a href="send_order_buy.php?send_order_buy=1" class="btn btn-dark waves-effect waves-themed">ยังไม่จัดส่ง</a>
-                                <a href="send_order_buy.php?send_order_buy=2" class="btn btn-outline-dark waves-effect waves-themed">รอการจัดส่ง</a>
-                                <a href="send_order_buy.php?send_order_buy=3" class="btn btn-outline-dark waves-effect waves-themed">จัดส่งแล้ว</a>
+            $val_send_status = 'ยังไม่จัดส่ง';
+            $btn_send_status = '<a href="send.php?send" class="btn btn-outline-dark waves-effect waves-themed">ทั้งหมด</a>
+                                <a href="send.php?send=1" class="btn btn-dark waves-effect waves-themed">ยังไม่จัดส่ง</a>
+                                <a href="send.php?send=2" class="btn btn-outline-dark waves-effect waves-themed">รอการจัดส่ง</a>
+                                <a href="send.php?send=3" class="btn btn-outline-dark waves-effect waves-themed">จัดส่งแล้ว</a>
                                 ';
-        } else if ($check_send_buy_status === '2') {
+        } else if ($check_send_status === '2') {
 
-            $val_send_buy_status = 'รอการจัดส่ง';
-            $btn_send_buy_status = '<a href="send_order_buy.php?send_order_buy" class="btn btn-outline-dark waves-effect waves-themed">ทั้งหมด</a>
-                                <a href="send_order_buy.php?send_order_buy=1" class="btn btn-outline-dark waves-effect waves-themed">ยังไม่จัดส่ง</a>
-                                <a href="send_order_buy.php?send_order_buy=2" class="btn btn-dark waves-effect waves-themed">รอการจัดส่ง</a>
-                                <a href="send_order_buy.php?send_order_buy=3" class="btn btn-outline-dark waves-effect waves-themed">จัดส่งแล้ว</a>
+            $val_send_status = 'รอการจัดส่ง';
+            $btn_send_status = '<a href="send.php?send" class="btn btn-outline-dark waves-effect waves-themed">ทั้งหมด</a>
+                                <a href="send.php?send=1" class="btn btn-outline-dark waves-effect waves-themed">ยังไม่จัดส่ง</a>
+                                <a href="send.php?send=2" class="btn btn-dark waves-effect waves-themed">รอการจัดส่ง</a>
+                                <a href="send.php?send=3" class="btn btn-outline-dark waves-effect waves-themed">จัดส่งแล้ว</a>
                                 ';
         } else {
 
-            $val_send_buy_status = 'จัดส่งแล้ว';
-            $btn_send_buy_status = '<a href="send_order_buy.php?send_order_buy" class="btn btn-outline-dark waves-effect waves-themed">ทั้งหมด</a>
-                                <a href="send_order_buy.php?send_order_buy=1" class="btn btn-outline-dark waves-effect waves-themed">ยังไม่จัดส่ง</a>
-                                <a href="send_order_buy.php?send_order_buy=2" class="btn btn-outline-dark waves-effect waves-themed">รอการจัดส่ง</a>
-                                <a href="send_order_buy.php?send_order_buy=3" class="btn btn-dark waves-effect waves-themed">จัดส่งแล้ว</a>
+            $val_send_status = 'จัดส่งแล้ว';
+            $btn_send_status = '<a href="send.php?send" class="btn btn-outline-dark waves-effect waves-themed">ทั้งหมด</a>
+                                <a href="send.php?send=1" class="btn btn-outline-dark waves-effect waves-themed">ยังไม่จัดส่ง</a>
+                                <a href="send.php?send=2" class="btn btn-outline-dark waves-effect waves-themed">รอการจัดส่ง</a>
+                                <a href="send.php?send=3" class="btn btn-dark waves-effect waves-themed">จัดส่งแล้ว</a>
                                 ';
         }
 
-        $select = $conn->prepare("SELECT o.id AS orders_buy_id, 
-                                            o.total AS orders_buy_total,
-                                            sb.id AS send_buy_id, 
-                                            sb.code AS send_buy_code, 
-                                            sb.status AS send_buy_status,
-                                            sb.account_id AS account_id,
-                                            (SELECT concat(a.pkname,'',a.fname,' ',a.lname) FROM account a WHERE a.id = sb.account_id) AS account_name
+        $select = $conn->prepare("SELECT o.id AS orders_id, 
+                                            o.total AS orders_total,
+                                            s.id AS send_id, 
+                                            s.code AS send_code, 
+                                            s.status AS send_status,
+                                            s.account_id AS account_id,
+                                            (SELECT concat(a.pkname,'',a.fname,' ',a.lname) FROM account a WHERE a.id = s.account_id) AS account_name
                                             
-                                    FROM orders_buy o 
-                                    INNER JOIN payment_buy pb ON o.id = pb.orders_buy_id
-                                    INNER JOIN send_buy sb ON o.id = sb.orders_buy_id
-                                    WHERE pb.status=?
-                                    AND sb.status=?
+                                    FROM orders o 
+                                    INNER JOIN payment p ON o.id = p.orders_id
+                                    INNER JOIN send s ON o.id = s.orders_id
+                                    WHERE p.status=?
+                                    AND s.status=?
                                     ORDER BY o.save_time DESC
                                 ");
         $select->bindParam(1, $check_payment_status);
-        $select->bindParam(2, $val_send_buy_status);
+        $select->bindParam(2, $val_send_status);
         $select->execute();
     } else {
 
-        $btn_send_buy_status = '<a href="send_order_buy.php?send_order_buy" class="btn btn-dark waves-effect waves-themed">ทั้งหมด</a>
-                            <a href="send_order_buy.php?send_order_buy=1" class="btn btn-outline-dark waves-effect waves-themed">ยังไม่จัดส่ง</a>
-                            <a href="send_order_buy.php?send_order_buy=2" class="btn btn-outline-dark waves-effect waves-themed">รอการจัดส่ง</a>
-                            <a href="send_order_buy.php?send_order_buy=3" class="btn btn-outline-dark waves-effect waves-themed">จัดส่งแล้ว</a>
+        $btn_send_status = '<a href="send.php?send" class="btn btn-dark waves-effect waves-themed">ทั้งหมด</a>
+                            <a href="send.php?send=1" class="btn btn-outline-dark waves-effect waves-themed">ยังไม่จัดส่ง</a>
+                            <a href="send.php?send=2" class="btn btn-outline-dark waves-effect waves-themed">รอการจัดส่ง</a>
+                            <a href="send.php?send=3" class="btn btn-outline-dark waves-effect waves-themed">จัดส่งแล้ว</a>
                             ';
 
-        $select = $conn->prepare("SELECT o.id AS orders_buy_id, 
-                                            o.total AS orders_buy_total,
-                                            sb.id AS send_buy_id, 
-                                            sb.code AS send_buy_code, 
-                                            sb.status AS send_buy_status,
-                                            sb.account_id AS account_id,
-                                            (SELECT concat(a.pkname,'',a.fname,' ',a.lname) FROM account a WHERE a.id = sb.account_id) AS account_name
+        $select = $conn->prepare("SELECT o.id AS orders_id, 
+                                            o.total AS orders_total,
+                                            s.id AS send_id, 
+                                            s.code AS send_code, 
+                                            s.status AS send_status,
+                                            s.account_id AS account_id,
+                                            (SELECT concat(a.pkname,'',a.fname,' ',a.lname) FROM account a WHERE a.id = s.account_id) AS account_name
                                             
-                                    FROM orders_buy o 
-                                    INNER JOIN payment_buy pb ON o.id = pb.orders_buy_id
-                                    INNER JOIN send_buy sb ON o.id = sb.orders_buy_id
-                                    WHERE pb.status=?
+                                    FROM orders o 
+                                    INNER JOIN payment p ON o.id = p.orders_id
+                                    INNER JOIN send s ON o.id = s.orders_id
+                                    WHERE p.status=?
                                     ORDER BY o.save_time DESC
                                 ");
         $select->bindParam(1, $check_payment_status);
@@ -138,7 +138,7 @@ if (isset($_GET['send_order_buy'])) {
                         <div class="col-xl-12">
                             <div class="demo">
 
-                                <?= $btn_send_buy_status; ?>
+                                <?= $btn_send_status; ?>
 
                             </div>
                         </div>
@@ -178,12 +178,12 @@ if (isset($_GET['send_order_buy'])) {
                                                 $i = 1;
                                                 while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
 
-                                                    if ($row['send_buy_status'] === 'ยังไม่จัดส่ง') {
-                                                        $show_send_buy_status = '<span class="badge badge-danger badge-pill">ยังไม่จัดส่ง</span>';
-                                                    } else if ($row['send_buy_status'] === 'รอการจัดส่ง') {
-                                                        $show_send_buy_status = '<span class="badge badge-warning badge-pill">รอการจัดส่ง</span>';
+                                                    if ($row['send_status'] === 'ยังไม่จัดส่ง') {
+                                                        $show_send_status = '<span class="badge badge-danger badge-pill">ยังไม่จัดส่ง</span>';
+                                                    } else if ($row['send_status'] === 'รอการจัดส่ง') {
+                                                        $show_send_status = '<span class="badge badge-warning badge-pill">รอการจัดส่ง</span>';
                                                     } else {
-                                                        $show_send_buy_status = '<span class="badge badge-success badge-pill">จัดส่งแล้ว</span>';
+                                                        $show_send_status = '<span class="badge badge-success badge-pill">จัดส่งแล้ว</span>';
                                                     }
 
                                                     if($row['account_id'] !== ''){
@@ -196,24 +196,24 @@ if (isset($_GET['send_order_buy'])) {
                                                 ?>
                                                     <tr>
                                                         <td style="text-align: center; vertical-align: middle;"><?= $i++; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['send_buy_code']; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><?= $show_send_buy_status; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['send_code']; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $show_send_status; ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?= $row['account_name']; ?></td>
                                                         <td style="text-align: center; vertical-align: middle;">
-                                                            <button type="button" class="btn btn-warning btn-sm btn-icon waves-effect waves-themed mb-2" data-toggle="modal" data-target="#send-modal<?= $row['orders_buy_id']; ?>"><i class="fal fa-shipping-timed"></i></button>
+                                                            <button type="button" class="btn btn-warning btn-sm btn-icon waves-effect waves-themed mb-2" data-toggle="modal" data-target="#send-modal<?= $row['orders_id']; ?>"><i class="fal fa-shipping-timed"></i></button>
                                                         </td>
                                                     </tr>
 
                                                     <!-- Modal send-->
-                                                    <div class="modal fade" id="send-modal<?= $row['orders_buy_id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal fade" id="send-modal<?= $row['orders_id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
 
-                                                                <form action="action/send_order_buy_db.php" method="post" enctype="multipart/form-data">
+                                                                <form action="action/send_db.php" method="post" enctype="multipart/form-data">
 
-                                                                    <input type="hidden" name="send_buy_id" value="<?= $row['send_buy_id']; ?>" required>
-                                                                    <input type="hidden" name="send_order_buy" value="<?= $check_send_buy_status; ?>" required>
-
+                                                                    <input type="hidden" name="send_id" value="<?= $row['send_id']; ?>" required>
+                                                                    <input type="hidden" name="send" value="<?= $check_send_status; ?>" required>
+                                                                    
                                                                     <div class="modal-header">
                                                                         <h4 class="modal-title">
                                                                             ฟอร์มแจ้งสถานะจัดส่ง
@@ -227,14 +227,14 @@ if (isset($_GET['send_order_buy'])) {
                                                                         <div class="form-group row">
                                                                             <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">เลขที่ใบจัดส่ง:</label>
                                                                             <div class="col-lg-9">
-                                                                                <input type="text" class="form-control" value="<?= $row['send_buy_code']; ?>" readonly="">
+                                                                                <input type="text" class="form-control" value="<?= $row['send_code']; ?>" readonly="">
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group row">
                                                                             <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">ช่องทาง:</label>
                                                                             <div class="col-lg-9">
-                                                                                <select class="custom-select form-control" name="send_buy_status" required>
-                                                                                    <option value="<?= $row['send_buy_status']; ?>">-- <?= $row['send_buy_status']; ?> --</option>
+                                                                                <select class="custom-select form-control" name="send_status" required>
+                                                                                    <option value="<?= $row['send_status']; ?>">-- <?= $row['send_status']; ?> --</option>
                                                                                     <option value="ยังไม่จัดส่ง">ยังไม่จัดส่ง</option>
                                                                                     <option value="รอการจัดส่ง">รอการจัดส่ง</option>
                                                                                     <option value="จัดส่งแล้ว">จัดส่งแล้ว</option>

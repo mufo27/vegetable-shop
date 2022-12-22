@@ -1,3 +1,5 @@
+<?php require_once('active.inc.php'); ?>
+
 <aside class="page-sidebar">
     <div class="page-logo">
         <a href="#" class="page-logo-link press-scale-down d-flex align-items-center position-relative" data-toggle="modal" data-target="#modal-shortcut">
@@ -24,7 +26,7 @@
             <div class="info-card-text">
                 <a href="#" class="d-flex align-items-center text-white">
                     <span class="text-truncate text-truncate-sm d-inline-block">
-                        Dr. Codex Lantern
+                        ลูกค้า
                     </span>
                 </a>
                 <span class="d-inline-block text-truncate text-truncate-sm">Toronto, Canada</span>
@@ -37,51 +39,65 @@
 
         <ul id="js-nav-menu" class="nav-menu">
 
-            <li>
-                <a href="index.php" title="" data-filter-tags="">
+            <li class="nav-title">Menu</li>
+
+            <li class="<?= $main; ?>">
+                <a href="index.php?main" title="" data-filter-tags="">
                     <i class="fal fa-home"></i><span class="nav-link-text" data-i18n="">หน้าแรก</span>
                 </a>
             </li>
 
-            <li>
-                <a href="category.php" title="" data-filter-tags="">
-                    <i class="fal fa-tag"></i><span class="nav-link-text" data-i18n="">สั่งซื้อสินค้า</span>
+            <li class="nav-title">ข้อมูลทั่วไป</li>
+
+            <li class="<?= $profile; ?>">
+                <a href="profile.php?profile" title="" data-filter-tags="">
+                    <i class="fal fa-user-circle"></i><span class="nav-link-text" data-i18n="">ข้อมูลส่วนตัว</span>
                 </a>
             </li>
 
-            <li>
-                <a href="cart.php" title="" data-filter-tags="">
+            <li class="nav-title">ข้อมูลการสั่งซื้อ</li>
+
+            <li class="<?= $category; ?>">
+                <a href="category.php?category" title="" data-filter-tags="">
+                    <i class="fal fa-store-alt"></i><span class="nav-link-text" data-i18n="">สั่งซื้อสินค้า</span>
+                </a>
+            </li>
+
+            <li class="<?= $cart; ?>">
+                <a href="cart.php?cart" title="" data-filter-tags="">
                     <i class="fal fa-shopping-basket"></i><span class="nav-link-text" data-i18n="">ตะกร้าสินค้า</span>
                 </a>
             </li>
 
-            <li>
-                <a href="#" title="" data-filter-tags="">
-                    <i class="fal fa-shopping-bag"></i><span class="nav-link-text" data-i18n="">รายการสั่งซื้อ</span>
+            <li class="<?= $order; ?>">
+                <a href="order.php?order" title="" data-filter-tags="">
+                    <i class="fal fa-list-alt"></i><span class="nav-link-text" data-i18n="">รายการสั่งซื้อ</span>
                 </a>
             </li>
 
-            <li>
-                <a href="#" title="" data-filter-tags="">
+            <li class="<?= $payment; ?>">
+                <a href="payment.php?payment" title="" data-filter-tags="">
                     <i class="fal fa-money-check-alt"></i><span class="nav-link-text" data-i18n="">การชำระเงิน</span>
                 </a>
             </li>
 
-            <li>
-                <a href="#" title="" data-filter-tags="">
-                    <i class="fal fa-shipping-fast"></i><span class="nav-link-text" data-i18n="">การจัดส่งสินค้า</span>
+            <li class="<?= $send; ?>">
+                <a href="send.php?send" title="" data-filter-tags="">
+                    <i class="fal fa-shipping-fast"></i><span class="nav-link-text" data-i18n="">การจัดส่ง</span>
                 </a>
             </li>
 
-            <li>
-                <a href="#" title="" data-filter-tags="">
-                    <i class="fal fa-history"></i><span class="nav-link-text" data-i18n="">ประวัติการสั่งซื้อ</span>
+            <li class="<?= $history; ?>">
+                <a href="history.php?history" title="" data-filter-tags="">
+                    <i class="fal fa-history"></i><span class="nav-link-text" data-i18n="">ประวัติ</span>
                 </a>
             </li>
 
+            <li class="nav-title"></li>
+
             <li>
-                <a href="profile.php" title="" data-filter-tags="">
-                    <i class="fal fa-user-circle"></i><span class="nav-link-text" data-i18n="">ข้อมูลส่วนตัว</span>
+                <a href="../../logout.php" title="" data-filter-tags="">
+                    <i class="fal fa-power-off"></i><span class="nav-link-text" data-i18n="">ออกจากระบบ</span>
                 </a>
             </li>
 

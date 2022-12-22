@@ -1,5 +1,5 @@
 <?php
-
+require_once('include/auth.inc.php');
 require_once('../database/condb.inc.php');
 
 $select = $conn->prepare("SELECT p.*, c.name AS category_name FROM product p INNER JOIN category c ON p.category_id = c.id ORDER BY p.category_id ASC");

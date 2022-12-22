@@ -1,28 +1,83 @@
 <?php
-
+require_once('include/auth.inc.php');
 require_once('../database/condb.inc.php');
 
-if (isset($_GET['payment_buy'])) {
+if (isset($_GET['send_order'])) {
 
-    $check_order_status = $_GET['payment_buy'];
+    $check_send_status = $_GET['send_order'];
+    $check_payment_status = 'ชำระเงินแล้ว';
 
-    if ($check_order_status === 'ยังไม่ชำระเงิน') {
+    if ($check_send_status === '1' || $check_send_status === '2' || $check_send_status === '3') {
 
-        $select = $conn->prepare("SELECT o.* , concat(a.pkname,'',a.fname,' ',a.lname) as account_name FROM orders o INNER JOIN account a ON o.account_id = a.id WHERE o.payment_status=? ORDER BY o.save_time DESC");
-        $select->bindParam(1, $check_order_status);
+
+        if ($check_send_status === '1') {
+
+            $val_send_status = 'ยังไม่จัดส่ง';
+            $btn_send_status = '<a href="send_order.php?send_order" class="btn btn-outline-dark waves-effect waves-themed">ทั้งหมด</a>
+                                <a href="send_order.php?send_order=1" class="btn btn-dark waves-effect waves-themed">ยังไม่จัดส่ง</a>
+                                <a href="send_order.php?send_order=2" class="btn btn-outline-dark waves-effect waves-themed">รอการจัดส่ง</a>
+                                <a href="send_order.php?send_order=3" class="btn btn-outline-dark waves-effect waves-themed">จัดส่งแล้ว</a>
+                                ';
+        } else if ($check_send_status === '2') {
+
+            $val_send_status = 'รอการจัดส่ง';
+            $btn_send_status = '<a href="send_order.php?send_order" class="btn btn-outline-dark waves-effect waves-themed">ทั้งหมด</a>
+                                <a href="send_order.php?send_order=1" class="btn btn-outline-dark waves-effect waves-themed">ยังไม่จัดส่ง</a>
+                                <a href="send_order.php?send_order=2" class="btn btn-dark waves-effect waves-themed">รอการจัดส่ง</a>
+                                <a href="send_order.php?send_order=3" class="btn btn-outline-dark waves-effect waves-themed">จัดส่งแล้ว</a>
+                                ';
+        } else {
+
+            $val_send_status = 'จัดส่งแล้ว';
+            $btn_send_status = '<a href="send_order.php?send_order" class="btn btn-outline-dark waves-effect waves-themed">ทั้งหมด</a>
+                                <a href="send_order.php?send_order=1" class="btn btn-outline-dark waves-effect waves-themed">ยังไม่จัดส่ง</a>
+                                <a href="send_order.php?send_order=2" class="btn btn-outline-dark waves-effect waves-themed">รอการจัดส่ง</a>
+                                <a href="send_order.php?send_order=3" class="btn btn-dark waves-effect waves-themed">จัดส่งแล้ว</a>
+                                ';
+        }
+
+        $select = $conn->prepare("SELECT o.id AS orders_id, 
+                                            o.total AS orders_total,
+                                            s.id AS send_id, 
+                                            s.code AS send_code, 
+                                            s.status AS send_status,
+                                            s.account_id AS account_id,
+                                            (SELECT concat(a.pkname,'',a.fname,' ',a.lname) FROM account a WHERE a.id = s.account_id) AS account_name
+                                            
+                                    FROM orders o 
+                                    INNER JOIN payment p ON o.id = p.orders_id
+                                    INNER JOIN send s ON o.id = s.orders_id
+                                    WHERE p.status=?
+                                    AND s.status=?
+                                    ORDER BY o.save_time DESC
+                                ");
+        $select->bindParam(1, $check_payment_status);
+        $select->bindParam(2, $val_send_status);
         $select->execute();
-
-    } else if ($check_order_status === 'ชำระเงินแล้ว') {
-
-        $select = $conn->prepare("SELECT o.* , concat(a.pkname,'',a.fname,' ',a.lname) as account_name FROM orders o INNER JOIN account a ON o.account_id = a.id WHERE o.payment_status=? ORDER BY o.save_time DESC");
-        $select->bindParam(1, $check_order_status);
-        $select->execute();
-
     } else {
 
-        $select = $conn->prepare("SELECT o.* , concat(a.pkname,'',a.fname,' ',a.lname) as account_name FROM orders o INNER JOIN account a ON o.account_id = a.id ORDER BY o.save_time DESC");
-        $select->execute();
+        $btn_send_status = '<a href="send_order.php?send_order" class="btn btn-dark waves-effect waves-themed">ทั้งหมด</a>
+                            <a href="send_order.php?send_order=1" class="btn btn-outline-dark waves-effect waves-themed">ยังไม่จัดส่ง</a>
+                            <a href="send_order.php?send_order=2" class="btn btn-outline-dark waves-effect waves-themed">รอการจัดส่ง</a>
+                            <a href="send_order.php?send_order=3" class="btn btn-outline-dark waves-effect waves-themed">จัดส่งแล้ว</a>
+                            ';
 
+        $select = $conn->prepare("SELECT o.id AS orders_id, 
+                                            o.total AS orders_total,
+                                            s.id AS send_id, 
+                                            s.code AS send_code, 
+                                            s.status AS send_status,
+                                            s.account_id AS account_id,
+                                            (SELECT concat(a.pkname,'',a.fname,' ',a.lname) FROM account a WHERE a.id = s.account_id) AS account_name
+                                            
+                                    FROM orders o 
+                                    INNER JOIN payment p ON o.id = p.orders_id
+                                    INNER JOIN send s ON o.id = s.orders_id
+                                    WHERE p.status=?
+                                    ORDER BY o.save_time DESC
+                                ");
+        $select->bindParam(1, $check_payment_status);
+        $select->execute();
     }
 }
 
@@ -34,7 +89,7 @@ if (isset($_GET['payment_buy'])) {
     <meta charset="utf-8">
     <title>
 
-        รายการสั่งซื้อ - ระบบจัดการสินค้าออนไลน์
+        การจัดส่ง - ระบบจัดการสินค้าออนไลน์
 
     </title>
     <meta name="description" content="Basic">
@@ -75,16 +130,16 @@ if (isset($_GET['payment_buy'])) {
                 <!-- BEGIN Page Content -->
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item active"> รายการสั่งซื้อ </li>
+                        <li class="breadcrumb-item active"> การจัดส่ง </li>
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
                     </ol>
 
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="demo">
-                                <a href="payment_buy.php?payment_buy='ยังไม่ชำระเงิน'" class="btn btn-outline-danger waves-effect waves-themed">ยังไม่ชำระเงิน</a>
-                                <a href="payment_buy.php?payment_buy='ชำระเงินแล้ว'" class="btn btn-outline-success waves-effect waves-themed">ชำระเงินแล้ว</a>
-                                <a href="payment_buy.php?payment_buy" class="btn btn-outline-dark waves-effect waves-themed">ทั้งหมด</a>
+
+                                <?= $btn_send_status; ?>
+
                             </div>
                         </div>
                     </div>
@@ -94,7 +149,7 @@ if (isset($_GET['payment_buy'])) {
                             <div id="panel-1" class="panel">
                                 <div class="panel-hdr">
                                     <h2>
-                                        แสดงรายการข้อมูลรายการสั่งซื้อ
+                                        แสดงรายการข้อมูล / การจัดส่ง
                                     </h2>
                                     <div class="panel-toolbar">
 
@@ -104,16 +159,17 @@ if (isset($_GET['payment_buy'])) {
                                 <div class="panel-container show">
                                     <div class="panel-content">
 
+                                        <div class="alert border-dark bg-transparent text-dark" role="alert">
+                                            <strong>คำชี้แจง!</strong> จะแสดงเฉพาะรายการสั่งซื้อที่มีสถานะ "ชำระเงินแล้ว" เท่านั้น
+                                        </div>
                                         <!-- datatable start -->
                                         <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
                                             <thead class="bg-dark text-white">
                                                 <tr>
                                                     <th style="width:5%; text-align: center; vertical-align: middle;">No.</th>
-                                                    <th style="width:20%; vertical-align: middle;">ชื่อ-นามสกุล</th>
-                                                    <th style="width:10%; vertical-align: middle;">เลขที่ใบสั่งซื้อ</th>
-                                                    <th style="width:10%; text-align: center; vertical-align: middle;">ยอดรวม</th>
-                                                    <th style="width:10%; text-align: center; vertical-align: middle;">สถานะชำระเงิน</th>
-                                                    <th style="width:10%; text-align: center; vertical-align: middle;">สถานะจัดส่ง</th>
+                                                    <th style="width:10%; text-align: center; vertical-align: middle;">เลขที่ใบจัดส่ง</th>
+                                                    <th style="width:10%; text-align: center; vertical-align: middle;">สถานะ</th>
+                                                    <th style="width:10%; text-align: center; vertical-align: middle;">พนักงานส่ง</th>
                                                     <th style="width:5%; text-align: center; vertical-align: middle;">จัดการ</th>
                                                 </tr>
                                             </thead>
@@ -122,147 +178,93 @@ if (isset($_GET['payment_buy'])) {
                                                 $i = 1;
                                                 while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
 
-                                                    if($row['payment_status'] === 'ยังไม่ชำระเงิน'){
-                                                        $show_payment_status = '<span class="badge badge-danger badge-pill">ยังไม่ชำระเงิน</span>';
-                                                    } else {
-                                                        $show_payment_status = '<span class="badge badge-success badge-pill">ชำระเงินแล้ว</span>';
-                                                    }
-
-                                                    if($row['send_status'] === 'ยังไม่จัดส่ง'){
+                                                    if ($row['send_status'] === 'ยังไม่จัดส่ง') {
                                                         $show_send_status = '<span class="badge badge-danger badge-pill">ยังไม่จัดส่ง</span>';
-                                                    } else if($row['send_status'] === 'รอการจัดส่ง'){
+                                                    } else if ($row['send_status'] === 'รอการจัดส่ง') {
                                                         $show_send_status = '<span class="badge badge-warning badge-pill">รอการจัดส่ง</span>';
-                                                    }else {
+                                                    } else {
                                                         $show_send_status = '<span class="badge badge-success badge-pill">จัดส่งแล้ว</span>';
                                                     }
-                                                    
+
+                                                    if($row['account_id'] !== ''){
+                                                        $modal_account_name = $row['account_name'];
+                                                    } else {
+                                                        $modal_account_name = 'เลือก';
+                                                    }
+
 
                                                 ?>
                                                     <tr>
                                                         <td style="text-align: center; vertical-align: middle;"><?= $i++; ?></td>
-                                                        <td style="vertical-align: middle;"><?= $row['account_name']; ?></td>
-                                                        <td style="vertical-align: middle;"><?= $row['code']; ?></td>
-                                                        <td style="vertical-align: middle;"><?= $row['total']; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><?= $show_payment_status; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['send_code']; ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?= $show_send_status; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['account_name']; ?></td>
                                                         <td style="text-align: center; vertical-align: middle;">
-                                                            <button type="button" class="btn btn-warning btn-sm btn-icon waves-effect waves-themed mb-2" data-toggle="modal" data-target="#edit-modal<?= $row['id']; ?>"><i class="fal fa-edit"></i></button>
-                                                            <button type="button" class="btn btn-danger btn-sm btn-icon waves-effect waves-themed mb-2" data-toggle="modal" data-target="#del-modal<?= $row['id']; ?>"><i class="fal fa-times"></i></button>
+                                                            <button type="button" class="btn btn-warning btn-sm btn-icon waves-effect waves-themed mb-2" data-toggle="modal" data-target="#send-modal<?= $row['orders_id']; ?>"><i class="fal fa-shipping-timed"></i></button>
                                                         </td>
                                                     </tr>
 
-                                                    <!-- Modal Edit-->
-                                                    <div class="modal fade" id="edit-modal<?= $row['id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <!-- Modal send-->
+                                                    <div class="modal fade" id="send-modal<?= $row['orders_id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
 
-                                                                <form action="action/product_db.php" method="post" enctype="multipart/form-data">
+                                                                <form action="action/send_order_db.php" method="post" enctype="multipart/form-data">
 
-
-
+                                                                    <input type="hidden" name="send_id" value="<?= $row['send_id']; ?>" required>
+                                                                    <input type="hidden" name="send_order" value="<?= $check_send_status; ?>" required>
+                                                                    
                                                                     <div class="modal-header">
                                                                         <h4 class="modal-title">
-                                                                            แก้ไขข้อมูลสินค้า
+                                                                            ฟอร์มแจ้งสถานะจัดส่ง
                                                                         </h4>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true"><i class="fal fa-times"></i></span>
                                                                         </button>
                                                                     </div>
-                                                                    <div class="modal-body">
+                                                                    <div class="modal-body bg-faded">
+
                                                                         <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">หมวดหมู่:</label>
+                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">เลขที่ใบจัดส่ง:</label>
                                                                             <div class="col-lg-9">
-                                                                                <select class="custom-select form-control" name="category_id" required>
-                                                                                    <option value="<?= $row['category_id']; ?>">-- <?= $row['category_name']; ?> --</option>
-                                                                                    <?php
-                                                                                    $select_t2 = $conn->prepare("SELECT * FROM category ORDER BY id ASC");
-                                                                                    $select_t2->execute();
-                                                                                    while ($row_t2 = $select_t2->fetch(PDO::FETCH_ASSOC)) {
-                                                                                    ?>
-                                                                                        <option value="<?= $row_t2['id']; ?>"> <?= $row_t2['name']; ?> </option>
-                                                                                    <?php } ?>
+                                                                                <input type="text" class="form-control" value="<?= $row['send_code']; ?>" readonly="">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">ช่องทาง:</label>
+                                                                            <div class="col-lg-9">
+                                                                                <select class="custom-select form-control" name="send_status" required>
+                                                                                    <option value="<?= $row['send_status']; ?>">-- <?= $row['send_status']; ?> --</option>
+                                                                                    <option value="ยังไม่จัดส่ง">ยังไม่จัดส่ง</option>
+                                                                                    <option value="รอการจัดส่ง">รอการจัดส่ง</option>
+                                                                                    <option value="จัดส่งแล้ว">จัดส่งแล้ว</option>
                                                                                 </select>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">Product ID:</label>
+                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">พนักงานส่ง:</label>
                                                                             <div class="col-lg-9">
-                                                                                <input type="text" id="id" name="id" class="form-control" value="<?= $row['id']; ?>" placeholder="ระบบสร้างอัตโนมัติ" readonly="">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">สินค้า:</label>
-                                                                            <div class="col-lg-9">
-                                                                                <input type="text" id="name" name="name" class="form-control" value="<?= $row['name']; ?>" required>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">รายละเอียด:</label>
-                                                                            <div class="col-lg-9">
-                                                                                <textarea class="form-control" id="" name="detail" rows="3"><?= $row['name']; ?></textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">จำนวนสินค้า:</label>
-                                                                            <div class="col-lg-9">
-                                                                                <input type="number" id="qty" name="qty" class="form-control" value="<?= $row['qty']; ?>" min="0" max="10000" required>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">หน่วยนับ:</label>
-                                                                            <div class="col-lg-9">
-                                                                                <input type="text" id="unit" name="unit" class="form-control" value="<?= $row['unit']; ?>" required>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">ราคาซื้อ:</label>
-                                                                            <div class="col-lg-9">
-                                                                                <input type="number" id="price_buy" name="price_buy" class="form-control" min="0" max="999999" value="<?= $row['price_buy']; ?>" required>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">ราคาขาย:</label>
-                                                                            <div class="col-lg-9">
-                                                                                <input type="number" id="price_sell" name="price_sell" class="form-control" min="0" max="999999" value="<?= $row['price_sell']; ?>" required>
+                                                                                <select class="custom-select form-control" name="account_id">
+                                                                                    <option value="<?= $row['account_id']; ?>">-- <?= $modal_account_name; ?> --</option>
+                                                                                    <option value="">ว่าง</option>
+                                                                                    <?php
+                                                                                    $select_account = $conn->prepare("SELECT id, concat(pkname,'',fname,' ',lname) AS fullname 
+                                                                                                                        FROM account 
+                                                                                                                        WHERE status = 2 
+                                                                                                                        ORDER BY pkname ASC, fname ASC, lname ASC
+                                                                                                                    ");
+                                                                                    $select_account->execute();
+                                                                                    while ($row_account = $select_account->fetch(PDO::FETCH_ASSOC)) {
+                                                                                    ?>
+                                                                                        <option value="<?= $row_account['id']; ?>"> <?= $row_account['fullname']; ?> </option>
+                                                                                    <?php } ?>
+                                                                                </select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                                                                        <button type="submit" name="btn_edit" class="btn btn-warning">ยันยันเปลี่ยนแปลงข้อมูล</button>
-                                                                    </div>
-                                                                </form>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Modal Alert Delete -->
-                                                    <div class="modal fade" id="del-modal<?= $row['id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <form action="action/product_db.php" method="post" enctype="multipart/form-data">
-
-                                                                    <div class="modal-header">
-                                                                        <h4 class="modal-title">
-                                                                            ลบข้อมูลสินค้า
-                                                                        </h4>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true"><i class="fal fa-times"></i></span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <div class="row">
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">Product ID:&nbsp;</label> <?= $row['id']; ?></div>
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">สินค้า:&nbsp;</label> <?= $row['name']; ?></div>
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">จำนวนสินค้า:&nbsp;</label> <?= $row['qty']; ?></div>
-                                                                            <div class="col-12 mb-2"><label class="form-label" for="">หน่วย:&nbsp;</label> <?= $row['unit']; ?></div>
-
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                                                                        <button type="submit" name="btn_del" value="<?= $row['id']; ?>" class="btn btn-danger"><i class="fal fa-times"></i> ยันยันลบข้อมูล</button>
+                                                                        <button type="submit" name="btn_edit" class="btn btn-warning">ยืนยันการชำระเงิน</button>
                                                                     </div>
                                                                 </form>
 
@@ -316,6 +318,35 @@ if (isset($_GET['payment_buy'])) {
                 $('#dt-basic-example').removeClassPrefix('bg-').addClass(theadColor);
             });
 
+        });
+    </script>
+    <script>
+        $(function() {
+            // Multiple images preview with JavaScript
+            var multiImgPreview = function(input, imgPreviewPlaceholder) {
+
+                if (input.files) {
+                    var filesAmount = input.files.length;
+
+                    for (i = 0; i < filesAmount; i++) {
+                        var reader = new FileReader();
+
+                        reader.onload = function(event) {
+                            $($.parseHTML('<img width="250px" height="150px">')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
+                        }
+
+                        reader.readAsDataURL(input.files[i]);
+                    }
+                }
+
+            };
+
+            $('#chooseFile').on('change', function() {
+                multiImgPreview(this, 'div.imgGallery');
+            });
+            $('#chooseFile2').on('change', function() {
+                multiImgPreview(this, 'div.imgGallery2');
+            });
         });
     </script>
 </body>
