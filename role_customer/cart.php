@@ -13,22 +13,25 @@ if (isset($_POST['cart'])) {
 
     $p_id = $_POST['cart'];
     $act = $_POST['act'];
-    $check_number = $_POST['number'];
 
-    for ($k = 1; $k <= $check_number; $k++) {
-        if ($act == 'add' && !empty($p_id)) {
+    if (isset($_POST['number'])) {
+        $check_number = $_POST['number'];
 
-            if (isset($_SESSION['cart'][$p_id])) {
+        for ($k = 1; $k <= $check_number; $k++) {
+            if ($act == 'add' && !empty($p_id)) {
 
-                $_SESSION['cart'][$p_id]++;
-            } else {
+                if (isset($_SESSION['cart'][$p_id])) {
 
-                $_SESSION['cart'][$p_id] = 1;
+                    $_SESSION['cart'][$p_id]++;
+                } else {
+
+                    $_SESSION['cart'][$p_id] = 1;
+                }
             }
-        }
-        if ($k >= $check_number) {
-            header("location: cart.php");
-            exit;
+            if ($k >= $check_number) {
+                header("location: cart.php");
+                exit;
+            }
         }
     }
 
@@ -92,7 +95,7 @@ if (isset($_POST['cart'])) {
                         <li class="breadcrumb-item"><a href="javascript:void(0);">ตะกร้าสินค้า</a></li>
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date">Sunday, December 18, 2022</span></li>
                     </ol>
-                    
+
                     <div class="row">
                         <div class="col-xl-12">
                             <div id="panel-1" class="panel">
@@ -168,10 +171,9 @@ if (isset($_POST['cart'])) {
                                                                     <button type="submit" class="btn btn-danger btn-sm btn-icon waves-effect waves-themed"><i class="fal fa-times"></i></button>
                                                                 </td>
                                                             </tr>
-                                                        <?php 
+                                                        <?php
                                                             $_SESSION['num'] = $i;
-                                                    
-                                                    } ?>
+                                                        } ?>
                                                     </tbody>
                                                 </table>
                                                 <!-- datatable end -->
@@ -222,7 +224,7 @@ if (isset($_POST['cart'])) {
                                 timer: 2000
                               });
                             </script>';
-                    echo "<meta http-equiv=\"refresh\" content=\"3; URL=cart.php\">";
+                    echo "<meta http-equiv=\"refresh\" content=\"3; URL=cart.php?cart\">";
                     exit;
                 }
 
