@@ -16,7 +16,7 @@ if (isset($_GET['category']) || isset($_GET['product']) || isset($_GET['product_
     $category = 'active';
 }
 
-if (isset($_GET['cart'])) {
+if (isset($_GET['cart']) || isset($_GET['confirm'])) {
 
     $cart = 'active';
 }

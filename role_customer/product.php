@@ -116,10 +116,10 @@ $select->execute();
                             <div class="modal fade" id="detail-modal<?= $row['id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
-                                        <form action="cart.php" method="post" enctype="multipart/form-data">
+                                        <form action="cart.php?cart" method="post" enctype="multipart/form-data">
 
                                             <input type="hidden" name="cart" value="<?= $row['id']; ?>">
-                                            <input type="hidden" name="act" value="add">
+                                            <!-- <input type="hidden" name="act" value="add"> -->
 
                                             <div class="modal-header">
                                                 <h4 class="modal-title">
@@ -157,7 +157,7 @@ $select->execute();
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                                                <button type="submit" name="btn_cart" class="btn btn-success">ยืนยันข้อมูล</button>
+                                                <button type="submit" name="btn_add" value="add" class="btn btn-success">ยืนยันข้อมูล</button>
                                             </div>
                                         </form>
 

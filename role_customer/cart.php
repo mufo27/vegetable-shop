@@ -4,17 +4,10 @@ require_once('../database/condb.inc.php');
 
 if (isset($_POST['cart'])) {
 
-    // $id = $_SESSION['id'];
+    if (isset($_POST['btn_add'])) {
 
-    // $select = $conn->prepare("SELECT * FROM accuont WHERE id = ?");
-    // $select->bindParam(1, $id);
-    // $select->execute();
-    // $row = $select->fetch(PDO::FETCH_ASSOC);
-
-    $p_id = $_POST['cart'];
-    $act = $_POST['act'];
-
-    if (isset($_POST['number'])) {
+        $act  = $_POST['btn_add'];
+        $p_id = $_POST['cart'];
         $check_number = $_POST['number'];
 
         for ($k = 1; $k <= $check_number; $k++) {
@@ -29,16 +22,43 @@ if (isset($_POST['cart'])) {
                 }
             }
             if ($k >= $check_number) {
-                header("location: cart.php");
+                echo "<script>alert('เพิ่มสินค้า ลงในตะกร้าแล้ว..!!')</script>";
+                echo "<meta http-equiv=\"refresh\" content=\"0; URL=cart.php?cart\">";
                 exit;
             }
         }
     }
 
-    if ($act == 'remove' && !empty($p_id)) {
-        unset($_SESSION['cart'][$p_id]);
+    if (isset($_POST['btn_update'])) {
+
+        $act = $_POST['btn_update'];
+
+        if ($act === 'update') {
+            $amount_array = $_POST['amount'];
+            foreach ($amount_array as $p_id => $amount) {
+                $_SESSION['cart'][$p_id] = $amount;
+            }
+        }
+        echo "<script>alert('อัพเดทสินค้า ในตะกร้าแล้ว..!!')</script>";
+        echo "<meta http-equiv=\"refresh\" content=\"0; URL=cart.php?cart\">";
+        exit;
+    }
+
+    if (isset($_POST['btn_delete'])) {
+
+        $act = $_POST['btn_delete'];
+        $p_id = $_POST['cart'];
+
+        if ($act == 'delete' && !empty($p_id)) {
+            unset($_SESSION['cart'][$p_id]);
+        }
+        echo "<script>alert('ลบสินค้า ในตะกร้าออกแล้ว..!!')</script>";
+        echo "<meta http-equiv=\"refresh\" content=\"0; URL=cart.php?cart\">";
+        exit;
     }
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -96,145 +116,113 @@ if (isset($_POST['cart'])) {
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date">Sunday, December 18, 2022</span></li>
                     </ol>
 
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div id="panel-1" class="panel">
-                                <div class="panel-hdr">
-                                    <h2>
-                                        แสดงรายการตะกร้าสินค้า
-                                    </h2>
-                                </div>
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="panel-1" class="panel">
 
-                                <div class="panel-container show">
-                                    <div class="panel-content">
+                                    <div class="panel-hdr">
+                                        <h2>
+                                            แสดงรายการตะกร้าสินค้า
+                                        </h2>
+                                    </div>
 
-                                        <?php
-                                        if (empty($_SESSION['cart'])) {
-                                        ?>
-                                            <div class="row d-flex justify-content-center mt-2">
-                                                <h2 class="text-primary"><i class="lni lni-cart-full"></i> ยังไม่มี สินค้าในตะกล้า</h2>
-                                            </div>
+                                    <div class="panel-container show">
+                                        <div class="panel-content">
 
-                                        <?php
-                                        } else {
-                                        ?>
-                                            <!-- datatable start -->
-                                            <form action="" method="post">
-                                                <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
-                                                    <thead class="bg-dark text-white">
-                                                        <tr>
-                                                            <th style="width:5%; text-align: center; vertical-align: middle;">No.</th>
-                                                            <th style="width:10%; text-align: center; vertical-align: middle;">รูปภาพ</th>
-                                                            <th style="width:30%; text-align: center; vertical-align: middle;">สินค้า</th>
-                                                            <th style="width:10%; text-align: center; vertical-align: middle;">ราคา</th>
-                                                            <th style="width:10%; text-align: center; vertical-align: middle;">จำนวน</th>
-                                                            <th style="width:10%; text-align: center; vertical-align: middle;">หน่วยนับ</th>
-                                                            <th style="width:10%; text-align: center; vertical-align: middle;">ราคารวม</th>
-                                                            <th style="width:10%; text-align: center; vertical-align: middle;">จัดการ</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <?php
-                                                        $i  =  1;
-                                                        $sum    =  0;
-                                                        $total  =  0;
-                                                        $price =  0;
-                                                        foreach ($_SESSION['cart'] as $p_id => $qty) {
-                                                            $select_p = $conn->prepare("SELECT p.id, p.name, p.price_sell, p.unit,
-                                                                                        (SELECT im.img FROM product_img im WHERE im.product_id=p.id ORDER BY im.id ASC LIMIT 1) AS show_img
-                                                                                        FROM product p WHERE p.id=?
-                                                                                        ");
-                                                            $select_p->bindParam(1, $p_id);
-                                                            $select_p->execute();
-                                                            $row_p = $select_p->fetch(PDO::FETCH_ASSOC);
-                                                            $sum = $row_p['price_sell'] * $qty;
-                                                            $total += $sum;
+                                            <?php if (empty($_SESSION['cart'])) { ?>
+                                                <div class="row d-flex justify-content-center mt-2">
+                                                    <h2 class="text-primary"><i class="fa fa-cart-plus"></i> ยังไม่มีสินค้าในตะกล้า</h2>
+                                                </div>
 
-                                                        ?>
+                                            <?php } else { ?>
+
+                                                <div class="table-responsive">
+                                                    <!-- datatable start -->
+                                                    <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
+                                                        <thead class="bg-dark text-white">
                                                             <tr>
-                                                                <td style="text-align: center; vertical-align: middle;"><?= $i++; ?></td>
-                                                                <td style="text-align: center; vertical-align: middle;">
-                                                                    <img src="../share/image/product/<?= $row_p['show_img']; ?>" class="profile-image-lg" alt="..." width="100px" height="70px">
-                                                                </td>
-                                                                <td style="text-align: center; vertical-align: middle;"><?= $row_p['name']; ?></td>
-                                                                <td style="text-align: center; vertical-align: middle;"><?= $row_p['price_sell']; ?></td>
-                                                                <td style="text-align: center; vertical-align: middle;">
-                                                                    <input type="number" name="amount[<?= $p_id ?>];" value="<?= $qty; ?>" min="1" max="100" class="px-3 py-2 border rounded">
-                                                                </td>
-                                                                <td style="text-align: center; vertical-align: middle;"><?= $row_p['unit']; ?></td>
-                                                                <td style="text-align: center; vertical-align: middle;"><?= $sum; ?></td>
-                                                                <td style="text-align: center; vertical-align: middle;">
+                                                                <th style="width:5%; text-align: center; vertical-align: middle;">ลบ</th>
+                                                                <th style="width:5%; text-align: center; vertical-align: middle;">No.</th>
+                                                                <!-- <th style="width:10%; text-align: center; vertical-align: middle;">รูป</th> -->
+                                                                <th style="width:40%; vertical-align: middle;">สินค้า</th>
+                                                                <th style="width:30%; text-align: center; vertical-align: middle;">ราคา x จำนวน</th>
+                                                                <th style="width:10%; text-align: center; vertical-align: middle;">รวม</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php
+                                                            $i  =  1;
+                                                            $sum    =  0;
+                                                            $total  =  0;
+                                                            $price =  0;
+                                                            foreach ($_SESSION['cart'] as $p_id => $qty) {
+                                                                $select_p = $conn->prepare("SELECT p.id, p.name, p.price_sell, p.unit,
+                                                                                    (SELECT im.img FROM product_img im WHERE im.product_id=p.id ORDER BY im.id ASC LIMIT 1) AS show_img
+                                                                                    FROM product p WHERE p.id=?
+                                                                                    ");
+                                                                $select_p->bindParam(1, $p_id);
+                                                                $select_p->execute();
+                                                                $row_p = $select_p->fetch(PDO::FETCH_ASSOC);
+                                                                $sum = $row_p['price_sell'] * $qty;
+                                                                $total += $sum;
 
-                                                                    <input type="hidden" name="cart" value="<?= $row_p['id']; ?>">
-                                                                    <input type="hidden" name="act" value="remove">
+                                                            ?>
+                                                                <tr>
+                                                                    <td style="text-align: center; vertical-align: middle;">
+                                                                        <input type="hidden" name="cart" value="<?= $row_p['id']; ?>">
+                                                                        <button type="submit" name="btn_delete" value="delete" class="btn btn-danger btn-sm btn-icon waves-effect waves-themed"><i class="fal fa-times"></i></button>
+                                                                    </td>
+                                                                    <td style="text-align: center; vertical-align: middle;"><?= $i++; ?></td>
+                                                                    <td style="text-align: center; vertical-align: middle;">
+                                                                        <img src="../share/image/product/<?= $row_p['show_img']; ?>" class="profile-image-lg" alt="..." width="50px" height="50px">
+                                                                        <?= $row_p['name']; ?>
+                                                                    </td>
+                                                                    <td style="text-align: center; vertical-align: middle;">
+                                                                        <?= $row_p['price_sell']; ?> x <input type="number" name="amount[<?= $p_id ?>];" value="<?= $qty; ?>" min="1" max="100" class="px-3 py-2 border rounded">
+                                                                    </td>
+                                                                    <td style="text-align: center; vertical-align: middle;"><?= $sum; ?></td>
 
-                                                                    <button type="submit" class="btn btn-danger btn-sm btn-icon waves-effect waves-themed"><i class="fal fa-times"></i></button>
+                                                                </tr>
+                                                            <?php
+                                                                //$_SESSION['num'] = $i;
+                                                            } ?>
+
+                                                            <tr class="bg-warning">
+                                                                <td colspan="3" style="text-align: center; vertical-align: middle;">
+                                                                    <h4 class="text-dark"><B>ยอดชำระเงิน</B></h4>
+                                                                </td>
+                                                                <td colspan="2" style="text-align: center; vertical-align: middle;">
+                                                                    <h4 class="text-dark"><B><?= $total; ?></B></h4>
                                                                 </td>
                                                             </tr>
-                                                        <?php
-                                                            $_SESSION['num'] = $i;
-                                                        } ?>
-                                                    </tbody>
-                                                </table>
-                                                <!-- datatable end -->
+
+                                                        </tbody>
+                                                    </table>
+                                                    <!-- datatable end -->
+
+                                                </div>
 
                                                 <div class="row mt-5">
-                                                    <div class="col-6"></div>
-                                                    <div class="col-3">
-                                                        <div class="single-input">
-                                                            <button type="submit" name="update" value="update" class="btn btn-warning">อัพเดทตะกร้าสินค้า</button>
-                                                        </div>
+                                                    <div class="col-12 col-md-4 mb-2">
+                                                        <button type="submit" name="btn_update" value="update" class="btn btn-block btn-secondary waves-effect waves-themed"><i class="fal fa-shopping-cart"></i> อัพเดทตะกร้า</button>
                                                     </div>
-                                                    <div class="col-3">
-                                                        <div class="single-input">
-                                                            <button type="submit" name="send" value="<?= $_SESSION['cart']; ?>" class="btn btn-success">ยืนยันซื้อสินค้าตอนนี้</button>
-                                                        </div>
+                                                    <div class="col-12 col-md-8 ">
+                                                        <a href="confirm.php?confirm" class="btn btn-block btn-success waves-effect waves-themed"><i class="fal fa-paper-plane"></i> สั่งซื้อสินค้า</a>
                                                     </div>
                                                 </div>
 
-                                            </form>
+                                            <?php } ?>
 
-                                        <?php } ?>
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
 
                 </main>
-
-                <?php
-
-                if (isset($_POST['update'])) {
-
-                    $act = $_POST['update'];
-
-                    if ($act === 'update') {
-                        $amount_array = $_POST['amount'];
-                        foreach ($amount_array as $p_id => $amount) {
-                            $_SESSION['cart'][$p_id] = $amount;
-                        }
-                    }
-
-                    echo '<script type="text/javascript">
-                              Swal.fire({
-                                icon: "success",
-                                title: "อัพเดท ตระกร้าสินค้า เรียบร้อยแล้ว",", 
-                                showConfirmButton: false,
-                                timer: 2000
-                              });
-                            </script>';
-                    echo "<meta http-equiv=\"refresh\" content=\"3; URL=cart.php?cart\">";
-                    exit;
-                }
-
-                if (isset($_POST['send'])) {
-
-                    $_POST['send'];
-
-                    echo "<meta http-equiv=\"refresh\" content=\"0; URL=checkout.php\">";
-                }
-                ?>
 
                 <?php include('include/footer.inc.php'); ?>
 
