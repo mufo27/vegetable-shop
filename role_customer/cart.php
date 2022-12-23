@@ -207,9 +207,9 @@ if (isset($_POST['cart'])) {
                                                     <div class="col-12 col-md-4 mb-2">
                                                         <button type="submit" name="btn_update" value="update" class="btn btn-block btn-secondary waves-effect waves-themed"><i class="fal fa-shopping-cart"></i> อัพเดทตะกร้า</button>
                                                     </div>
-                                                    <div class="col-3">
+                                                    <div class="col-12 col-md-8">
                                                         <div class="single-input">
-                                                            <button type="submit" name="send" value="<?= $_SESSION['cart']; ?>" class="btn btn-success">ยืนยันซื้อสินค้าตอนนี้</button>
+                                                            <a href="confirm.php?confirm" class="btn btn-block btn-success">ยืนยันซื้อสินค้าตอนนี้</a>
                                                         </div>
                                                     </div>
                                                 </div>

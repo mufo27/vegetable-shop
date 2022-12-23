@@ -70,7 +70,7 @@ if (isset($_GET['confirm'])) {
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
                     </ol>
 
-                    <form action="confirm_db.php" method="post" enctype="multipart/form-data">
+                    <form action="action/confirm_db.php" method="post" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-12 col-md-6">
                                 <div id="panel-6" class="panel">
@@ -172,8 +172,7 @@ if (isset($_GET['confirm'])) {
                                                     <tbody>
                                                         <?php
                                                         $i  =  1;
-                                                        $K  =  0;
-
+                                                        $k = 0;
                                                         $sum    =  0;
                                                         $total  =  0;
                                                         $price =  0;
@@ -195,14 +194,12 @@ if (isset($_GET['confirm'])) {
                                                                 <td style="vertical-align: middle;"><?= $row_p['name']; ?></td>
                                                                 <td style="text-align: center; vertical-align: middle;"><?= $row_p['price_sell']; ?> x <?= $qty; ?></td>
                                                                 <td style="text-align: right; vertical-align: middle;"><?= $sum; ?></td>
+                                                                <!-- data product -->
+                                                                <input type="hidden" name="product_check_num[]" value="<?= $k++; ?>">
+                                                                <input type="hidden" name="product_id[]" value="<?= $row_p['id']; ?>">
+                                                                <input type="hidden" name="product_price[]" value="<?= $row_p['price_sell']; ?>">
+                                                                <input type="hidden" name="product_number[]" value="<?= $qty; ?>">
                                                             </tr>
-
-                                                            <!-- data product -->
-                                                            <input type="hidden" name="product_check_num[]" value="<?= $k++; ?>">
-                                                            <input type="hidden" name="product_id[]" value="<?= $row_p['id']; ?>">
-                                                            <input type="hidden" name="product_price[]" value="<?= $row_p['price_sell']; ?>">
-                                                            <input type="hidden" name="product_number[]" value="<?= $qty; ?>">
-
                                                         <?php } ?>
 
                                                         <tr class="bg-warning">

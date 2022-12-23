@@ -18,8 +18,15 @@
 
     <?php
 
+// if (isset($_POST['btn_confirm'])) {
+//     print_r('<pre>');
+//     print_r($_POST);
+//     print_r('<pre>');
+// }
 
-    if (isset($_POST['confirm'])) {
+    if (isset($_POST['btn_confirm'])) {
+
+        require_once('../../database/condb.inc.php');
 
         // data randomly generated
         $orders_code     =  rand(1111111, 9999999);
@@ -42,11 +49,11 @@
 
         // data customer
         $account_id     =   $_SESSION['id'];
-        $pkname         =   $_POST['pkname'];
-        $fname          =   $_POST['fname'];
-        $lname          =   $_POST['lname'];
-        $phone          =   $_POST['phone'];
-        $address        =   $_POST['address'];
+        $pkname         =   trim($_POST['pkname']);
+        $fname          =   trim($_POST['fname']);
+        $lname          =   trim($_POST['lname']);
+        $phone          =   trim($_POST['phone']);
+        $address        =   trim($_POST['address']);
 
         try {
 
@@ -62,7 +69,7 @@
                 $row_check_account['phone']     ===   null ||
                 $row_check_account['address']   ===   null
             ) {
-                $update_account = $conn->prepare("UPDATE account SET pkname=? fname=? lname=? phone=? address=? WHERE id=?");
+                $update_account = $conn->prepare("UPDATE account SET pkname=?, fname=?, lname=?, phone=?, address=? WHERE id=?");
                 $update_account->bindParam(1, $pkname);
                 $update_account->bindParam(2, $fname);
                 $update_account->bindParam(3, $lname);
@@ -81,12 +88,12 @@
             $orders_id = $conn->lastInsertId();
 
             foreach ($product_check_num as $i) {
-                $insert_order_detail = $conn->prepare("INSERT INTO order_detail (product_id, price, number, orders_id) VALUES (?,?,?,?)");
-                $insert_order_detail->bindParam(1,  $product_id[$i]);
-                $insert_order_detail->bindParam(2,  $product_price[$i]);
-                $insert_order_detail->bindParam(3,  $product_number[$i]);
-                $insert_order_detail->bindParam(4,  $orders_id);
-                $insert_order_detail->execute();
+                $insert_order_details = $conn->prepare("INSERT INTO order_details (product_id, price, number, orders_id) VALUES (?,?,?,?)");
+                $insert_order_details->bindParam(1,  $product_id[$i]);
+                $insert_order_details->bindParam(2,  $product_price[$i]);
+                $insert_order_details->bindParam(3,  $product_number[$i]);
+                $insert_order_details->bindParam(4,  $orders_id);
+                $insert_order_details->execute();
             }
 
             $insert_payment = $conn->prepare("INSERT INTO payment (code, form, orders_id) VALUES (?,?,?)");
@@ -102,7 +109,7 @@
 
             if ($update_account && 
                 $insert_orders && 
-                $insert_order_detail && 
+                $insert_order_details && 
                 $insert_payment && 
                 $insert_send
             ) {
@@ -110,7 +117,7 @@
                 echo '<script type="text/javascript">
                                     Swal.fire({
                                         icon: "success",
-                                        title: "แก้ไขข้อมูล เรียบร้อย...!!", 
+                                        title: "บันทึกข้อมูลสังซื้อสินค้า เรียบร้อย!!", 
                                         showConfirmButton: false,
                                         timer: 2000
                                     });
