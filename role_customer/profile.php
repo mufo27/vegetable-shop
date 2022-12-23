@@ -70,9 +70,9 @@ require_once('../database/condb.inc.php');
                                     <div class="panel-content p-0">
                                         <form action="" method="post">
                                             <?php
-                                            session_start();
                                             require_once('../database/condb.inc.php');
-                                            $select = $conn->prepare("SELECT * FROM account");
+                                            $select = $conn->prepare("SELECT * FROM account WHERE id=?");
+                                            $select->bindParam(1,$_SESSION['id']);
                                             $select->execute();
                                             while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
                                             ?>

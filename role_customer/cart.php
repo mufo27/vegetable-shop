@@ -172,7 +172,7 @@ if (isset($_POST['cart'])) {
                                                                 </td>
                                                             </tr>
                                                         <?php
-                                                            $_SESSION['num'] = $i;
+                                                            //$_SESSION['num'] = $i;
                                                         } ?>
                                                     </tbody>
                                                 </table>
@@ -187,7 +187,7 @@ if (isset($_POST['cart'])) {
                                                     </div>
                                                     <div class="col-3">
                                                         <div class="single-input">
-                                                            <button type="submit" name="send" value="<?= $_SESSION['cart']; ?>" class="btn btn-success">ยืนยันซื้อสินค้าตอนนี้</button>
+                                                            <a href="confirm.php" class="btn btn-success">ยืนยันซื้อสินค้าตอนนี้</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -228,12 +228,6 @@ if (isset($_POST['cart'])) {
                     exit;
                 }
 
-                if (isset($_POST['send'])) {
-
-                    $_POST['send'];
-
-                    echo "<meta http-equiv=\"refresh\" content=\"0; URL=checkout.php\">";
-                }
                 ?>
 
                 <?php include('include/footer.inc.php'); ?>

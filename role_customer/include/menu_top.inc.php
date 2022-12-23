@@ -56,17 +56,16 @@
         </div>
         <!-- app notification -->
         <?php
-        
-            if($_SESSION['num'] > 0){
-                $show_cart_num = $_SESSION['num'];
-            } else{
-                $show_cart_num = 0;
-            }
+        // if (isset($_SESSION['num'])) {
+        //     $show_cart_num = $_SESSION['num'];
+        // } else {
+        //     $show_cart_num = 0;
+        // }
         ?>
         <div>
             <a href="cart.php?cart" class="header-icon">
                 <i class="fal fa-shopping-cart"></i>
-                <span class="badge badge-icon"><?= $show_cart_num; ?></span>
+                <span class="badge badge-icon"><?php //$show_cart_num; ?></span>
             </a>
         </div>
         <!-- app user menu -->
@@ -100,7 +99,7 @@
                 </a>
 
                 <div class="dropdown-divider m-0"></div>
-                <a class="dropdown-item fw-500 pt-3 pb-3" href="../logout.php">
+                <a class="dropdown-item fw-500 pt-3 pb-3" href="../login/logout.php">
                     <span data-i18n="drpdwn.page-logout">ออกจากระบบ</span>
                 </a>
             </div>
