@@ -33,11 +33,9 @@
         $pass       =   $_POST['pass'];
         $status     =   $_POST['status'];
 
-        $select = $conn->prepare("SELECT count(*) AS check_num FROM account WHERE pkname=? AND fname=? AND lname=? OR phone=?");
-        $select->bindParam(1, $pkname);
-        $select->bindParam(2, $fname);
-        $select->bindParam(3, $lname);
-        $select->bindParam(4, $phone);
+        $select = $conn->prepare("SELECT count(*) AS check_num FROM account WHERE user=? AND  phone=?");
+        $select->bindParam(1, $user);
+        $select->bindParam(2, $phone);
         $select->execute();
         $row = $select->fetch(PDO::FETCH_ASSOC);
 
@@ -105,11 +103,9 @@
         $status     =   $_POST['status'];
         $id         =   $_POST['id'];
 
-        $select = $conn->prepare("SELECT count(*) AS check_num FROM account WHERE pkname=? AND fname=? AND lname=? OR phone=?");
-        $select->bindParam(1, $pkname);
-        $select->bindParam(2, $fname);
-        $select->bindParam(3, $lname);
-        $select->bindParam(4, $phone);
+        $select = $conn->prepare("SELECT count(*) AS check_num FROM account WHERE user=? AND phone=?");
+        $select->bindParam(1, $user);
+        $select->bindParam(2, $phone);
         $select->execute();
         $row = $select->fetch(PDO::FETCH_ASSOC);
 

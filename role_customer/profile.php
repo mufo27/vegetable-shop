@@ -1,10 +1,7 @@
-<<<<<<< HEAD
 <?php
 require_once('include/auth.inc.php');
 require_once('../database/condb.inc.php');
 ?>
-=======
->>>>>>> 49dea60203eed017fe13ed2e8763fcd3ec78b4c7
 <!DOCTYPE html>
 <html lang="en">
 
@@ -73,9 +70,9 @@ require_once('../database/condb.inc.php');
                                     <div class="panel-content p-0">
                                         <form action="" method="post">
                                             <?php
-                                            session_start();
                                             require_once('../database/condb.inc.php');
-                                            $select = $conn->prepare("SELECT * FROM account");
+                                            $select = $conn->prepare("SELECT * FROM account WHERE id=?");
+                                            $select->bindParam(1,$_SESSION['id']);
                                             $select->execute();
                                             while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
                                             ?>

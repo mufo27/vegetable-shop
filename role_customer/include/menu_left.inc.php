@@ -96,7 +96,7 @@
             <li class="nav-title"></li>
 
             <li>
-                <a href="../../logout.php" title="" data-filter-tags="">
+                <a href="../login/logout.php" title="" data-filter-tags="">
                     <i class="fal fa-power-off"></i><span class="nav-link-text" data-i18n="">ออกจากระบบ</span>
                 </a>
             </li>

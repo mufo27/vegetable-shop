@@ -38,9 +38,9 @@
       exit;
     } else {
 
-      $select = $conn->prepare("SELECT count(id) AS check_num FROM account WHERE user=:user or phone=:phone");
-      $select->bindParam(':user', $user);
-      $select->bindParam(':phone', $phone);
+      $select = $conn->prepare("SELECT count(id) AS check_num FROM account WHERE user=? or phone=?");
+      $select->bindParam(1, $user);
+      $select->bindParam(2, $phone);
       $select->execute();
       $row = $select->fetch(PDO::FETCH_ASSOC);
 
@@ -59,14 +59,11 @@
 
         try {
 
-          $insert = $conn->prepare("INSERT INTO account (phone, user, pass, status) 
-                                                VALUES(:phone, :user, :pass, :status)
-                                            ");
-
-          $insert->bindParam(':phone',  $phone);
-          $insert->bindParam(':user',  $user);
-          $insert->bindParam(':pass',  $pass);
-          $insert->bindParam(':status',  $status);
+          $insert = $conn->prepare("INSERT INTO account (phone, user, pass, status) VALUES (?,?,?,?)");
+          $insert->bindParam(1,  $phone);
+          $insert->bindParam(2,  $user);
+          $insert->bindParam(3,  $pass);
+          $insert->bindParam(4,  $status);
           $insert->execute();
 
           if ($insert) {
