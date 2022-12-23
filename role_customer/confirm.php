@@ -115,15 +115,13 @@ if (isset($_GET['confirm'])) {
 
                                                     <div class="col-md-12 mb-3">
                                                         <label class="form-label" for="">เบอร์โทร :<span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" name="phone" value="<?= $row_address_send['phone']; ?>" required>
+                                                        <input type="text" class="form-control" maxlength="10" name="phone" value="<?= $row_address_send['phone']; ?>" required>
                                                     </div>
                                                 </div>
                                                 <div class="form row">
                                                     <div class="col-md-12 mb-3">
                                                         <label class="form-label" for="">ที่อยู่ :<span class="text-danger">*</span></label>
-                                                        <textarea class="form-control" id="" name="address" rows="3">
-                                                            <?= $row_address_send['address']; ?>
-                                                        </textarea>
+                                                        <textarea class="form-control" id="" name="address" rows="3"><?= $row_address_send['address']; ?></textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <h5 class="mt-5">ตำแหน่งที่ตั้ง</h5>
