@@ -196,10 +196,10 @@ if (isset($_POST['cart'])) {
                                                                     <h4 class="text-dark"><B><?= $total; ?></B></h4>
                                                                 </td>
                                                             </tr>
-
-                                                        </tbody>
-                                                    </table>
-                                                    <!-- datatable end -->
+                                                        
+                                                    </tbody>
+                                                </table>
+                                                <!-- datatable end -->
 
                                                 </div>
 
@@ -207,8 +207,10 @@ if (isset($_POST['cart'])) {
                                                     <div class="col-12 col-md-4 mb-2">
                                                         <button type="submit" name="btn_update" value="update" class="btn btn-block btn-secondary waves-effect waves-themed"><i class="fal fa-shopping-cart"></i> อัพเดทตะกร้า</button>
                                                     </div>
-                                                    <div class="col-12 col-md-8 ">
-                                                        <a href="confirm.php?confirm" class="btn btn-block btn-success waves-effect waves-themed"><i class="fal fa-paper-plane"></i> สั่งซื้อสินค้า</a>
+                                                    <div class="col-3">
+                                                        <div class="single-input">
+                                                            <button type="submit" name="send" value="<?= $_SESSION['cart']; ?>" class="btn btn-success">ยืนยันซื้อสินค้าตอนนี้</button>
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -223,6 +225,7 @@ if (isset($_POST['cart'])) {
                     </form>
 
                 </main>
+
 
                 <?php include('include/footer.inc.php'); ?>
 
