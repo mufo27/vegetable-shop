@@ -11,10 +11,10 @@ if (isset($_GET['order_detail'])) {
     $select_order->execute();
     $row_order = $select_order->fetch(PDO::FETCH_ASSOC);
 
-    $select_address_send = $conn->prepare("SELECT *, concat(pkname,'',fname,' ',lname) AS fullname FROM account WHERE id=?");
-    $select_address_send->bindParam(1, $row_order['account_id']);
-    $select_address_send->execute();
-    $row_address_send = $select_address_send->fetch(PDO::FETCH_ASSOC);
+    // $select_address_send = $conn->prepare("SELECT *, concat(pkname,'',fname,' ',lname) AS fullname FROM account WHERE id=?");
+    // $select_address_send->bindParam(1, $row_order['account_id']);
+    // $select_address_send->execute();
+    // $row_address_send = $select_address_send->fetch(PDO::FETCH_ASSOC);
 
     $select_order_detail = $conn->prepare("SELECT od.*,
                             p.name AS product_name , p.unit AS product_unit,
@@ -147,7 +147,7 @@ if (isset($_GET['order_detail'])) {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-12">
+                        <!-- <div class="col-xl-12">
                             <div id="panel-6" class="panel">
                                 <div class="panel-hdr">
                                     <h2>
@@ -207,7 +207,7 @@ if (isset($_GET['order_detail'])) {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- <div class="col-xl-12 text-center">
                             <a href="print_order_detail.php?pdf=<?php //$row_order['id']; ?>" class="btn btn-lg btn-primary waves-effect waves-themed"><span class="fal fa-print mr-1"></span> ปริ้น</a>
                         </div> -->
