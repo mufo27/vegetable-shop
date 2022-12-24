@@ -4,6 +4,8 @@ require_once('../database/condb.inc.php');
 
 if (isset($_GET['payment'])) {
 
+    $account_id = $_SESSION['id'];
+
     $check_payment_status = $_GET['payment'];
 
     if ($check_payment_status === '1' || $check_payment_status === '2') {
@@ -22,7 +24,6 @@ if (isset($_GET['payment'])) {
                                    <a href="payment.php?payment=1" class="btn btn-outline-dark waves-effect waves-themed">ยังไม่ชำระเงิน</a>
                                    <a href="payment.php?payment=2" class="btn btn-dark waves-effect waves-themed">ชำระเงินแล้ว</a>
                                    ';
-
         }
 
         $select = $conn->prepare("SELECT o.id AS orders_id, 
@@ -36,10 +37,12 @@ if (isset($_GET['payment'])) {
                                             
                                     FROM orders o 
                                     INNER JOIN payment p ON o.id = p.orders_id
-                                    WHERE p.status = ?
+                                    WHERE p.status = ? AND o.account_id = ?
                                     ORDER BY o.save_time DESC
                                 ");
         $select->bindParam(1, $val_payment_status);
+        $select->bindParam(2, $account_id);
+
         $select->execute();
     } else {
 
@@ -59,8 +62,11 @@ if (isset($_GET['payment'])) {
                                             
                                     FROM orders o 
                                     INNER JOIN payment p ON o.id = p.orders_id
+                                    WHERE o.account_id = ?
                                     ORDER BY o.save_time DESC
+                                    
                                 ");
+        $select->bindParam(1, $account_id);
         $select->execute();
     }
 }
@@ -95,7 +101,7 @@ if (isset($_GET['payment'])) {
     <link rel="stylesheet" media="screen, print" href="../assets/dist/css/datagrid/datatables/datatables.bundle.css">
     <link rel="stylesheet" href="include/style.css">
 
-</head> 
+</head>
 
 <body class="mod-bg-1 mod-nav-link ">
 

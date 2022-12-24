@@ -4,6 +4,8 @@ require_once('../database/condb.inc.php');
 
 if (isset($_GET['order'])) {
 
+    $account_id = $_SESSION['id'];
+
     $select = $conn->prepare("SELECT o.*, 
                             concat(a.pkname,'',a.fname,' ',a.lname) AS account_name,
                             p.code AS payment_code, 
@@ -15,8 +17,10 @@ if (isset($_GET['order'])) {
                             INNER JOIN account a ON o.account_id = a.id
                             INNER JOIN payment p ON o.id = p.orders_id
                             INNER JOIN send s ON o.id = s.orders_id
-                            ORDER BY o.save_time DESC
+                            WHERE a.id = ?
+                            
                         ");
+    $select->bindParam(1, $account_id);
     $select->execute();
 }
 
@@ -107,6 +111,7 @@ if (isset($_GET['order'])) {
                                             <tbody>
                                                 <?php
                                                 $i = 1;
+
                                                 while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
 
                                                     if ($row['payment_status'] === 'ยังไม่ชำระเงิน') {
@@ -138,8 +143,6 @@ if (isset($_GET['order'])) {
                                                             <a href="order_detail.php?order_detail=<?= $row['id']; ?>" class="btn btn-info btn-sm btn-icon waves-effect waves-themed mb-2"><i class="fal fa-info-square"></i></a>
                                                         </td>
                                                     </tr>
-
-
 
                                                 <?php } ?>
                                             </tbody>

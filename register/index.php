@@ -80,20 +80,20 @@
                   <form action="check_register.php" method="post">
                     <div class="form-group">
                       <label class="form-label" for="">บัญชีผู้ใช้งาน</label>
-                      <input type="email" id="" name="user" class="form-control form-control-lg" placeholder="" required>
+                      <input type="email" id="" name="user" class="form-control form-control-lg" required>
                       <div class="invalid-feedback">คุณไม่ได้กรอกข้อมูลช่องนี้...!!</div>
                     </div>
                     <div class="form-group">
                       <label class="form-label" for="">รหัสผ่าน</label>
-                      <input type="password" id="" name="pass" class="form-control form-control-lg" placeholder="" required>
+                      <input type="password" id="" name="pass" class="form-control form-control-lg" required>
                     </div>
                     <div class="form-group">
                       <label class="form-label" for="password">ยืนยันรหัสผ่าน</label>
-                      <input type="password" id="" name="cpass" class="form-control form-control-lg" placeholder="" required>
+                      <input type="password" id="" name="cpass" class="form-control form-control-lg" required>
                     </div>
                     <div class="form-group">
                       <label class="form-label" for="">เบอร์โทร</label>
-                      <input type="phone" id="" name="phone" class="form-control form-control-lg" placeholder="" required>
+                      <input type="phone" id="" name="phone"  maxlength="10" class="form-control form-control-lg" required>
                     </div>
                     <div class="form-group">
                       <label for="">สถานะพันธมิตร</label>
