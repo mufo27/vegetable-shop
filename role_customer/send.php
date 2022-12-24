@@ -4,6 +4,8 @@ require_once('../database/condb.inc.php');
 
 if (isset($_GET['send'])) {
 
+    $account_id = $_SESSION['id'];
+
     $check_send_status = $_GET['send'];
     $check_payment_status = 'ชำระเงินแล้ว';
 
@@ -48,11 +50,12 @@ if (isset($_GET['send'])) {
                                     INNER JOIN payment p ON o.id = p.orders_id
                                     INNER JOIN send s ON o.id = s.orders_id
                                     WHERE p.status=?
-                                    AND s.status=?
+                                    AND s.status=? AND o.account_id=?
                                     ORDER BY o.save_time DESC
                                 ");
         $select->bindParam(1, $check_payment_status);
         $select->bindParam(2, $val_send_status);
+        $select->bindParam(3, $account_id);
         $select->execute();
     } else {
 
@@ -73,10 +76,11 @@ if (isset($_GET['send'])) {
                                     FROM orders o 
                                     INNER JOIN payment p ON o.id = p.orders_id
                                     INNER JOIN send s ON o.id = s.orders_id
-                                    WHERE p.status=?
+                                    WHERE p.status=? AND o.account_id=?
                                     ORDER BY o.save_time DESC
                                 ");
         $select->bindParam(1, $check_payment_status);
+        $select->bindParam(2, $account_id);
         $select->execute();
     }
 }
@@ -170,7 +174,7 @@ if (isset($_GET['send'])) {
                                                     <th style="width:10%; text-align: center; vertical-align: middle;">เลขที่ใบจัดส่ง</th>
                                                     <th style="width:10%; text-align: center; vertical-align: middle;">สถานะ</th>
                                                     <th style="width:10%; text-align: center; vertical-align: middle;">พนักงานส่ง</th>
-                                                    <th style="width:5%; text-align: center; vertical-align: middle;">จัดการ</th>
+                                                    <!-- <th style="width:5%; text-align: center; vertical-align: middle;">จัดการ</th> -->
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -199,9 +203,9 @@ if (isset($_GET['send'])) {
                                                         <td style="text-align: center; vertical-align: middle;"><?= $row['send_code']; ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?= $show_send_status; ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?= $row['account_name']; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;">
+                                                        <!-- <td style="text-align: center; vertical-align: middle;">
                                                             <button type="button" class="btn btn-warning btn-sm btn-icon waves-effect waves-themed mb-2" data-toggle="modal" data-target="#send-modal<?= $row['orders_id']; ?>"><i class="fal fa-shipping-timed"></i></button>
-                                                        </td>
+                                                        </td> -->
                                                     </tr>
 
                                                     <!-- Modal send-->
