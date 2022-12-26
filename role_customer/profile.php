@@ -78,15 +78,25 @@ require_once('../database/condb.inc.php');
                                             ?>
                                                 <div class="panel-content">
                                                     <div class="form-row">
-                                                        <div class="col-md-6 mb-3">
-                                                            <label class="form-label" for="validationDefault01">First name</label>
-                                                            <input type="text" class="form-control" id="validationDefault01" name="fname" placeholder="First name" value="<?= $row['fname'] ?>" required="">
-                                                        </div>
-                                                        <div class="col-md-6 mb-3">
-                                                            <label class="form-label" for="validationDefault02">Last name</label>
-                                                            <input type="text" class="form-control" id="validationDefault02" name="lname" placeholder="Last name" value="<?= $row['lname'] ?>" required="">
+                                                        
+                                                        <div class="col-md-4 mb-3">
+                                                            <label class="form-label">คำนำหน้า</label>
+                                                            <select name="pkname" class="custom-select" required>
+                                                                <option value="<?= $row['pkname'] ?>"><?= $row['pkname'] ?></option>
+                                                                <option value="นาย">นาย</option>
+                                                                <option value="นาง">นาง</option>
+                                                                <option value="น.ส">น.ส</option>
+                                                            </select>
                                                         </div>
 
+                                                        <div class="col-md-4 mb-3">
+                                                            <label class="form-label" for="validationDefault01">ชื่อ</label>
+                                                            <input type="text" class="form-control" id="validationDefault01" name="fname" placeholder="First name" value="<?= $row['fname'] ?>" required="">
+                                                        </div>
+                                                        <div class="col-md-4 mb-3">
+                                                            <label class="form-label" for="validationDefault02">นามสกุล</label>
+                                                            <input type="text" class="form-control" id="validationDefault02" name="lname" placeholder="Last name" value="<?= $row['lname'] ?>" required="">
+                                                        </div>
                                                     </div>
                                                     <div class="form-row">
                                                         <div class="col-md-6 mb-3">

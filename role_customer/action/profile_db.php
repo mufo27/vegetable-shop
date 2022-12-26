@@ -23,6 +23,7 @@
         require_once('../../database/condb.inc.php');
 
         $id = $_POST['id'];
+        $pkname = $_POST['pkname'];
         $fname  =   $_POST['fname'];
         $lname  =   $_POST['lname'];
         $user = $_POST['user'];
@@ -49,14 +50,15 @@
         } else {
             try {
 
-                $update = $conn->prepare("UPDATE account SET fname=?, lname=?, user=?, pass=?, address=?, phone=? WHERE id=?");
+                $update = $conn->prepare("UPDATE account SET fname=?, lname=?, user=?, pass=?, address=?, phone=?, pkname=? WHERE id=?");
                 $update->bindParam(1, $fname);
                 $update->bindParam(2, $lname);
                 $update->bindParam(3, $user);
                 $update->bindParam(4, $pass);
                 $update->bindParam(5, $address);
                 $update->bindParam(6, $phone);
-                $update->bindParam(7, $id);
+                $update->bindParam(7, $pkname);
+                $update->bindParam(8, $id);
 
 
                 if ($update->execute()) {
