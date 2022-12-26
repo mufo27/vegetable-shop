@@ -82,7 +82,7 @@ if (isset($_GET['history'])) {
                             <div id="panel-1" class="panel">
                                 <div class="panel-hdr">
                                     <h2>
-                                        แสดงรายการข้อมูลประวัติ
+                                        แสดงรายการประวัติการสั่งซื้อ
                                     </h2>
                                     <div class="panel-toolbar">
 

@@ -58,7 +58,7 @@ require_once('../database/condb.inc.php');
                             <div id="panel-6" class="panel">
                                 <div class="panel-hdr">
                                     <h2>
-                                    <i class="fal fa-user-circle"></i>&nbsp;ข้อมูลส่วนตัว
+                                        ข้อมูลส่วนตัว
                                     </h2>
                                     <!-- <div class="panel-toolbar">
                                         <button class="btn btn-panel waves-effect waves-themed" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>

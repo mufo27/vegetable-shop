@@ -163,7 +163,7 @@ if (isset($_GET['send'])) {
                                 <div class="panel-container show">
                                     <div class="panel-content">
 
-                                        <div class="alert border-dark bg-transparent text-dark" role="alert">
+                                        <div class="alert border-danger bg-transparent text-danger" role="alert">
                                             <strong>คำชี้แจง!</strong> จะแสดงเฉพาะรายการสั่งซื้อที่มีสถานะ "ชำระเงินแล้ว" เท่านั้น
                                         </div>
                                         <!-- datatable start -->

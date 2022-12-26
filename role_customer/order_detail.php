@@ -136,7 +136,7 @@ if (isset($_GET['order_detail'])) {
                                                             <h4><B>ยอดชำระเงินทั้งหมด</B></h4>
                                                         </td>
                                                         <td colspan="1">
-                                                            <h4><B><?= $total; ?></B></h4>
+                                                            <h4><B><?= $total; ?>&nbsp;บาท</B></h4>
                                                         </td>
                                                     </tr>
                                                 </tbody>

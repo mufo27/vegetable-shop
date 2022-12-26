@@ -89,7 +89,7 @@ if(isset($_POST['btn_search'])){
  
                             <div class="col-6 col-md-3 mb-4">
                                 <div class="card h-100">
-                                    <img class="card-img-top" src="../share/image/category/<?= $row['img']; ?>" height="150px" width="100%">
+                                    <img class="card-img-top" src="../share/image/category/<?= $row['img']; ?>" >
                                     <div class="card-body">
                                         <h4><B><?= $row['name']; ?></B></h4>
                                     </div>

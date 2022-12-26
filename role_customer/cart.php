@@ -21,6 +21,7 @@ if (isset($_POST['cart'])) {
                     $_SESSION['cart'][$p_id] = 1;
                 }
             }
+            
             if ($k >= $check_number) {
                 echo "<script>alert('เพิ่มสินค้า ลงในตะกร้าแล้ว..!!')</script>";
                 echo "<meta http-equiv=\"refresh\" content=\"0; URL=cart.php?cart\">";
@@ -193,7 +194,7 @@ if (isset($_POST['cart'])) {
                                                                     <h4 class="text-dark"><B>ยอดชำระเงิน</B></h4>
                                                                 </td>
                                                                 <td colspan="2" style="text-align: center; vertical-align: middle;">
-                                                                    <h4 class="text-dark"><B><?= $total; ?></B></h4>
+                                                                    <h4 class="text-dark"><B><?= $total; ?>&nbsp;บาท</B></h4>
                                                                 </td>
                                                             </tr>
                                                         
@@ -209,7 +210,7 @@ if (isset($_POST['cart'])) {
                                                     </div>
                                                     <div class="col-12 col-md-8">
                                                         <div class="single-input">
-                                                            <a href="confirm.php?confirm" class="btn btn-block btn-success">ยืนยันซื้อสินค้าตอนนี้</a>
+                                                            <a href="confirm.php?confirm" class="btn btn-block btn-success"><i class="fal fa-check-circle"></i>&nbsp;ยืนยันซื้อสินค้าตอนนี้</a>
                                                         </div>
                                                     </div>
                                                 </div>
