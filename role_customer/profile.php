@@ -54,11 +54,11 @@ require_once('../database/condb.inc.php');
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
                     </ol>
                     <div class="row">
-                        <div class="col-xl-6">
+                        <div class="col-xl-12">
                             <div id="panel-6" class="panel">
                                 <div class="panel-hdr">
                                     <h2>
-                                        ข้อมูลส่วนตัว<span class="fw-300"><i></i></span>
+                                    <i class="fal fa-user-circle"></i>&nbsp;ข้อมูลส่วนตัว
                                     </h2>
                                     <!-- <div class="panel-toolbar">
                                         <button class="btn btn-panel waves-effect waves-themed" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
@@ -113,7 +113,7 @@ require_once('../database/condb.inc.php');
                                                 </div>
                                                 <div class="panel-content border-faded border-left-0 border-right-0 border-bottom-0 d-flex flex-row">
                                                     <input type="hidden" name="id" value="<?= $row['id']; ?>">
-                                                    <button class="btn btn-primary ml-auto waves-effect waves-themed" type="submit" name="btn_edit">บันทึกข้อมูล</button>
+                                                    <button class="btn btn-primary ml-auto waves-effect waves-themed" type="submit" name="btn_edit"><i class="fal fa-save"></i> บันทึกข้อมูล</button>
                                                 </div>
                                             <?php } ?>
                                         </form>
