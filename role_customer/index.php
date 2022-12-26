@@ -72,7 +72,7 @@
 
                         <div class="col-12 col-sm-4">
                             <a href="cart.php?cart">
-                                <div class="p-3 bg-dark rounded overflow-hidden position-relative text-white mb-g">
+                                <div class="p-3 bg-primary rounded overflow-hidden position-relative text-white mb-g">
                                     <div class="">
                                         <h3 style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">
                                             ตะกร้าสินค้า
@@ -85,7 +85,7 @@
 
                         <div class="col-12 col-sm-4">
                             <a href="order.php?order">
-                                <div class="p-3 bg-dark rounded overflow-hidden position-relative text-white mb-g">
+                                <div class="p-3 bg-secondary rounded overflow-hidden position-relative text-white mb-g">
                                     <div class="">
                                         <h3 style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">
                                             รายการสั่งซื้อ
@@ -98,7 +98,7 @@
 
                         <div class="col-12 col-sm-4">
                             <a href="payment.php?payment">
-                                <div class="p-3 bg-dark rounded overflow-hidden position-relative text-white mb-g">
+                                <div class="p-3 bg-warning rounded overflow-hidden position-relative text-white mb-g">
                                     <div class="">
                                         <h3 style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">
                                             การชำระเงิน
@@ -111,7 +111,7 @@
 
                         <div class="col-12 col-sm-4">
                             <a href="send.php?send">
-                                <div class="p-3 bg-dark rounded overflow-hidden position-relative text-white mb-g">
+                                <div class="p-3 bg-info rounded overflow-hidden position-relative text-white mb-g">
                                     <div class="">
                                         <h3 style="color:aliceblue" class="display-4 d-block l-h-n m-0 fw-500">
                                             การจัดส่ง
