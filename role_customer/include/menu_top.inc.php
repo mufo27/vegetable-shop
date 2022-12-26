@@ -81,8 +81,7 @@
                             <img src="../assets/dist/img/demo/avatars/avatar-admin.png" class="rounded-circle profile-image" alt="Dr. Codex Lantern">
                         </span>
                         <div class="info-card-text">
-                            <div class="fs-lg text-truncate text-truncate-lg">ลูกค้า</div>
-                            <span class="text-truncate text-truncate-md opacity-80">admin@gmail.com</span>
+                            <div class="fs-lg text-truncate text-truncate-lg">คุณ <?php echo $_SESSION['fname']; ?></div>
                         </div>
                     </div>
                 </div>
