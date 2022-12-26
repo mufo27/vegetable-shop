@@ -5,6 +5,12 @@
         $password = "";
         $database = "vegetable_shop_active";
 
+        // $servername = "localhost";
+        // $username = "u596094530_sp";
+        // $password = "fa1Z&LK$7+P";
+        // $database = "u596094530_shoppuk";
+    
+
         try {
 
             $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password, 

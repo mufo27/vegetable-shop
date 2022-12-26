@@ -2,14 +2,39 @@
 require_once('include/auth.inc.php');
 require_once('../database/condb.inc.php');
 
-$category_id = $_GET['product'];
 
-$select_name = $conn->prepare("SELECT c.name AS category_name FROM category c WHERE c.id=?");
-$select_name->bindParam(1, $category_id);
-$select_name->execute();
-$row_name = $select_name->fetch(PDO::FETCH_ASSOC);
+if (isset($_POST['btn_search'])) {
 
-$select = $conn->prepare("SELECT p.*, 
+    $category_id = $_POST['btn_search'];
+    $txt_search = $_POST['txt_search'];
+
+    $select_name = $conn->prepare("SELECT c.name AS category_name FROM category c WHERE c.id=?");
+    $select_name->bindParam(1, $category_id);
+    $select_name->execute();
+    $row_name = $select_name->fetch(PDO::FETCH_ASSOC);
+
+    $select = $conn->prepare("SELECT p.*, 
+                            c.name AS category_name,
+                            (SELECT im.img FROM product_img im WHERE im.product_id=p.id ORDER BY im.id ASC LIMIT 1) AS show_img
+                            FROM product p 
+                            INNER JOIN category c ON p.category_id = c.id 
+                            WHERE p.category_id=?
+                            AND p.status_sell='เปิด'
+                            AND p.name LIKE '%".$txt_search."%'
+                        ");
+                        
+    $select->bindParam(1, $category_id);
+    $select->execute();
+} else {
+    
+    $category_id = $_GET['product'];
+
+    $select_name = $conn->prepare("SELECT c.name AS category_name FROM category c WHERE c.id=?");
+    $select_name->bindParam(1, $category_id);
+    $select_name->execute();
+    $row_name = $select_name->fetch(PDO::FETCH_ASSOC);
+
+    $select = $conn->prepare("SELECT p.*, 
                             c.name AS category_name,
                             (SELECT im.img FROM product_img im WHERE im.product_id=p.id ORDER BY im.id ASC LIMIT 1) AS show_img
                             FROM product p 
@@ -17,8 +42,9 @@ $select = $conn->prepare("SELECT p.*,
                             WHERE p.category_id=?
                             AND p.status_sell='เปิด'
                         ");
-$select->bindParam(1, $category_id);
-$select->execute();
+    $select->bindParam(1, $category_id);
+    $select->execute();
+}
 
 ?>
 
@@ -75,12 +101,14 @@ $select->execute();
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date">Sunday, December 18, 2022</span></li>
                     </ol>
 
-                    <div class="input-group input-group-lg mb-3">
-                        <input type="text" class="form-control shadow-inset-2" id="filter-icon" aria-label="type 2 or more letters">
-                        <div class="input-group-append">
-                            <span class="input-group-text"><i class="fal fa-search"></i></span>
+                    <form action="" method="post">
+                        <div class="input-group input-group-lg mb-3">
+                            <input type="text" class="form-control shadow-inset-2" name="txt_search" required>
+                            <div class="input-group-append">
+                                <button type="submit" name="btn_search" value="<?= $category_id;?>" class="input-group-text"><i class="fal fa-search"></i></button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
 
                     <h1><B>แสดงสินค้า / หมวดหมู่: <?= $row_name['category_name']; ?></B></h1>
 

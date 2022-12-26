@@ -1,6 +1,21 @@
 <?php
 require_once('include/auth.inc.php');
 require_once('../database/condb.inc.php');
+
+if(isset($_POST['btn_search'])){
+
+    $txt_search = $_POST['txt_search'];
+
+    $select = $conn->prepare("SELECT * FROM category WHERE name LIKE '%".$txt_search."%' ");
+    $select->execute();
+
+} else {
+
+    $select = $conn->prepare("SELECT * FROM category");
+    $select->execute();
+    
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -56,19 +71,19 @@ require_once('../database/condb.inc.php');
                     </ol>
 
                  
-                    <div class="input-group input-group-lg mb-3">
-                        <input type="text" class="form-control shadow-inset-2" id="filter-icon" aria-label="type 2 or more letters">
-                        <div class="input-group-append">
-                            <span class="input-group-text"><i class="fal fa-search"></i></span>
+                    <form action="" method="post">
+                        <div class="input-group input-group-lg mb-3">
+                            <input type="text" class="form-control shadow-inset-2" name="txt_search" required>
+                            <div class="input-group-append">
+                                <button type="submit" name="btn_search" class="input-group-text"><i class="fal fa-search"></i></button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
 
                     <h1><B>แสดงหมวดหมู่</B></h1>
 
                     <div class="row">
                         <?php
-                        $select = $conn->prepare("SELECT * FROM category");
-                        $select->execute();
                         while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
                         ?>
  
