@@ -85,7 +85,25 @@
                         </script>';
             echo "<meta http-equiv=\"refresh\" content=\"3; URL=../role_customer/index.php\">";
             exit;
-          } else {
+          } else if ($row_login['status'] === 3) {
+
+            $_SESSION['id']  = $row_login['id'];
+            $_SESSION['fname'] = $row_login['fname'];
+            $_SESSION['status'] = $row_login['status'];
+
+            echo '<script type="text/javascript">
+                          Swal.fire({
+                            icon: "success",
+                            title: "เข้าสู่ระบบสำเร็จ พนง.ขนส่ง", 
+                            showConfirmButton: false,
+                            timer: 2000
+                          });
+                        </script>';
+            echo "<meta http-equiv=\"refresh\" content=\"3; URL=../role_delivery/index.php\">";
+            exit;
+          } 
+          
+          else {
 
             echo '<script type="text/javascript">
                               Swal.fire(
