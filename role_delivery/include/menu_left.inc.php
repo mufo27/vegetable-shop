@@ -54,7 +54,7 @@
                 </a>
             </li>
 
-            <li class="nav-title">ข้อมูลการสั่งซื้อ</li>
+            <!-- <li class="nav-title">ข้อมูลการสั่งซื้อ</li>
 
             <li class="<?= $category; ?>">
                 <a href="category.php?category" title="" data-filter-tags="">
@@ -84,7 +84,7 @@
                 <a href="send.php?send" title="" data-filter-tags="">
                     <i class="fal fa-shipping-fast"></i><span class="nav-link-text" data-i18n="">การจัดส่ง</span>
                 </a>
-            </li>
+            </li> -->
 
             <li class="<?= $history; ?>">
                 <a href="history.php?history" title="" data-filter-tags="">

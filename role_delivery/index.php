@@ -104,6 +104,49 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div id="panel-1" class="panel">
+                                <div class="panel-hdr">
+                                    <h2>
+                                        แสดงรายการข้อมูลจัดส่งสินค้า
+                                    </h2>
+                                    <div class="panel-toolbar">
+
+                                    </div>
+                                </div>
+
+                                <div class="panel-container show">
+                                    <div class="panel-content">
+                                        <!-- datatable start -->
+                                        <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
+                                            <thead class="bg-dark text-white">
+                                                <tr>
+                                                    <th style="width:5%; text-align: center; vertical-align: middle;">No.</th>
+                                                    <th style="width:10%; text-align: center; vertical-align: middle;">เลขที่ใบจัดส่ง</th>
+                                                    <th style="width:10%; text-align: center; vertical-align: middle;">สถานะ</th>
+                                                    <th style="width:10%; text-align: center; vertical-align: middle;">พนักงานส่ง</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $i++; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['send_code']; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $show_send_status; ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['account_name']; ?></td>
+                                                    </tr>
+
+                                            </tbody>
+                                        </table>
+                                        <!-- datatable end -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
                 </main>
 
                 <?php include('include/footer.inc.php'); ?>

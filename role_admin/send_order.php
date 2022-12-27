@@ -250,7 +250,7 @@ if (isset($_GET['send_order'])) {
                                                                                     <?php
                                                                                     $select_account = $conn->prepare("SELECT id, concat(pkname,'',fname,' ',lname) AS fullname 
                                                                                                                         FROM account 
-                                                                                                                        WHERE status = 2 
+                                                                                                                        WHERE status = 3
                                                                                                                         ORDER BY pkname ASC, fname ASC, lname ASC
                                                                                                                     ");
                                                                                     $select_account->execute();
