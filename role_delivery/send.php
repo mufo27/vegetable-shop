@@ -59,10 +59,10 @@ if (isset($_GET['send'])) {
         $select->execute();
     } else {
 
-        $btn_send_status = '<a href="send_order.php?send_order" class="btn btn-dark waves-effect waves-themed">ทั้งหมด</a>
-                            <a href="send_order.php?send_order=1" class="btn btn-outline-dark waves-effect waves-themed">ยังไม่จัดส่ง</a>
-                            <a href="send_order.php?send_order=2" class="btn btn-outline-dark waves-effect waves-themed">รอการจัดส่ง</a>
-                            <a href="send_order.php?send_order=3" class="btn btn-outline-dark waves-effect waves-themed">จัดส่งแล้ว</a>
+        $btn_send_status = '<a href="send.php?send" class="btn btn-dark waves-effect waves-themed">ทั้งหมด</a>
+                            <a href="send.php?send=1" class="btn btn-outline-dark waves-effect waves-themed">ยังไม่จัดส่ง</a>
+                            <a href="send.php?send=2" class="btn btn-outline-dark waves-effect waves-themed">รอการจัดส่ง</a>
+                            <a href="send.php?send=3" class="btn btn-outline-dark waves-effect waves-themed">จัดส่งแล้ว</a>
                             ';
 
         $select = $conn->prepare("SELECT o.id AS orders_id, 
