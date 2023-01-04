@@ -53,38 +53,13 @@
                     <i class="fal fa-user-circle"></i><span class="nav-link-text" data-i18n="">ข้อมูลส่วนตัว</span>
                 </a>
             </li>
-
-            <!-- <li class="nav-title">ข้อมูลการสั่งซื้อ</li>
-
-            <li class="<?= $category; ?>">
-                <a href="category.php?category" title="" data-filter-tags="">
-                    <i class="fal fa-store-alt"></i><span class="nav-link-text" data-i18n="">สั่งซื้อสินค้า</span>
-                </a>
-            </li>
-
-            <li class="<?= $cart; ?>">
-                <a href="cart.php?cart" title="" data-filter-tags="">
-                    <i class="fal fa-shopping-basket"></i><span class="nav-link-text" data-i18n="">ตะกร้าสินค้า</span>
-                </a>
-            </li>
-
-            <li class="<?= $order; ?>">
-                <a href="order.php?order" title="" data-filter-tags="">
-                    <i class="fal fa-list-alt"></i><span class="nav-link-text" data-i18n="">รายการสั่งซื้อ</span>
-                </a>
-            </li>
-
-            <li class="<?= $payment; ?>">
-                <a href="payment.php?payment" title="" data-filter-tags="">
-                    <i class="fal fa-money-check-alt"></i><span class="nav-link-text" data-i18n="">การชำระเงิน</span>
-                </a>
-            </li>
+            <li class="nav-title">ข้อมูลการจัดส่ง</li>
 
             <li class="<?= $send; ?>">
                 <a href="send.php?send" title="" data-filter-tags="">
-                    <i class="fal fa-shipping-fast"></i><span class="nav-link-text" data-i18n="">การจัดส่ง</span>
+                    <i class="fal fa-truck"></i><span class="nav-link-text" data-i18n="">การจัดส่ง</span>
                 </a>
-            </li> -->
+            </li>
 
             <li class="<?= $history; ?>">
                 <a href="history.php?history" title="" data-filter-tags="">

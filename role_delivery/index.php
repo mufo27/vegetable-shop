@@ -1,23 +1,14 @@
-<?php
-require_once('include/auth.inc.php');
-require_once('../database/condb.inc.php');
+<?php require_once('include/auth.inc.php'); ?>
 
-if (isset($_GET['send_order'])) {
-
-}
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <title>
-
-        การจัดส่ง - ระบบจัดการสินค้าออนไลน์
-
+        หน้าแรก - ระบบจัดการสินค้าออนไลน์
     </title>
-    <meta name="description" content="Basic">
+    <meta name="description" content="Profile">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
     <!-- Call App Mode on ios devices -->
@@ -33,8 +24,10 @@ if (isset($_GET['send_order'])) {
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/dist/img/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/dist/img/favicon/favicon-32x32.png">
     <link rel="mask-icon" href="../assets/dist/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
-    <link rel="stylesheet" media="screen, print" href="../assets/dist/css/datagrid/datatables/datatables.bundle.css">
-    <link rel="stylesheet" href="include/style.css">
+    <!-- Optional: page related CSS-->
+    <link rel="stylesheet" media="screen, print" href="../assets/dist/css/fa-brands.css">
+    <link rel="stylesheet" media="screen, print" href="../assets/dist/css/fa-solid.css">
+    <link rel="stylesheet" href="./include/style.css">
 
 </head>
 
@@ -55,153 +48,59 @@ if (isset($_GET['send_order'])) {
                 <!-- BEGIN Page Content -->
                 <main id="js-page-content" role="main" class="page-content">
                     <ol class="breadcrumb page-breadcrumb">
-                        <li class="breadcrumb-item active"> การจัดส่ง </li>
+                        <li class="breadcrumb-item active">หน้าแรก</li>
                         <li class="position-absolute pos-top pos-right d-none d-sm-block"><span class="js-get-date"></span></li>
                     </ol>
-
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="demo">
-
-                                <?= $btn_send_status; ?>
-
-                            </div>
-                        </div>
+                    <div class="subheader">
+                        <h1 class="subheader-title">
+                            <i class='subheader-icon fal fa-home'></i><span class='fw-300'>หน้าแรก</span>
+                        </h1>
                     </div>
-
                     <div class="row">
-                        <div class="col-xl-12">
-                            <div id="panel-1" class="panel">
-                                <div class="panel-hdr">
-                                    <h2>
-                                        แสดงรายการจัดส่ง
-                                    </h2>
-                                    <div class="panel-toolbar">
-
+                            <div class="col-sm-6 col-xl-3">
+                                <a href="send.php?send">
+                                    <div class="p-3 bg-secondary rounded overflow-hidden position-relative text-white mb-g">
+                                        <div class="">
+                                            <h4 class="display-4 d-block l-h-n m-0 fw-500">
+                                                การจัดส่ง
+                                            </h4>
+                                        </div>
+                                        <i class="fal fa-user position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n1" style="font-size:6rem"></i>
                                     </div>
+                                </a>
+                            </div>
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="p-3 bg-secondary rounded overflow-hidden position-relative text-white mb-g">
+                                    <div class="">
+                                        <h3 class="display-4 d-block l-h-n m-0 fw-500">
+                                           ประวัติ
+                                        </h3>
+                                    </div>
+                                    <i class="fal fa-gem position-absolute pos-right pos-bottom opacity-15  mb-n1 mr-n4" style="font-size: 6rem;"></i>
                                 </div>
-
-                                <div class="panel-container show">
-                                    <div class="panel-content">
-                                        <!-- datatable start -->
-                                        <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
-                                            <thead class="bg-dark text-white">
-                                                <tr>
-                                                    <th style="width:5%; text-align: center; vertical-align: middle;">No.</th>
-                                                    <th style="width:10%; text-align: center; vertical-align: middle;">เลขที่ใบจัดส่ง</th>
-                                                    <th style="width:10%; text-align: center; vertical-align: middle;">สถานะ</th>
-                                                    <th style="width:10%; text-align: center; vertical-align: middle;">พนักงานส่ง</th>
-                                                    <th style="width:5%; text-align: center; vertical-align: middle;">จัดการ</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                $i = 1;
-                                                while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
-
-                                                    if ($row['send_status'] === 'ยังไม่จัดส่ง') {
-                                                        $show_send_status = '<span class="badge badge-danger badge-pill">ยังไม่จัดส่ง</span>';
-                                                    } else if ($row['send_status'] === 'รอการจัดส่ง') {
-                                                        $show_send_status = '<span class="badge badge-warning badge-pill">รอการจัดส่ง</span>';
-                                                    } else {
-                                                        $show_send_status = '<span class="badge badge-success badge-pill">จัดส่งแล้ว</span>';
-                                                    }
-
-                                                    if ($row['account_id'] !== '') {
-                                                        $modal_account_name = $row['account_name'];
-                                                    } else {
-                                                        $modal_account_name = 'เลือก';
-                                                    }
-
-
-                                                ?>
-                                                    <tr>
-                                                        <td style="text-align: center; vertical-align: middle;"><?= $i++; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['send_code']; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><?= $show_send_status; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><?= $row['account_name']; ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;">
-                                                            <button type="button" class="btn btn-warning btn-sm btn-icon waves-effect waves-themed mb-2" data-toggle="modal" data-target="#send-modal<?= $row['orders_id']; ?>"><i class="fal fa-shipping-timed"></i></button>
-                                                        </td>
-                                                    </tr>
-
-                                                    <!-- Modal send-->
-                                                    <div class="modal fade" id="send-modal<?= $row['orders_id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-
-                                                                <form action="" method="post" enctype="multipart/form-data">
-                                                                    <div class="modal-header">
-                                                                        <h4 class="modal-title">
-                                                                            ฟอร์มแจ้งสถานะจัดส่ง
-                                                                        </h4>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true"><i class="fal fa-times"></i></span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body bg-faded">
-
-                                                                        <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">เลขที่ใบจัดส่ง:</label>
-                                                                            <div class="col-lg-9">
-                                                                                <input type="text" class="form-control" value="<?= $row['send_code']; ?>" readonly="">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">ช่องทาง:</label>
-                                                                            <div class="col-lg-9">
-                                                                                <select class="custom-select form-control" name="send_status" required>
-                                                                                    <option value="<?= $row['send_status']; ?>">-- <?= $row['send_status']; ?> --</option>
-                                                                                    <option value="ยังไม่จัดส่ง">ยังไม่จัดส่ง</option>
-                                                                                    <option value="รอการจัดส่ง">รอการจัดส่ง</option>
-                                                                                    <option value="จัดส่งแล้ว">จัดส่งแล้ว</option>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group row">
-                                                                            <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="">พนักงานส่ง:</label>
-                                                                            <div class="col-lg-9">
-                                                                                <select class="custom-select form-control" name="account_id">
-                                                                                    <option value="<?= $row['account_id']; ?>">-- <?= $modal_account_name; ?> --</option>
-                                                                                    <option value="">ว่าง</option>
-                                                                                    <?php
-                                                                                    $select_account = $conn->prepare("SELECT id, concat(pkname,'',fname,' ',lname) AS fullname 
-                                                                                                                        FROM account 
-                                                                                                                        WHERE status = 3
-                                                                                                                        ORDER BY pkname ASC, fname ASC, lname ASC
-                                                                                                                    ");
-                                                                                    $select_account->execute();
-                                                                                    while ($row_account = $select_account->fetch(PDO::FETCH_ASSOC)) {
-                                                                                    ?>
-                                                                                        <option value="<?= $row_account['id']; ?>"> <?= $row_account['fullname']; ?> </option>
-                                                                                    <?php } ?>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                                                                        <button type="submit" name="btn_edit" class="btn btn-warning">ยืนยันการชำระเงิน</button>
-                                                                    </div>
-                                                                </form>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                <?php } ?>
-                                            </tbody>
-                                        </table>
-                                        <!-- datatable end -->
-
+                            </div>
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="p-3 bg-secondary rounded overflow-hidden position-relative text-white mb-g">
+                                    <div class="">
+                                        <h3 class="display-4 d-block l-h-n m-0 fw-500">
+                                            - 103.72
+                                        </h3>
                                     </div>
+                                    <i class="fal fa-lightbulb position-absolute pos-right pos-bottom opacity-15 mb-n5 mr-n6" style="font-size: 8rem;"></i>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="p-3 bg-secondary rounded overflow-hidden position-relative text-white mb-g">
+                                    <div class="">
+                                        <h3 class="display-4 d-block l-h-n m-0 fw-500">
+                                            +40%
+                                        </h3>
+                                    </div>
+                                    <i class="fal fa-globe position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n4" style="font-size: 6rem;"></i>
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </main>
-                <!-- END Page Content -->
-
 
                 <?php include('include/footer.inc.php'); ?>
 
@@ -212,58 +111,12 @@ if (isset($_GET['send_order'])) {
 
     <?php include('include/settings_page.inc.php'); ?>
 
-
     <script src="../assets/dist/js/vendors.bundle.js"></script>
-    <script src="../assets/dist/js/app.bundle.js"></script>
 
-    <script src="../assets/dist/js/datagrid/datatables/datatables.bundle.js"></script>
+    <script src="../assets/dist/js/app.bundle.js"></script>
     <script>
         $(document).ready(function() {
-            $('#dt-basic-example').dataTable({
-                responsive: true
-            });
 
-            $('.js-thead-colors a').on('click', function() {
-                var theadColor = $(this).attr("data-bg");
-                console.log(theadColor);
-                $('#dt-basic-example thead').removeClassPrefix('bg-').addClass(theadColor);
-            });
-
-            $('.js-tbody-colors a').on('click', function() {
-                var theadColor = $(this).attr("data-bg");
-                console.log(theadColor);
-                $('#dt-basic-example').removeClassPrefix('bg-').addClass(theadColor);
-            });
-
-        });
-    </script>
-    <script>
-        $(function() {
-            // Multiple images preview with JavaScript
-            var multiImgPreview = function(input, imgPreviewPlaceholder) {
-
-                if (input.files) {
-                    var filesAmount = input.files.length;
-
-                    for (i = 0; i < filesAmount; i++) {
-                        var reader = new FileReader();
-
-                        reader.onload = function(event) {
-                            $($.parseHTML('<img width="250px" height="150px">')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
-                        }
-
-                        reader.readAsDataURL(input.files[i]);
-                    }
-                }
-
-            };
-
-            $('#chooseFile').on('change', function() {
-                multiImgPreview(this, 'div.imgGallery');
-            });
-            $('#chooseFile2').on('change', function() {
-                multiImgPreview(this, 'div.imgGallery2');
-            });
         });
     </script>
 </body>
