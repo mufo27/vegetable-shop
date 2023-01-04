@@ -148,6 +148,63 @@ if (isset($_GET['send'])) {
                         </div>
                     </div>
 
+                    <div id="panel-2" class="panel">
+                        <div class="panel-container show">
+                            <div class="panel-content">
+                                <div class="accordion accordion-outline" id="js_demo_accordion-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a href="javascript:void(0);" class="card-title collapsed" data-toggle="collapse" data-target="#js_demo_accordion-3a" aria-expanded="false">
+                                                <i class="fal fa-money-check width-2 fs-xl"></i>
+                                                ชำระเงินก่อนจัดสั่ง
+                                                <span class="ml-auto">
+                                                    <span class="collapsed-reveal">
+                                                        <i class="fal fa-minus fs-xl"></i>
+                                                    </span>
+                                                    <span class="collapsed-hidden">
+                                                        <i class="fal fa-plus fs-xl"></i>
+                                                    </span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                        <div id="js_demo_accordion-3a" class="collapse" data-parent="#js_demo_accordion-3">
+                                            <div class="card-body">
+                                                ขั้นตอนการการทำงาน <br>
+                                                1. พนักงานนำถุงรวมสินค้าของแต่ละรายการขึ้นรถไปส่งลูกค้า <br>
+                                                2. พนักงานจัดส่งสินค้าแล้วให้ลูกค้าเซ็นรับสินค้าลงในใบรายการจัดส่งสินค้า <br>
+                                                3. เมื่อจัดส่งครบทุกรายการแล้ว ให้นำใบรายการจัดส่งสินค้ารวมส่งคืนพนักงานคีย์ข้อมูล(แคชเชียร์) <br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a href="javascript:void(0);" class="card-title collapsed" data-toggle="collapse" data-target="#js_demo_accordion-3b" aria-expanded="false">
+                                                <i class="fal fa-money-bill width-2 fs-xl"></i>
+                                                เก็บเงินปลายทาง
+                                                <span class="ml-auto">
+                                                    <span class="collapsed-reveal">
+                                                        <i class="fal fa-minus fs-xl"></i>
+                                                    </span>
+                                                    <span class="collapsed-hidden">
+                                                        <i class="fal fa-plus fs-xl"></i>
+                                                    </span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                        <div id="js_demo_accordion-3b" class="collapse" data-parent="#js_demo_accordion-3">
+                                            <div class="card-body">
+                                            ขั้นตอนการการทำงาน <br>
+                                            1.พนักงานนำถุงรวมสินค้าของแต่ละรายการขึ้นรถไปส่งลูกค้า พร้อมใบรายการจัดส่งสินค้ารวม <br>
+                                            2.พนักงานจัดส่งสินนำใบรายการจัดส่งสินค้ารวมให้ลูกค้าแต่ละรายเซ็นรับสินค้า <u>(พร้อมเก็บเงินลูกค้าทันที, กรณีลูกค้าต้องสแกนจ่ายให้ลูกค้าสแกนจ่ายผ่านบาร์โค้ดธนาคารท่กำหนดหรือพร้อมเพร์ที่เรากำหนดเท่านั้น)</u> <br>
+                                            3.เมื่อจัดส่งครบทุกรายการแล้ว ให้นำใบรายการจัดส่งสินค้ารวมส่งคืนพนักงานคีย์ข้อมูลพร้อมเงินสด(แคชเชียร์) <br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-xl-12">
                             <div id="panel-1" class="panel">
@@ -162,6 +219,7 @@ if (isset($_GET['send'])) {
 
                                 <div class="panel-container show">
                                     <div class="panel-content">
+
                                         <!-- datatable start -->
                                         <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
                                             <thead class="bg-dark text-white">
@@ -222,8 +280,8 @@ if (isset($_GET['send'])) {
                                                                             <span aria-hidden="true"><i class="fal fa-times"></i></span>
                                                                         </button>
                                                                     </div>
-                                                                    <div class="modal-body bg-faded">
 
+                                                                    <div class="modal-body bg-faded">
                                                                         <div class="form-group row">
                                                                             <label class="form-label col-sm-3 col-form-label text-left text-sm-right" for="id">เลขที่ใบจัดส่ง:</label>
                                                                             <div class="col-lg-9">
@@ -253,7 +311,7 @@ if (isset($_GET['send'])) {
                                                                                 <select class="custom-select form-control" name="account_id">
                                                                                     <option value="<?= $row['account_id']; ?>">-- <?= $modal_account_name; ?> --</option>
                                                                                     <option value="">ว่าง</option>
-                                                                                    <?php 
+                                                                                    <?php
                                                                                     $select_account = $conn->prepare("SELECT id, concat(pkname,'',fname,' ',lname) AS fullname 
                                                                                                                         FROM account 
                                                                                                                         WHERE status = 2 
